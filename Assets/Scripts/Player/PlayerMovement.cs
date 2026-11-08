@@ -2,9 +2,10 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    // Units per second. Matches the Run animation's feet: they slide back ~1.45 units/s,
-    // and the Run state plays 1.4x faster in the Animator, so ~2 units/s (no foot sliding).
-    [SerializeField] private float moveSpeed = 2f;
+    // Units per second, matched to the Run animation's feet so they don't slide:
+    // feet move back 87 px/s / 46 PPU (Scale 1) = 1.9 units/s, and the Run state plays
+    // 1.4x faster in the Animator: 1.9 * 1.4 = ~2.65. Recompute if PPU, Scale or Run Speed change.
+    [SerializeField] private float moveSpeed = 2.65f;
 
     private Animator _animator;
     private SpriteRenderer _spriteRenderer;
