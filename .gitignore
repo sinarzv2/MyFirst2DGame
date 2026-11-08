@@ -45,6 +45,11 @@ crashlytics-build.properties
 *.unitypackage
 *.app
 
+# Personal files that are not part of the game
+/Lessons.docx
+# Word's temporary lock file while a document is open (e.g. ~$ssons.docx)
+~$*
+
 # OS files
 .DS_Store
 Thumbs.db
