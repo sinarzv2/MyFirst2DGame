@@ -107,7 +107,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Hero_Run_3q_0
+      name: Hero_Run_0
       rect:
         serializedVersion: 2
         x: 0
@@ -124,11 +124,11 @@ TextureImporter:
       spriteID: a4787c1b1954b0055ae54fea5d52d353
       internalID: 1081212630
       vertices: []
-      indices:
+      indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Hero_Run_3q_1
+      name: Hero_Run_1
       rect:
         serializedVersion: 2
         x: 124
@@ -145,11 +145,11 @@ TextureImporter:
       spriteID: f5f1e05c04af533bc73e947f0997767a
       internalID: 1606721694
       vertices: []
-      indices:
+      indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Hero_Run_3q_2
+      name: Hero_Run_2
       rect:
         serializedVersion: 2
         x: 248
@@ -166,11 +166,11 @@ TextureImporter:
       spriteID: c3a443040a92d9be0227c52d2438beb7
       internalID: -11237280
       vertices: []
-      indices:
+      indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Hero_Run_3q_3
+      name: Hero_Run_3
       rect:
         serializedVersion: 2
         x: 372
@@ -187,11 +187,11 @@ TextureImporter:
       spriteID: c1304b89e25c0e793aaf1bcfa96d3eea
       internalID: 955410559
       vertices: []
-      indices:
+      indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Hero_Run_3q_4
+      name: Hero_Run_4
       rect:
         serializedVersion: 2
         x: 496
@@ -208,11 +208,11 @@ TextureImporter:
       spriteID: a0664776741131ba4b2070ca74f0662a
       internalID: -1154544411
       vertices: []
-      indices:
+      indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Hero_Run_3q_5
+      name: Hero_Run_5
       rect:
         serializedVersion: 2
         x: 620
@@ -229,11 +229,11 @@ TextureImporter:
       spriteID: 7d3e8f30a8da75fd5c8ec859cec79f02
       internalID: 1435796281
       vertices: []
-      indices:
+      indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Hero_Run_3q_6
+      name: Hero_Run_6
       rect:
         serializedVersion: 2
         x: 0
@@ -250,11 +250,11 @@ TextureImporter:
       spriteID: 2e7cba5e4b80ccaf8b3503e53bf36fae
       internalID: 1218366537
       vertices: []
-      indices:
+      indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Hero_Run_3q_7
+      name: Hero_Run_7
       rect:
         serializedVersion: 2
         x: 124
@@ -271,11 +271,11 @@ TextureImporter:
       spriteID: c000d5243f4fad92091d116d57f5f6b1
       internalID: 1776259356
       vertices: []
-      indices:
+      indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Hero_Run_3q_8
+      name: Hero_Run_8
       rect:
         serializedVersion: 2
         x: 248
@@ -292,11 +292,11 @@ TextureImporter:
       spriteID: 09e2977082b09755436d3a2c37581212
       internalID: 1733729237
       vertices: []
-      indices:
+      indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Hero_Run_3q_9
+      name: Hero_Run_9
       rect:
         serializedVersion: 2
         x: 372
@@ -313,11 +313,11 @@ TextureImporter:
       spriteID: db68c50c05f4f3d53e8a626c12e89d1c
       internalID: -276072973
       vertices: []
-      indices:
+      indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Hero_Run_3q_10
+      name: Hero_Run_10
       rect:
         serializedVersion: 2
         x: 496
@@ -334,11 +334,11 @@ TextureImporter:
       spriteID: 29f4e2d306b2020d92380ce88c9313ef
       internalID: -2006691554
       vertices: []
-      indices:
+      indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Hero_Run_3q_11
+      name: Hero_Run_11
       rect:
         serializedVersion: 2
         x: 620
@@ -355,11 +355,11 @@ TextureImporter:
       spriteID: e0d9eee2e3c4a7312b9f859089619bbd
       internalID: 84634859
       vertices: []
-      indices:
+      indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Hero_Run_3q_12
+      name: Hero_Run_12
       rect:
         serializedVersion: 2
         x: 0
@@ -376,11 +376,11 @@ TextureImporter:
       spriteID: 1d6b6508a776d90eebb038d4408ec9e9
       internalID: 312134119
       vertices: []
-      indices:
+      indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Hero_Run_3q_13
+      name: Hero_Run_13
       rect:
         serializedVersion: 2
         x: 124
@@ -397,11 +397,11 @@ TextureImporter:
       spriteID: 2cc17bfa04365717b3ebe5dcd7e9a630
       internalID: -107031624
       vertices: []
-      indices:
+      indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Hero_Run_3q_14
+      name: Hero_Run_14
       rect:
         serializedVersion: 2
         x: 248
@@ -418,11 +418,11 @@ TextureImporter:
       spriteID: dbd33b1ecc92d205cf7e51082c6f6034
       internalID: 875690960
       vertices: []
-      indices:
+      indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Hero_Run_3q_15
+      name: Hero_Run_15
       rect:
         serializedVersion: 2
         x: 372
@@ -439,11 +439,11 @@ TextureImporter:
       spriteID: dca7d625ae5751b437a51b01632d5a47
       internalID: 471093948
       vertices: []
-      indices:
+      indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Hero_Run_3q_16
+      name: Hero_Run_16
       rect:
         serializedVersion: 2
         x: 496
@@ -460,11 +460,11 @@ TextureImporter:
       spriteID: adf6a4d3ce0547fa3b555ccd24c1b164
       internalID: -28577374
       vertices: []
-      indices:
+      indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Hero_Run_3q_17
+      name: Hero_Run_17
       rect:
         serializedVersion: 2
         x: 620
@@ -481,11 +481,11 @@ TextureImporter:
       spriteID: 50de5be856b2e0ac795858ed82b8ffa0
       internalID: -1419678459
       vertices: []
-      indices:
+      indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Hero_Run_3q_18
+      name: Hero_Run_18
       rect:
         serializedVersion: 2
         x: 0
@@ -502,11 +502,11 @@ TextureImporter:
       spriteID: 7f5334e07964a3e08ba163ef251494d3
       internalID: -1130131473
       vertices: []
-      indices:
+      indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Hero_Run_3q_19
+      name: Hero_Run_19
       rect:
         serializedVersion: 2
         x: 124
@@ -523,7 +523,7 @@ TextureImporter:
       spriteID: ee55f97caf164a9db261f48062a685e1
       internalID: 1338776885
       vertices: []
-      indices:
+      indices: 
       edges: []
       weights: []
     outline: []
@@ -532,33 +532,33 @@ TextureImporter:
     spriteID: 2e3824a7450b4c5c1b33a95fd468e57b
     internalID: 0
     vertices: []
-    indices:
+    indices: 
     edges: []
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Hero_Run_3q_0: 1081212630
-      Hero_Run_3q_1: 1606721694
-      Hero_Run_3q_2: -11237280
-      Hero_Run_3q_3: 955410559
-      Hero_Run_3q_4: -1154544411
-      Hero_Run_3q_5: 1435796281
-      Hero_Run_3q_6: 1218366537
-      Hero_Run_3q_7: 1776259356
-      Hero_Run_3q_8: 1733729237
-      Hero_Run_3q_9: -276072973
-      Hero_Run_3q_10: -2006691554
-      Hero_Run_3q_11: 84634859
-      Hero_Run_3q_12: 312134119
-      Hero_Run_3q_13: -107031624
-      Hero_Run_3q_14: 875690960
-      Hero_Run_3q_15: 471093948
-      Hero_Run_3q_16: -28577374
-      Hero_Run_3q_17: -1419678459
-      Hero_Run_3q_18: -1130131473
-      Hero_Run_3q_19: 1338776885
-  spritePackingTag:
+      Hero_Run_0: 1081212630
+      Hero_Run_11: 84634859
+      Hero_Run_6: 1218366537
+      Hero_Run_1: 1606721694
+      Hero_Run_2: -11237280
+      Hero_Run_9: -276072973
+      Hero_Run_13: -107031624
+      Hero_Run_7: 1776259356
+      Hero_Run_19: 1338776885
+      Hero_Run_3: 955410559
+      Hero_Run_5: 1435796281
+      Hero_Run_4: -1154544411
+      Hero_Run_12: 312134119
+      Hero_Run_17: -1419678459
+      Hero_Run_8: 1733729237
+      Hero_Run_10: -2006691554
+      Hero_Run_18: -1130131473
+      Hero_Run_15: 471093948
+      Hero_Run_16: -28577374
+      Hero_Run_14: 875690960
+  spritePackingTag: 
   pSDRemoveMatte: 0
-  userData:
-  assetBundleName:
-  assetBundleVariant:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

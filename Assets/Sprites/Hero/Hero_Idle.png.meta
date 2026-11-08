@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: b518543e938ceb44ba9b4088e431d1ed
+guid: f486e8204a3299cc757dc7eed9c5adbb
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -46,9 +46,9 @@ TextureImporter:
   spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
-  alignment: 0
-  spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  alignment: 9
+  spritePivot: {x: 0.5, y: 0.02173913}
+  spritePixelsToUnits: 60
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -84,7 +84,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -96,7 +96,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -107,757 +107,757 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: idle with out size_0
+      name: Hero_Idle_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 1478.3334
-        width: 147.83333
-        height: 295.66666
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        y: 920
+        width: 104
+        height: 184
+      alignment: 9
+      pivot: {x: 0.5, y: 0.02173913}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 48ac5237c97a17348bb8372e3c8a2a3d
-      internalID: 789422131
+      spriteID: 237f5b19d4a286245d8f8cd28d117615
+      internalID: -1928317108
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: idle with out size_1
+      name: Hero_Idle_1
       rect:
         serializedVersion: 2
-        x: 147
-        y: 1478.3334
-        width: 147.83333
-        height: 295.66666
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 104
+        y: 920
+        width: 104
+        height: 184
+      alignment: 9
+      pivot: {x: 0.5, y: 0.02173913}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f30fc6a29e3af544ba12e303a5854f0e
-      internalID: -1343773633
+      spriteID: f1fc8c504d9d81bcd723134448e06f2d
+      internalID: -121644021
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: idle with out size_2
+      name: Hero_Idle_2
       rect:
         serializedVersion: 2
-        x: 294
-        y: 1478.3334
-        width: 147.83333
-        height: 295.66666
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 208
+        y: 920
+        width: 104
+        height: 184
+      alignment: 9
+      pivot: {x: 0.5, y: 0.02173913}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 71cd8781d8e6c124598359d7169c0e52
-      internalID: 626383070
+      spriteID: 5d0194087751fd06a5fa896ca2523199
+      internalID: -1553740089
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: idle with out size_3
+      name: Hero_Idle_3
       rect:
         serializedVersion: 2
-        x: 441
-        y: 1478.3334
-        width: 147.83333
-        height: 295.66666
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 312
+        y: 920
+        width: 104
+        height: 184
+      alignment: 9
+      pivot: {x: 0.5, y: 0.02173913}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d13d5aced3fef864aa3aca34b60cab43
-      internalID: -1095263827
+      spriteID: c3d821cb1f7057b23972e025fa5452f9
+      internalID: -1538421768
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: idle with out size_4
+      name: Hero_Idle_4
       rect:
         serializedVersion: 2
-        x: 588
-        y: 1478.3334
-        width: 147.83333
-        height: 295.66666
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 416
+        y: 920
+        width: 104
+        height: 184
+      alignment: 9
+      pivot: {x: 0.5, y: 0.02173913}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 24c5d27560bf3fc4b961a9b481e4d400
-      internalID: -1931802541
+      spriteID: edb8c8c6b43646fba4e246d958aa8d60
+      internalID: 855438117
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: idle with out size_5
+      name: Hero_Idle_5
       rect:
         serializedVersion: 2
-        x: 735
-        y: 1478.3334
-        width: 147.83333
-        height: 295.66666
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 520
+        y: 920
+        width: 104
+        height: 184
+      alignment: 9
+      pivot: {x: 0.5, y: 0.02173913}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2e55f0f9d65bee248bb8b5e7fce03c83
-      internalID: -1814196808
+      spriteID: d4cefdbf761a7d5633797e92b4ecf6bd
+      internalID: 1093199210
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: idle with out size_6
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 1183.3334
-        width: 147.83333
-        height: 295.66666
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ad6859a2e3495294d86d49a8a4982fa8
-      internalID: 635908407
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: idle with out size_7
-      rect:
-        serializedVersion: 2
-        x: 147
-        y: 1183.3334
-        width: 147.83333
-        height: 295.66666
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 7be7bf78bcacbc44780546d9835b92c9
-      internalID: 518082915
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: idle with out size_8
-      rect:
-        serializedVersion: 2
-        x: 294
-        y: 1183.3334
-        width: 147.83333
-        height: 295.66666
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 97925b0fb0ef3db4a9a390dc29b6b648
-      internalID: 234262862
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: idle with out size_9
-      rect:
-        serializedVersion: 2
-        x: 441
-        y: 1183.3334
-        width: 147.83333
-        height: 295.66666
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4571199458ebb244295fbc420ec85698
-      internalID: 1825523763
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: idle with out size_10
-      rect:
-        serializedVersion: 2
-        x: 588
-        y: 1183.3334
-        width: 147.83333
-        height: 295.66666
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 95f1a14931fc1e34db2c62965deb9483
-      internalID: 1312066578
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: idle with out size_11
-      rect:
-        serializedVersion: 2
-        x: 735
-        y: 1183.3334
-        width: 147.83333
-        height: 295.66666
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 35801e21e09e26b43970f054ecae86f1
-      internalID: 1221171248
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: idle with out size_12
+      name: Hero_Idle_6
       rect:
         serializedVersion: 2
         x: 0
-        y: 888.3334
-        width: 147.83333
-        height: 295.66666
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        y: 736
+        width: 104
+        height: 184
+      alignment: 9
+      pivot: {x: 0.5, y: 0.02173913}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ed1d22d161b2f804b9a42fed3742976d
-      internalID: 881073148
+      spriteID: 6c3a14adcf7a7cdd4f3845c11e927ee7
+      internalID: -1562393552
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: idle with out size_13
+      name: Hero_Idle_7
       rect:
         serializedVersion: 2
-        x: 147
-        y: 888.3334
-        width: 147.83333
-        height: 295.66666
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 104
+        y: 736
+        width: 104
+        height: 184
+      alignment: 9
+      pivot: {x: 0.5, y: 0.02173913}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4be79ad26a41b744c8402327fb5f437a
-      internalID: -1398472287
+      spriteID: f78e4a2289a07aa6d3854b81dd94e5e1
+      internalID: 228779001
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: idle with out size_14
+      name: Hero_Idle_8
       rect:
         serializedVersion: 2
-        x: 294
-        y: 888.3334
-        width: 147.83333
-        height: 295.66666
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 208
+        y: 736
+        width: 104
+        height: 184
+      alignment: 9
+      pivot: {x: 0.5, y: 0.02173913}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d30863ea583ce7847bad2bdc9991c23a
-      internalID: 968368134
+      spriteID: 7f4568ed3040b98cd96cc9b5477d081e
+      internalID: 1608792157
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: idle with out size_15
+      name: Hero_Idle_9
       rect:
         serializedVersion: 2
-        x: 441
-        y: 888.3334
-        width: 147.83333
-        height: 295.66666
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 312
+        y: 736
+        width: 104
+        height: 184
+      alignment: 9
+      pivot: {x: 0.5, y: 0.02173913}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 86bd380a526f8ae40948efa891168c2e
-      internalID: -1791683236
+      spriteID: 8ac427a24d1ccfb14c4f107c2892fbab
+      internalID: 1426579165
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: idle with out size_16
+      name: Hero_Idle_10
       rect:
         serializedVersion: 2
-        x: 588
-        y: 888.3334
-        width: 147.83333
-        height: 295.66666
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 416
+        y: 736
+        width: 104
+        height: 184
+      alignment: 9
+      pivot: {x: 0.5, y: 0.02173913}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8f392846efa594349aed6c12f0561b03
-      internalID: 424203092
+      spriteID: 794c1092820f9fa314855fb7ce4f7508
+      internalID: -222341498
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: idle with out size_17
+      name: Hero_Idle_11
       rect:
         serializedVersion: 2
-        x: 735
-        y: 888.3334
-        width: 147.83333
-        height: 295.66666
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 520
+        y: 736
+        width: 104
+        height: 184
+      alignment: 9
+      pivot: {x: 0.5, y: 0.02173913}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e5f9256de84080446973bf720da1a5f9
-      internalID: 70853366
+      spriteID: 3eba59d9fd1951043b8e3effc2b2bbc6
+      internalID: -1994027375
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: idle with out size_18
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 593.3334
-        width: 147.83333
-        height: 295.66666
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: fbaee8cc2121f774b85176a5a38ef5c0
-      internalID: -1040806060
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: idle with out size_19
-      rect:
-        serializedVersion: 2
-        x: 147
-        y: 593.3334
-        width: 147.83333
-        height: 295.66666
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6bdcb17cc4e16774bb13846f2e877ae1
-      internalID: -920510497
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: idle with out size_20
-      rect:
-        serializedVersion: 2
-        x: 294
-        y: 593.3334
-        width: 147.83333
-        height: 295.66666
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a312de07dea2c3d49859009d5323253b
-      internalID: 1844224487
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: idle with out size_21
-      rect:
-        serializedVersion: 2
-        x: 441
-        y: 593.3334
-        width: 147.83333
-        height: 295.66666
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 7d46ff2834ce55144be1d81f23a213e7
-      internalID: -499031362
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: idle with out size_22
-      rect:
-        serializedVersion: 2
-        x: 588
-        y: 593.3334
-        width: 147.83333
-        height: 295.66666
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 76f0844a5cdca68418d039599434fcf8
-      internalID: 1697699442
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: idle with out size_23
-      rect:
-        serializedVersion: 2
-        x: 735
-        y: 593.3334
-        width: 147.83333
-        height: 295.66666
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: fc251774c63d7bd47b75a52780cf63bc
-      internalID: -2113576820
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: idle with out size_24
+      name: Hero_Idle_12
       rect:
         serializedVersion: 2
         x: 0
-        y: 298.33334
-        width: 147.83333
-        height: 295.66666
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        y: 552
+        width: 104
+        height: 184
+      alignment: 9
+      pivot: {x: 0.5, y: 0.02173913}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f6d2e56fefbdbb44498c122ee12918e0
-      internalID: 773934039
+      spriteID: 639a3de074a85a9535e639a5f37abbe4
+      internalID: -1840701397
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: idle with out size_25
+      name: Hero_Idle_13
       rect:
         serializedVersion: 2
-        x: 147
-        y: 298.33334
-        width: 147.83333
-        height: 295.66666
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 104
+        y: 552
+        width: 104
+        height: 184
+      alignment: 9
+      pivot: {x: 0.5, y: 0.02173913}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7e59fd3e595e29c468354743f74cf9e7
-      internalID: -716467089
+      spriteID: ae458a6ffeb532b78dbb3fcfaa80ef35
+      internalID: 811925047
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: idle with out size_26
+      name: Hero_Idle_14
       rect:
         serializedVersion: 2
-        x: 294
-        y: 298.33334
-        width: 147.83333
-        height: 295.66666
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 208
+        y: 552
+        width: 104
+        height: 184
+      alignment: 9
+      pivot: {x: 0.5, y: 0.02173913}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2c6707138e2b1c14c8ce2ec500df0d54
-      internalID: 1470145358
+      spriteID: 635ec0058d944ee214d8e3cf3f840228
+      internalID: -1772516362
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: idle with out size_27
+      name: Hero_Idle_15
       rect:
         serializedVersion: 2
-        x: 441
-        y: 298.33334
-        width: 147.83333
-        height: 295.66666
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 312
+        y: 552
+        width: 104
+        height: 184
+      alignment: 9
+      pivot: {x: 0.5, y: 0.02173913}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0a7cc5568bdaf6847ac84034e7e59a83
-      internalID: -1757153427
+      spriteID: 314beea7381c162790c37ace16938214
+      internalID: 1742193384
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: idle with out size_28
+      name: Hero_Idle_16
       rect:
         serializedVersion: 2
-        x: 588
-        y: 298.33334
-        width: 147.83333
-        height: 295.66666
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 416
+        y: 552
+        width: 104
+        height: 184
+      alignment: 9
+      pivot: {x: 0.5, y: 0.02173913}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0a9d28a829f254145b646caf09bad2de
-      internalID: -1540953181
+      spriteID: cee40875f1e4f9b76707d3d44a7ecec1
+      internalID: 942991772
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: idle with out size_29
+      name: Hero_Idle_17
       rect:
         serializedVersion: 2
-        x: 735
-        y: 298.33334
-        width: 147.83333
-        height: 295.66666
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 520
+        y: 552
+        width: 104
+        height: 184
+      alignment: 9
+      pivot: {x: 0.5, y: 0.02173913}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bca56f189dc3e824f96d5fc22e4d1c7a
-      internalID: 491235567
+      spriteID: 49442fe2f13098c8da391fd2705a7eb9
+      internalID: -1555599422
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: idle with out size_30
+      name: Hero_Idle_18
       rect:
         serializedVersion: 2
         x: 0
-        y: 3.3333435
-        width: 147.83333
-        height: 295.66666
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        y: 368
+        width: 104
+        height: 184
+      alignment: 9
+      pivot: {x: 0.5, y: 0.02173913}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f813d5130d980ce48b496b481ba87182
-      internalID: -1682437198
+      spriteID: b30b177f68f410175cd292376c7fb007
+      internalID: -338393629
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: idle with out size_31
+      name: Hero_Idle_19
       rect:
         serializedVersion: 2
-        x: 147
-        y: 3.3333435
-        width: 147.83333
-        height: 295.66666
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 104
+        y: 368
+        width: 104
+        height: 184
+      alignment: 9
+      pivot: {x: 0.5, y: 0.02173913}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: aa51c26b0a6473c40ad6afedf20b0070
-      internalID: -478657443
+      spriteID: 288c62de3985381c3a320b9bbb7329e6
+      internalID: 657201491
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: idle with out size_32
+      name: Hero_Idle_20
       rect:
         serializedVersion: 2
-        x: 294
-        y: 3.3333435
-        width: 147.83333
-        height: 295.66666
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 208
+        y: 368
+        width: 104
+        height: 184
+      alignment: 9
+      pivot: {x: 0.5, y: 0.02173913}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 702042b2165e89449a6731ca1a18262a
-      internalID: 1255519038
+      spriteID: 2d39e3ec5b3b0c6fabf97b079a2516a0
+      internalID: -1154447983
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: idle with out size_33
+      name: Hero_Idle_21
       rect:
         serializedVersion: 2
-        x: 441
-        y: 3.3333435
-        width: 147.83333
-        height: 295.66666
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 312
+        y: 368
+        width: 104
+        height: 184
+      alignment: 9
+      pivot: {x: 0.5, y: 0.02173913}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c1658ec88d517694cb07c7d7aa2ec869
-      internalID: -1761304558
+      spriteID: 6b73d46be83ffe170e544acd7b99d525
+      internalID: -458047263
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: idle with out size_34
+      name: Hero_Idle_22
       rect:
         serializedVersion: 2
-        x: 588
-        y: 3.3333435
-        width: 147.83333
-        height: 295.66666
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 416
+        y: 368
+        width: 104
+        height: 184
+      alignment: 9
+      pivot: {x: 0.5, y: 0.02173913}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 435b74ca18383d340b03fdd9dccff52c
-      internalID: 492812240
+      spriteID: 34fc917aea99bf7d3e527a31d6e96c7c
+      internalID: 94004896
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: idle with out size_35
+      name: Hero_Idle_23
       rect:
         serializedVersion: 2
-        x: 735
-        y: 3.3333435
-        width: 147.83333
-        height: 295.66666
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 520
+        y: 368
+        width: 104
+        height: 184
+      alignment: 9
+      pivot: {x: 0.5, y: 0.02173913}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2d3777188b807a74b9b04fc19b89342a
-      internalID: 913288068
+      spriteID: cb2964dcd5958195346dbcffa2fdd803
+      internalID: -851290648
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hero_Idle_24
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 184
+        width: 104
+        height: 184
+      alignment: 9
+      pivot: {x: 0.5, y: 0.02173913}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ec0cf293159ca3093f07640f28c753a3
+      internalID: -390055265
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hero_Idle_25
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 184
+        width: 104
+        height: 184
+      alignment: 9
+      pivot: {x: 0.5, y: 0.02173913}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f7b80da9efd0a4aa906517a36b6c496e
+      internalID: 296480590
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hero_Idle_26
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 184
+        width: 104
+        height: 184
+      alignment: 9
+      pivot: {x: 0.5, y: 0.02173913}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cba53387a243c8ad6d9e34e4914a2fbe
+      internalID: 185918538
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hero_Idle_27
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 184
+        width: 104
+        height: 184
+      alignment: 9
+      pivot: {x: 0.5, y: 0.02173913}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 98356842f5313c473dc6558bc00b1dca
+      internalID: 2054508638
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hero_Idle_28
+      rect:
+        serializedVersion: 2
+        x: 416
+        y: 184
+        width: 104
+        height: 184
+      alignment: 9
+      pivot: {x: 0.5, y: 0.02173913}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: abf355bff7df7cf5c2df0f1575458f72
+      internalID: 1001395907
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hero_Idle_29
+      rect:
+        serializedVersion: 2
+        x: 520
+        y: 184
+        width: 104
+        height: 184
+      alignment: 9
+      pivot: {x: 0.5, y: 0.02173913}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a6e617b123a176ff523822e362179e2f
+      internalID: 2070555067
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hero_Idle_30
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 104
+        height: 184
+      alignment: 9
+      pivot: {x: 0.5, y: 0.02173913}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4c34ed882db638bd5769d6878f7ab634
+      internalID: -1470798229
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hero_Idle_31
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 0
+        width: 104
+        height: 184
+      alignment: 9
+      pivot: {x: 0.5, y: 0.02173913}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1f7641b08b9fefb042c95166541151af
+      internalID: -1549946510
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hero_Idle_32
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 0
+        width: 104
+        height: 184
+      alignment: 9
+      pivot: {x: 0.5, y: 0.02173913}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5a27dae15029136c1f13138c4ca88b14
+      internalID: -2047769729
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hero_Idle_33
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 0
+        width: 104
+        height: 184
+      alignment: 9
+      pivot: {x: 0.5, y: 0.02173913}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cce5d3c2c4537e3dce8d0fd472653a23
+      internalID: -1132911171
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hero_Idle_34
+      rect:
+        serializedVersion: 2
+        x: 416
+        y: 0
+        width: 104
+        height: 184
+      alignment: 9
+      pivot: {x: 0.5, y: 0.02173913}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 12c5781bf751c9ad529e093f44f28fa6
+      internalID: 571102000
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hero_Idle_35
+      rect:
+        serializedVersion: 2
+        x: 520
+        y: 0
+        width: 104
+        height: 184
+      alignment: 9
+      pivot: {x: 0.5, y: 0.02173913}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c965ea93e1a52af22a9279f6b47797bb
+      internalID: 761178632
       vertices: []
       indices: 
       edges: []
@@ -865,7 +865,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 992c8a7749d3a774e48f98da1a48ff27
     internalID: 0
     vertices: []
     indices: 
@@ -873,42 +873,42 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      idle with out size_7: 518082915
-      idle with out size_26: 1470145358
-      idle with out size_17: 70853366
-      idle with out size_19: -920510497
-      idle with out size_25: -716467089
-      idle with out size_1: -1343773633
-      idle with out size_10: 1312066578
-      idle with out size_0: 789422131
-      idle with out size_11: 1221171248
-      idle with out size_33: -1761304558
-      idle with out size_31: -478657443
-      idle with out size_24: 773934039
-      idle with out size_20: 1844224487
-      idle with out size_32: 1255519038
-      idle with out size_13: -1398472287
-      idle with out size_30: -1682437198
-      idle with out size_2: 626383070
-      idle with out size_9: 1825523763
-      idle with out size_16: 424203092
-      idle with out size_21: -499031362
-      idle with out size_8: 234262862
-      idle with out size_3: -1095263827
-      idle with out size_14: 968368134
-      idle with out size_22: 1697699442
-      idle with out size_4: -1931802541
-      idle with out size_12: 881073148
-      idle with out size_27: -1757153427
-      idle with out size_28: -1540953181
-      idle with out size_29: 491235567
-      idle with out size_15: -1791683236
-      idle with out size_5: -1814196808
-      idle with out size_18: -1040806060
-      idle with out size_6: 635908407
-      idle with out size_34: 492812240
-      idle with out size_35: 913288068
-      idle with out size_23: -2113576820
+      Hero_Idle_25: 296480590
+      Hero_Idle_0: -1928317108
+      Hero_Idle_3: -1538421768
+      Hero_Idle_6: -1562393552
+      Hero_Idle_16: 942991772
+      Hero_Idle_9: 1426579165
+      Hero_Idle_12: -1840701397
+      Hero_Idle_5: 1093199210
+      Hero_Idle_18: -338393629
+      Hero_Idle_28: 1001395907
+      Hero_Idle_22: 94004896
+      Hero_Idle_33: -1132911171
+      Hero_Idle_7: 228779001
+      Hero_Idle_32: -2047769729
+      Hero_Idle_2: -1553740089
+      Hero_Idle_13: 811925047
+      Hero_Idle_31: -1549946510
+      Hero_Idle_15: 1742193384
+      Hero_Idle_4: 855438117
+      Hero_Idle_11: -1994027375
+      Hero_Idle_24: -390055265
+      Hero_Idle_21: -458047263
+      Hero_Idle_30: -1470798229
+      Hero_Idle_34: 571102000
+      Hero_Idle_20: -1154447983
+      Hero_Idle_19: 657201491
+      Hero_Idle_27: 2054508638
+      Hero_Idle_23: -851290648
+      Hero_Idle_10: -222341498
+      Hero_Idle_14: -1772516362
+      Hero_Idle_1: -121644021
+      Hero_Idle_8: 1608792157
+      Hero_Idle_17: -1555599422
+      Hero_Idle_29: 2070555067
+      Hero_Idle_35: 761178632
+      Hero_Idle_26: 185918538
   spritePackingTag: 
   pSDRemoveMatte: 0
   userData: 
