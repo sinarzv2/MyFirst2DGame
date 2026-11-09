@@ -22,8 +22,12 @@ public class ProjectAssetTests
     // In every Hero sheet the soles are 4 px above the bottom of the cell; that point is the pivot.
     private const float SolesAbovePixels = 4f;
 
-    // Measured from the Run animation: a planted foot slides back 2.91 px per frame at 30 fps.
-    private const float RunFootSpeedPixelsPerSecond = 87.3f;
+    // Measured from the Run animation: a planted foot slides back 2.91 px for every frame of the sheet.
+    // Per frame, not per second, so a change to the clip's Samples is noticed too.
+    private const float RunFootPixelsPerFrame = 2.91f;
+
+    // Built-in Unity assets (default material, default sprite...) use these GUIDs and have no file in the project.
+    private static readonly string[] BuiltInGuids = { "0000000000000000e000000000000000", "0000000000000000f000000000000000" };
 
     private static string[] HeroSheetPaths()
     {
@@ -112,8 +116,10 @@ public class ProjectAssetTests
         var runState = LoadHeroController().layers[0].stateMachine.states
             .Select(child => child.state)
             .First(state => state.name == "Hero_Run");
-        // Assumes the Player's Scale is 1 (chapter 14).
-        var feet = RunFootSpeedPixelsPerSecond / importer.spritePixelsPerUnit * runState.speed;
+        var runClip = (AnimationClip)runState.motion;
+        // px per frame * frames per second = px/s; / PPU = units/s; * the state's Speed.
+        // Assumes the Player's Scale is 1 (chapter 14); the Play Mode test Player_HasItsComponents_AndScaleOne checks that.
+        var feet = RunFootPixelsPerFrame * runClip.frameRate / importer.spritePixelsPerUnit * runState.speed;
 
         // The default in the code...
         var gameObject = new GameObject("MoveSpeedTest");
@@ -133,6 +139,47 @@ public class ProjectAssetTests
         Assert.IsTrue(match.Success, "no PlayerMovement in " + MainScenePath);
         var sceneValue = float.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture);
         Assert.AreEqual(feet, sceneValue, feet * 0.03f, "moveSpeed of the Player in " + MainScenePath);
+    }
+
+    [Test]
+    public void HeroController_HasTheSpeedParameterUsedByTheCode()
+    {
+        var parameter = LoadHeroController().parameters.FirstOrDefault(p => p.name == PlayerMovement.SpeedParameter);
+        Assert.IsNotNull(parameter, $"Hero.controller has no parameter named \"{PlayerMovement.SpeedParameter}\"");
+        Assert.AreEqual(AnimatorControllerParameterType.Float, parameter.type);
+    }
+
+    [Test]
+    public void Scenes_HaveNoMissingReferences()
+    {
+        var scenePaths = AssetDatabase.FindAssets("t:Scene", new[] { "Assets/Scenes" })
+            .Select(guid => AssetDatabase.GUIDToAssetPath(guid))
+            .ToArray();
+        Assert.IsNotEmpty(scenePaths, "no scenes in Assets/Scenes");
+        foreach (var scenePath in scenePaths)
+        {
+            // Every reference in a scene file looks like {fileID: <object in the file>, guid: <file>, type: <n>}.
+            var references = Regex.Matches(File.ReadAllText(scenePath), @"\{fileID: (-?\d+), guid: ([0-9a-f]{32}), type: \d+\}");
+            foreach (Match reference in references)
+            {
+                var fileId = long.Parse(reference.Groups[1].Value, CultureInfo.InvariantCulture);
+                var guid = reference.Groups[2].Value;
+                if (BuiltInGuids.Contains(guid))
+                {
+                    continue;
+                }
+
+                // The file must exist...
+                var path = AssetDatabase.GUIDToAssetPath(guid);
+                Assert.IsFalse(string.IsNullOrEmpty(path) || AssetDatabase.LoadMainAssetAtPath(path) == null,
+                    $"{scenePath}: missing asset with guid {guid}");
+
+                // ...and so must the object inside it (for example one sprite of a sheet).
+                var found = AssetDatabase.LoadAllAssetsAtPath(path).Any(asset =>
+                    AssetDatabase.TryGetGUIDAndLocalFileIdentifier(asset, out string _, out long localId) && localId == fileId);
+                Assert.IsTrue(found, $"{scenePath}: {path} has no object with fileID {fileId} (shown as Missing)");
+            }
+        }
     }
 
     [Test]
