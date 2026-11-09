@@ -1,0 +1,147 @@
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Text.RegularExpressions;
+using NUnit.Framework;
+using UnityEditor;
+using UnityEditor.Animations;
+using UnityEngine;
+
+// Checks assets and settings that are easy to get wrong by hand.
+// These would have caught the problems found in the review (chapter 14 of the lessons).
+public class ProjectAssetTests
+{
+    private const string HeroSpritesFolder = "Assets/Sprites/Hero";
+    private const string AnimationsFolder = "Assets/Animations";
+    private const string HeroControllerPath = "Assets/Animations/Hero/Hero.controller";
+    private const string MainScenePath = "Assets/Scenes/Main.unity";
+
+    // Every Hero sheet must use the same Pixels Per Unit, or the hero changes size between animations.
+    private const float HeroPixelsPerUnit = 46f;
+
+    // In every Hero sheet the soles are 4 px above the bottom of the cell; that point is the pivot.
+    private const float SolesAbovePixels = 4f;
+
+    // Measured from the Run animation: a planted foot slides back 2.91 px per frame at 30 fps.
+    private const float RunFootSpeedPixelsPerSecond = 87.3f;
+
+    private static string[] HeroSheetPaths()
+    {
+        return AssetDatabase.FindAssets("t:Texture2D", new[] { HeroSpritesFolder })
+            .Select(guid => AssetDatabase.GUIDToAssetPath(guid))
+            .ToArray();
+    }
+
+    private static AnimatorController LoadHeroController()
+    {
+        var controller = AssetDatabase.LoadAssetAtPath<AnimatorController>(HeroControllerPath);
+        Assert.IsNotNull(controller, HeroControllerPath + " not found");
+        return controller;
+    }
+
+    [Test]
+    public void HeroSheets_AllUseHeroPixelsPerUnit()
+    {
+        var paths = HeroSheetPaths();
+        Assert.IsNotEmpty(paths, "no sprite sheets in " + HeroSpritesFolder);
+        foreach (var path in paths)
+        {
+            var importer = (TextureImporter)AssetImporter.GetAtPath(path);
+            Assert.AreEqual(HeroPixelsPerUnit, importer.spritePixelsPerUnit, 0.001f, path);
+        }
+    }
+
+    [Test]
+    public void HeroSprites_PivotIsOnTheSoles()
+    {
+        foreach (var path in HeroSheetPaths())
+        {
+            var sprites = AssetDatabase.LoadAllAssetsAtPath(path).OfType<Sprite>().ToArray();
+            Assert.IsNotEmpty(sprites, path + " has no sprites. Is it sliced?");
+            foreach (var sprite in sprites)
+            {
+                Assert.AreEqual(sprite.rect.width / 2f, sprite.pivot.x, 0.01f, sprite.name + ": pivot x");
+                Assert.AreEqual(SolesAbovePixels, sprite.pivot.y, 0.01f, sprite.name + ": pivot y");
+            }
+        }
+    }
+
+    [Test]
+    public void AnimationClips_HaveNoMissingSprites()
+    {
+        var guids = AssetDatabase.FindAssets("t:AnimationClip", new[] { AnimationsFolder });
+        Assert.IsNotEmpty(guids, "no clips in " + AnimationsFolder);
+        foreach (var guid in guids)
+        {
+            var path = AssetDatabase.GUIDToAssetPath(guid);
+            var clip = AssetDatabase.LoadAssetAtPath<AnimationClip>(path);
+            foreach (var binding in AnimationUtility.GetObjectReferenceCurveBindings(clip))
+            {
+                foreach (var key in AnimationUtility.GetObjectReferenceCurve(clip, binding))
+                {
+                    // Unity's own != also catches "Missing" references, which a plain C# null check misses.
+                    Assert.IsTrue(key.value != null, $"{path}: missing sprite at {key.time:0.###} s");
+                }
+            }
+        }
+    }
+
+    [Test]
+    public void HeroController_EveryStateHasAClip_AndTransitionsAreInstant()
+    {
+        foreach (var layer in LoadHeroController().layers)
+        {
+            foreach (var child in layer.stateMachine.states)
+            {
+                var state = child.state;
+                Assert.IsTrue(state.motion != null, state.name + " has no clip");
+                foreach (var transition in state.transitions)
+                {
+                    // Sprites can't be blended, so a transition must switch at once.
+                    var target = transition.destinationState != null ? transition.destinationState.name : "Exit";
+                    Assert.AreEqual(0f, transition.duration, 0.0001f, $"{state.name} -> {target}: Transition Duration");
+                }
+            }
+        }
+    }
+
+    [Test]
+    public void MoveSpeed_MatchesRunFeet()
+    {
+        var importer = (TextureImporter)AssetImporter.GetAtPath(HeroSpritesFolder + "/Hero_Run.png");
+        var runState = LoadHeroController().layers[0].stateMachine.states
+            .Select(child => child.state)
+            .First(state => state.name == "Hero_Run");
+        // Assumes the Player's Scale is 1 (chapter 14).
+        var feet = RunFootSpeedPixelsPerSecond / importer.spritePixelsPerUnit * runState.speed;
+
+        // The default in the code...
+        var gameObject = new GameObject("MoveSpeedTest");
+        try
+        {
+            var movement = gameObject.AddComponent<PlayerMovement>();
+            var codeDefault = new SerializedObject(movement).FindProperty("moveSpeed").floatValue;
+            Assert.AreEqual(feet, codeDefault, feet * 0.03f, "moveSpeed default in PlayerMovement.cs");
+        }
+        finally
+        {
+            Object.DestroyImmediate(gameObject);
+        }
+
+        // ...and the value saved in the scene, which wins over the default (lesson 12-9).
+        var match = Regex.Match(File.ReadAllText(MainScenePath), @"^\s*moveSpeed: ([-\d.eE]+)", RegexOptions.Multiline);
+        Assert.IsTrue(match.Success, "no PlayerMovement in " + MainScenePath);
+        var sceneValue = float.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture);
+        Assert.AreEqual(feet, sceneValue, feet * 0.03f, "moveSpeed of the Player in " + MainScenePath);
+    }
+
+    [Test]
+    public void BuildSettings_ScenesExist()
+    {
+        Assert.IsNotEmpty(EditorBuildSettings.scenes, "no scenes in Build Settings");
+        foreach (var scene in EditorBuildSettings.scenes)
+        {
+            Assert.IsNotNull(AssetDatabase.LoadAssetAtPath<SceneAsset>(scene.path), scene.path);
+        }
+    }
+}
