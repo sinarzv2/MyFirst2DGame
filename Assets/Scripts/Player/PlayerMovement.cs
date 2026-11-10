@@ -7,11 +7,11 @@ namespace Player
     public class PlayerMovement : MonoBehaviour
     {
         // Units per second, matched to the Run animation's feet so they don't slide:
-        // feet move back 87 px/s / 46 PPU (Scale 1) = 1.9 units/s, and the Run
-        // state plays 1.4x faster in the Animator: 1.9 * 1.4 = ~2.65.
+        // the planted shoe moves back 4 px a frame at 30 frames/s = 120 px/s,
+        // / 46 PPU (Scale 1) = 2.6 units/s, with the Run state at Speed 1.
         // Recompute if PPU, Scale or Run Speed change. The Edit Mode test
         // MoveSpeed_MatchesRunFeet checks this.
-        [SerializeField] private float moveSpeed = 2.65f;
+        [SerializeField] private float moveSpeed = 2.6f;
 
         // Name of the Animator parameter this script drives. Hero.controller must
         // have a Float parameter with this name (an Edit Mode test checks it).

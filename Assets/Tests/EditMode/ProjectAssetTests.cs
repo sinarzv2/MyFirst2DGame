@@ -25,9 +25,10 @@ namespace Tests.EditMode
         // In every Hero sheet the soles are 4 px above the bottom of the cell; that point is the pivot.
         private const float SolesAbovePixels = 4f;
 
-        // Measured from the Run animation: a planted foot slides back 2.91 px for every frame of the sheet.
-        // Per frame, not per second, so a change to the clip's Samples is noticed too.
-        private const float RunFootPixelsPerFrame = 2.91f;
+        // The Run animation's planted shoe moves back exactly 4 px for every frame of the sheet
+        // (run_3q_v2 locks it to the ground). Per frame, not per second, so a change to the clip's
+        // Samples is noticed too.
+        private const float RunFootPixelsPerFrame = 4f;
 
         // Built-in Unity assets (default material, default sprite...) use these GUIDs and have no file in the project.
         private static readonly string[] BuiltInGuids = { "0000000000000000e000000000000000", "0000000000000000f000000000000000" };
