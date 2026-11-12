@@ -4,6 +4,7 @@ namespace Player
 {
     [RequireComponent(typeof(Animator))]
     [RequireComponent(typeof(SpriteRenderer))]
+    [RequireComponent(typeof(Rigidbody2D))]
     public class PlayerMovement : MonoBehaviour
     {
         // Units per second, matched to the Run animation's feet so they don't slide:
@@ -24,31 +25,44 @@ namespace Player
 
         private Animator _animator;
         private SpriteRenderer _spriteRenderer;
+        private Rigidbody2D _body;
+
+        // The input read in Update, used by FixedUpdate.
+        private float _horizontal;
 
         private void Awake()
         {
             _animator = GetComponent<Animator>();
             _spriteRenderer = GetComponent<SpriteRenderer>();
+            _body = GetComponent<Rigidbody2D>();
         }
 
+        // Once per drawn frame: read the input and update what is drawn.
         private void Update()
         {
-            var horizontal = Input.GetAxisRaw("Horizontal");
+            _horizontal = Input.GetAxisRaw("Horizontal");
 
-            transform.position += GetDisplacement(horizontal, moveSpeed, Time.deltaTime);
+            _animator.SetFloat(SpeedHash, GetAnimatorSpeed(_horizontal));
 
-            _animator.SetFloat(SpeedHash, GetAnimatorSpeed(horizontal));
+            _spriteRenderer.flipX = FacesLeft(_horizontal, _spriteRenderer.flipX);
+        }
 
-            _spriteRenderer.flipX = FacesLeft(horizontal, _spriteRenderer.flipX);
+        // Once per physics step (50 a second by default): move the body.
+        // The physics engine moves it by its velocity and stops it at colliders;
+        // changing transform.position directly would teleport it past them.
+        private void FixedUpdate()
+        {
+            _body.velocity = GetVelocity(_horizontal, moveSpeed, _body.velocity);
         }
 
         // The rules below don't read input or touch components,
         // so Edit Mode tests can call them directly.
 
-        // How far the player moves this frame.
-        public static Vector3 GetDisplacement(float horizontal, float speed, float deltaTime)
+        // The body's new velocity: the input sets the horizontal part;
+        // the vertical part is left as it is, so gravity (and later jumps) keep working.
+        public static Vector2 GetVelocity(float horizontal, float speed, Vector2 current)
         {
-            return new Vector3(horizontal * speed * deltaTime, 0f, 0f);
+            return new Vector2(horizontal * speed, current.y);
         }
 
         // Value for the Animator's Speed parameter:

@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using Player;
+using UnityEngine;
 
 // Unit tests for the movement rules in PlayerMovement.
 // They run in Edit Mode: no Play button and no keyboard needed.
@@ -8,21 +9,23 @@ namespace Tests.EditMode
     public class PlayerMovementTests
     {
         [Test]
-        public void GetDisplacement_MovesSpeedTimesTime_InTheInputDirection()
+        public void GetVelocity_IsSpeed_InTheInputDirection()
         {
-            var right = PlayerMovement.GetDisplacement(1f, 2f, 0.25f);
-            var left = PlayerMovement.GetDisplacement(-1f, 2f, 0.25f);
-
-            Assert.AreEqual(0.5f, right.x, 1e-6f);
-            Assert.AreEqual(-0.5f, left.x, 1e-6f);
-            Assert.AreEqual(0f, right.y);
-            Assert.AreEqual(0f, right.z);
+            Assert.AreEqual(2f, PlayerMovement.GetVelocity(1f, 2f, Vector2.zero).x, 1e-6f);
+            Assert.AreEqual(-2f, PlayerMovement.GetVelocity(-1f, 2f, Vector2.zero).x, 1e-6f);
         }
 
         [Test]
-        public void GetDisplacement_IsZero_WithoutInput()
+        public void GetVelocity_StopsHorizontally_WithoutInput()
         {
-            Assert.AreEqual(0f, PlayerMovement.GetDisplacement(0f, 2.65f, 0.016f).magnitude);
+            Assert.AreEqual(0f, PlayerMovement.GetVelocity(0f, 2.68f, new Vector2(2.68f, 0f)).x);
+        }
+
+        [Test]
+        public void GetVelocity_KeepsTheVerticalVelocity()
+        {
+            // Falling (or, later, jumping) must not be cancelled by walking.
+            Assert.AreEqual(-3f, PlayerMovement.GetVelocity(1f, 2.68f, new Vector2(0f, -3f)).y);
         }
 
         [TestCase(1f, ExpectedResult = 1f)]

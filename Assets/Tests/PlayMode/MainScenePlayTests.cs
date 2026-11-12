@@ -36,7 +36,29 @@ namespace Tests.PlayMode
 
             // Sizes and speeds are set through Pixels Per Unit, not Scale (lesson 14-1).
             Assert.AreEqual(Vector3.one, _player.transform.localScale, "Player Scale must stay 1");
+
+            // Physics: a body that gravity moves, that doesn't tip over, and that is drawn smoothly between steps.
+            var body = _player.GetComponent<Rigidbody2D>();
+            Assert.IsNotNull(body, "Player has no Rigidbody2D");
+            Assert.AreEqual(RigidbodyType2D.Dynamic, body.bodyType, "Rigidbody2D Body Type");
+            Assert.IsTrue(body.freezeRotation, "Rigidbody2D: Constraints > Freeze Rotation Z must be on");
+            Assert.AreEqual(RigidbodyInterpolation2D.Interpolate, body.interpolation, "Rigidbody2D Interpolate");
+            Assert.IsNotNull(_player.GetComponent<CapsuleCollider2D>(), "Player has no CapsuleCollider2D");
             yield return null;
+        }
+
+        [UnityTest]
+        public IEnumerator Player_LandsOnTheGround_AndStaysThere()
+        {
+            var start = _player.transform.position.y;
+            var body = _player.GetComponent<Rigidbody2D>();
+
+            // One second of real physics with no input. Without a ground collider the player
+            // would fall about 5 units in that time.
+            yield return new WaitForSeconds(1f);
+
+            Assert.AreEqual(start, _player.transform.position.y, 0.1f, "the Player should stand where it starts (on the grass, y = -2)");
+            Assert.AreEqual(0f, body.velocity.y, 0.01f, "the Player should not be falling");
         }
 
         [UnityTest]
