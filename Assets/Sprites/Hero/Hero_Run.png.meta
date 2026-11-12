@@ -111,7 +111,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 552
+        y: 920
         width: 124
         height: 184
       alignment: 9
@@ -132,7 +132,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 124
-        y: 552
+        y: 920
         width: 124
         height: 184
       alignment: 9
@@ -153,7 +153,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 248
-        y: 552
+        y: 920
         width: 124
         height: 184
       alignment: 9
@@ -174,7 +174,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 372
-        y: 552
+        y: 920
         width: 124
         height: 184
       alignment: 9
@@ -195,7 +195,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 496
-        y: 552
+        y: 920
         width: 124
         height: 184
       alignment: 9
@@ -216,7 +216,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 620
-        y: 552
+        y: 920
         width: 124
         height: 184
       alignment: 9
@@ -237,7 +237,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 368
+        y: 736
         width: 124
         height: 184
       alignment: 9
@@ -258,7 +258,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 124
-        y: 368
+        y: 736
         width: 124
         height: 184
       alignment: 9
@@ -279,7 +279,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 248
-        y: 368
+        y: 736
         width: 124
         height: 184
       alignment: 9
@@ -300,7 +300,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 372
-        y: 368
+        y: 736
         width: 124
         height: 184
       alignment: 9
@@ -321,7 +321,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 496
-        y: 368
+        y: 736
         width: 124
         height: 184
       alignment: 9
@@ -342,7 +342,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 620
-        y: 368
+        y: 736
         width: 124
         height: 184
       alignment: 9
@@ -363,7 +363,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 184
+        y: 552
         width: 124
         height: 184
       alignment: 9
@@ -384,7 +384,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 124
-        y: 184
+        y: 552
         width: 124
         height: 184
       alignment: 9
@@ -405,7 +405,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 248
-        y: 184
+        y: 552
         width: 124
         height: 184
       alignment: 9
@@ -426,7 +426,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 372
-        y: 184
+        y: 552
         width: 124
         height: 184
       alignment: 9
@@ -447,7 +447,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 496
-        y: 184
+        y: 552
         width: 124
         height: 184
       alignment: 9
@@ -468,7 +468,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 620
-        y: 184
+        y: 552
         width: 124
         height: 184
       alignment: 9
@@ -489,7 +489,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
+        y: 368
         width: 124
         height: 184
       alignment: 9
@@ -510,7 +510,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 124
-        y: 0
+        y: 368
         width: 124
         height: 184
       alignment: 9
@@ -522,6 +522,342 @@ TextureImporter:
       bones: []
       spriteID: ee55f97caf164a9db261f48062a685e1
       internalID: 1338776885
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hero_Run_20
+      rect:
+        serializedVersion: 2
+        x: 248
+        y: 368
+        width: 124
+        height: 184
+      alignment: 9
+      pivot: {x: 0.5, y: 0.02173913}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c7d7cd568c6ec5c1588b01fcc24f2e6c
+      internalID: -1558767738
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hero_Run_21
+      rect:
+        serializedVersion: 2
+        x: 372
+        y: 368
+        width: 124
+        height: 184
+      alignment: 9
+      pivot: {x: 0.5, y: 0.02173913}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6383c25f97872a24c18910e7cfd5df77
+      internalID: -140335978
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hero_Run_22
+      rect:
+        serializedVersion: 2
+        x: 496
+        y: 368
+        width: 124
+        height: 184
+      alignment: 9
+      pivot: {x: 0.5, y: 0.02173913}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0f7bdd9848f52e1726d274f2bb7cdeeb
+      internalID: -1848147567
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hero_Run_23
+      rect:
+        serializedVersion: 2
+        x: 620
+        y: 368
+        width: 124
+        height: 184
+      alignment: 9
+      pivot: {x: 0.5, y: 0.02173913}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f18490ea6ed808e27c9798bb1a44123f
+      internalID: 1343085183
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hero_Run_24
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 184
+        width: 124
+        height: 184
+      alignment: 9
+      pivot: {x: 0.5, y: 0.02173913}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 88424cd679eeb2090f9f5337c19097e0
+      internalID: -1821989902
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hero_Run_25
+      rect:
+        serializedVersion: 2
+        x: 124
+        y: 184
+        width: 124
+        height: 184
+      alignment: 9
+      pivot: {x: 0.5, y: 0.02173913}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6f2c94a933110e5b19f142f457a79047
+      internalID: -337006955
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hero_Run_26
+      rect:
+        serializedVersion: 2
+        x: 248
+        y: 184
+        width: 124
+        height: 184
+      alignment: 9
+      pivot: {x: 0.5, y: 0.02173913}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2fa49dca693a22f67371fe5ce06655be
+      internalID: 1417286075
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hero_Run_27
+      rect:
+        serializedVersion: 2
+        x: 372
+        y: 184
+        width: 124
+        height: 184
+      alignment: 9
+      pivot: {x: 0.5, y: 0.02173913}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cdbe230703d9115ed218980a31f41645
+      internalID: 1896276582
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hero_Run_28
+      rect:
+        serializedVersion: 2
+        x: 496
+        y: 184
+        width: 124
+        height: 184
+      alignment: 9
+      pivot: {x: 0.5, y: 0.02173913}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 23bc3f745ab716e9fd1beef6dceb2b6e
+      internalID: -40521345
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hero_Run_29
+      rect:
+        serializedVersion: 2
+        x: 620
+        y: 184
+        width: 124
+        height: 184
+      alignment: 9
+      pivot: {x: 0.5, y: 0.02173913}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4a546489286a4484b23c2d4285f52a1c
+      internalID: 279675251
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hero_Run_30
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 124
+        height: 184
+      alignment: 9
+      pivot: {x: 0.5, y: 0.02173913}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 38dbd7090cd434de37ea5b985a77e3cf
+      internalID: -328913260
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hero_Run_31
+      rect:
+        serializedVersion: 2
+        x: 124
+        y: 0
+        width: 124
+        height: 184
+      alignment: 9
+      pivot: {x: 0.5, y: 0.02173913}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2b037f78009debfe260fcdcb5a40a6d9
+      internalID: 1529194955
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hero_Run_32
+      rect:
+        serializedVersion: 2
+        x: 248
+        y: 0
+        width: 124
+        height: 184
+      alignment: 9
+      pivot: {x: 0.5, y: 0.02173913}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 78a258857a2ff00036561a520c452d64
+      internalID: 2059731501
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hero_Run_33
+      rect:
+        serializedVersion: 2
+        x: 372
+        y: 0
+        width: 124
+        height: 184
+      alignment: 9
+      pivot: {x: 0.5, y: 0.02173913}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c678c1abc4c2df69808342548fe8a4ed
+      internalID: 512140781
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hero_Run_34
+      rect:
+        serializedVersion: 2
+        x: 496
+        y: 0
+        width: 124
+        height: 184
+      alignment: 9
+      pivot: {x: 0.5, y: 0.02173913}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ee11f70c513b5e14cd711c81b51d765b
+      internalID: -2022543222
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hero_Run_35
+      rect:
+        serializedVersion: 2
+        x: 620
+        y: 0
+        width: 124
+        height: 184
+      alignment: 9
+      pivot: {x: 0.5, y: 0.02173913}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 320fdfc36fa9ecaa3012d4203fb08b3f
+      internalID: -1838375225
       vertices: []
       indices: 
       edges: []
@@ -538,25 +874,41 @@ TextureImporter:
     secondaryTextures: []
     nameFileIdTable:
       Hero_Run_0: 1081212630
-      Hero_Run_11: 84634859
-      Hero_Run_6: 1218366537
       Hero_Run_1: 1606721694
       Hero_Run_2: -11237280
-      Hero_Run_9: -276072973
-      Hero_Run_13: -107031624
-      Hero_Run_7: 1776259356
-      Hero_Run_19: 1338776885
       Hero_Run_3: 955410559
-      Hero_Run_5: 1435796281
       Hero_Run_4: -1154544411
-      Hero_Run_12: 312134119
-      Hero_Run_17: -1419678459
+      Hero_Run_5: 1435796281
+      Hero_Run_6: 1218366537
+      Hero_Run_7: 1776259356
       Hero_Run_8: 1733729237
+      Hero_Run_9: -276072973
       Hero_Run_10: -2006691554
-      Hero_Run_18: -1130131473
+      Hero_Run_11: 84634859
+      Hero_Run_12: 312134119
+      Hero_Run_13: -107031624
+      Hero_Run_14: 875690960
       Hero_Run_15: 471093948
       Hero_Run_16: -28577374
-      Hero_Run_14: 875690960
+      Hero_Run_17: -1419678459
+      Hero_Run_18: -1130131473
+      Hero_Run_19: 1338776885
+      Hero_Run_20: -1558767738
+      Hero_Run_21: -140335978
+      Hero_Run_22: -1848147567
+      Hero_Run_23: 1343085183
+      Hero_Run_24: -1821989902
+      Hero_Run_25: -337006955
+      Hero_Run_26: 1417286075
+      Hero_Run_27: 1896276582
+      Hero_Run_28: -40521345
+      Hero_Run_29: 279675251
+      Hero_Run_30: -328913260
+      Hero_Run_31: 1529194955
+      Hero_Run_32: 2059731501
+      Hero_Run_33: 512140781
+      Hero_Run_34: -2022543222
+      Hero_Run_35: -1838375225
   spritePackingTag: 
   pSDRemoveMatte: 0
   userData: 
