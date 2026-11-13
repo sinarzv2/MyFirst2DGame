@@ -7,13 +7,18 @@ namespace Player
     [RequireComponent(typeof(Rigidbody2D))]
     public class PlayerMovement : MonoBehaviour
     {
-        // Units per second, matched to the Run animation's feet so they don't slide:
-        // the planted shoe moves back 7.28 px a frame (on average over a step)
-        // at 16.94 frames/s = 123.3 px/s, / 46 PPU (Scale 1) = 2.68 units/s,
-        // with the Run state at Speed 1.
+        // Units per second. The Run animation's planted shoe moves back 7.28 px a frame (on average
+        // over a step): at its 16.94 frames/s that is 123.3 px/s, / 46 PPU (Scale 1) = 2.68 units/s.
+        // The hero runs faster than that, 4 units/s, so the Run state plays the clip faster to match:
+        // Speed 4 / 2.68 = 1.49 (about 25 frames/s). The feet still don't slide.
+        // Why 4: a jump must clear a one-cell gap (2 units, but about 2.9 between the rounded grass
+        // corners). The distance covered in a jump is moveSpeed * 2 * timeToApex = 4 * 0.9 = 3.6 units;
+        // at 2.68 it was 2.1, not enough. A two-cell gap (about 4.9) stays impossible.
+        // Much faster and the jog-paced Run clip would look sped up (legs whirring): a faster hero
+        // would want a sprint animation of its own. (5 was tried; the user preferred 4.)
         // Recompute if PPU, Scale, the Run clip's Samples or Run Speed change.
         // The Edit Mode test MoveSpeed_MatchesRunFeet checks this.
-        [SerializeField] private float moveSpeed = 2.68f;
+        [SerializeField] private float moveSpeed = 4f;
 
         // The jump is designed by its height (units, soles above the ground) and the time to reach it
         // (seconds); gravity and the take-off speed are worked out from those two (see GetJumpGravity).
@@ -22,7 +27,7 @@ namespace Player
         // (the Edit Mode test JumpClips_FitTheJumpTime checks it).
         // Min: both are divided by, so the Inspector must not accept 0 (gravity would be infinite).
         [SerializeField, Min(0.1f)] private float jumpHeight = 3f;
-        [SerializeField, Min(0.05f)] private float timeToApex = 0.4f;
+        [SerializeField, Min(0.05f)] private float timeToApex = 0.45f;
 
         // Names of the Animator parameters this script drives. Hero.controller must
         // have them, with these types (an Edit Mode test checks it).

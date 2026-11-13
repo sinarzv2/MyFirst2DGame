@@ -83,7 +83,7 @@ namespace Tests.PlayMode
             }
 
             // Physics moves the body in steps (50 a second), so it stops a little short of the exact
-            // height: about half a step of the take-off speed (15 x 0.02 / 2 = 0.15 units).
+            // height: about half a step of the take-off speed (13.3 x 0.02 / 2 = 0.13 units).
             Assert.AreEqual(movement.JumpHeight, top - ground, 0.25f, "height of the jump");
             Assert.IsTrue(landed, "the Player should be on the ground again within 2 seconds");
             Assert.AreEqual(ground, body.position.y, 0.05f, "the Player should land where it took off");
