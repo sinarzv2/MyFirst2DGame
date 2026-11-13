@@ -89,6 +89,30 @@ namespace Tests.PlayMode
             Assert.AreEqual(ground, body.position.y, 0.05f, "the Player should land where it took off");
         }
 
+        // The camera keeps the Player in view: centred on it horizontally at the start, and still
+        // centred after the Player has moved 8 units to the right (given time to catch up).
+        [UnityTest]
+        public IEnumerator Camera_FollowsThePlayer()
+        {
+            var camera = Camera.main;
+            Assert.IsNotNull(camera, "no camera tagged MainCamera in the Main scene");
+            yield return new WaitForSeconds(0.2f);
+            Assert.AreEqual(_player.transform.position.x, camera.transform.position.x, 1.5f, "camera x at the start");
+
+            // Move the Player without the keyboard: switch the script off and slide the body.
+            _player.GetComponent<PlayerMovement>().enabled = false;
+            var body = _player.GetComponent<Rigidbody2D>();
+            for (var t = 0f; t < 1f; t += Time.fixedDeltaTime)
+            {
+                body.velocity = new Vector2(8f, body.velocity.y);
+                yield return new WaitForFixedUpdate();
+            }
+
+            body.velocity = Vector2.zero;
+            yield return new WaitForSeconds(2f);
+            Assert.AreEqual(_player.transform.position.x, camera.transform.position.x, 1.5f, "camera x after the Player moved 8 units");
+        }
+
         // The Animator's transitions are made by hand, so check the whole chain of a jump on the spot.
         [UnityTest]
         public IEnumerator Animator_PlaysJumpFallLand_ThenIdleAgain()
