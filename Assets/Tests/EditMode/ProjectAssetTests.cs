@@ -111,7 +111,86 @@ namespace Tests.EditMode
                         Assert.AreEqual(0f, transition.duration, 0.0001f, $"{state.name} -> {target}: Transition Duration");
                     }
                 }
+
+                // Transitions from Any State too (the jump and the fall start from any state).
+                foreach (var transition in layer.stateMachine.anyStateTransitions)
+                {
+                    var target = transition.destinationState != null ? transition.destinationState.name : "?";
+                    Assert.AreEqual(0f, transition.duration, 0.0001f, $"Any State -> {target}: Transition Duration");
+                    Assert.IsFalse(transition.canTransitionToSelf, $"Any State -> {target}: Can Transition To Self (it would restart the clip every frame)");
+                }
             }
+        }
+
+        // Idle and Run repeat; the jump's clips play once and hold their last frame (a long fall
+        // stays in the falling pose, a landing doesn't start again).
+        [TestCase("Hero_Idle", true)]
+        [TestCase("Hero_Run", true)]
+        [TestCase("Hero_Jump", false)]
+        [TestCase("Hero_Fall", false)]
+        [TestCase("Hero_Land", false)]
+        public void HeroClips_LoopOnlyWhereTheyShould(string stateName, bool loops)
+        {
+            var state = LoadHeroController().layers[0].stateMachine.states
+                .Select(child => child.state)
+                .FirstOrDefault(s => s.name == stateName);
+            Assert.IsNotNull(state, $"Hero.controller has no state named {stateName}");
+            Assert.AreEqual(loops, ((AnimationClip)state.motion).isLooping, $"{stateName}: Loop Time of its clip");
+        }
+
+        // A transition that waits for its clip with no condition (Hero_Land -> Hero_Idle) must wait for
+        // the whole clip: Exit Time 1. Unity suggests a smaller one when the transition is made
+        // (0.615 here, once), which cut the landing off in its deepest crouch.
+        [Test]
+        public void HeroController_ExitTimeOnlyTransitions_WaitForTheWholeClip()
+        {
+            foreach (var child in LoadHeroController().layers[0].stateMachine.states)
+            {
+                foreach (var transition in child.state.transitions)
+                {
+                    if (!transition.hasExitTime || transition.conditions.Length > 0)
+                    {
+                        continue;
+                    }
+
+                    var target = transition.destinationState != null ? transition.destinationState.name : "Exit";
+                    Assert.AreEqual(1f, transition.exitTime, 0.001f, $"{child.state.name} -> {target}: Exit Time");
+                }
+            }
+        }
+
+        // The jump's clips must last as long as the jump does: Hero_Jump plays while the hero rises,
+        // Hero_Fall while it comes down again (from the top to the same ground: the same time).
+        // A state's Speed stretches its clip: the clip lasts length / Speed seconds.
+        [TestCase("Hero_Jump")]
+        [TestCase("Hero_Fall")]
+        public void JumpClips_FitTheJumpTime(string stateName)
+        {
+            var state = LoadHeroController().layers[0].stateMachine.states
+                .Select(child => child.state)
+                .FirstOrDefault(s => s.name == stateName);
+            Assert.IsNotNull(state, $"Hero.controller has no state named {stateName}");
+            var clip = (AnimationClip)state.motion;
+
+            var gameObject = new GameObject("JumpTimeTest");
+            float timeToApex;
+            try
+            {
+                timeToApex = new SerializedObject(gameObject.AddComponent<PlayerMovement>()).FindProperty("timeToApex").floatValue;
+            }
+            finally
+            {
+                Object.DestroyImmediate(gameObject);
+            }
+
+            // The scene's value wins over the default (lesson 12-9), once the scene has saved one.
+            var match = Regex.Match(File.ReadAllText(MainScenePath), @"^\s*timeToApex: ([-\d.eE]+)", RegexOptions.Multiline);
+            if (match.Success)
+            {
+                timeToApex = float.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture);
+            }
+
+            Assert.AreEqual(timeToApex, clip.length / state.speed, timeToApex * 0.05f, $"{stateName}: clip length / state Speed (seconds)");
         }
 
         [Test]
@@ -146,12 +225,14 @@ namespace Tests.EditMode
             Assert.AreEqual(feet, sceneValue, feet * 0.03f, "moveSpeed of the Player in " + MainScenePath);
         }
 
-        [Test]
-        public void HeroController_HasTheSpeedParameterUsedByTheCode()
+        [TestCase(PlayerMovement.SpeedParameter, AnimatorControllerParameterType.Float)]
+        [TestCase(PlayerMovement.GroundedParameter, AnimatorControllerParameterType.Bool)]
+        [TestCase(PlayerMovement.VelocityYParameter, AnimatorControllerParameterType.Float)]
+        public void HeroController_HasTheParametersUsedByTheCode(string name, AnimatorControllerParameterType type)
         {
-            var parameter = LoadHeroController().parameters.FirstOrDefault(p => p.name == PlayerMovement.SpeedParameter);
-            Assert.IsNotNull(parameter, $"Hero.controller has no parameter named \"{PlayerMovement.SpeedParameter}\"");
-            Assert.AreEqual(AnimatorControllerParameterType.Float, parameter.type);
+            var parameter = LoadHeroController().parameters.FirstOrDefault(p => p.name == name);
+            Assert.IsNotNull(parameter, $"Hero.controller has no parameter named \"{name}\"");
+            Assert.AreEqual(type, parameter.type, $"type of the parameter \"{name}\"");
         }
 
         [Test]

@@ -1,4 +1,6 @@
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using NUnit.Framework;
 using Player;
 using UnityEngine;
@@ -59,6 +61,66 @@ namespace Tests.PlayMode
 
             Assert.AreEqual(start, _player.transform.position.y, 0.1f, "the Player should stand where it starts (on the grass, y = -2)");
             Assert.AreEqual(0f, body.velocity.y, 0.01f, "the Player should not be falling");
+        }
+
+        [UnityTest]
+        public IEnumerator Player_JumpsToItsJumpHeight_AndLandsAgain()
+        {
+            var movement = _player.GetComponent<PlayerMovement>();
+            var body = _player.GetComponent<Rigidbody2D>();
+            yield return new WaitForSeconds(0.3f);
+            Assert.IsTrue(movement.IsGrounded, "the Player should start on the ground");
+            var ground = body.position.y;
+
+            movement.RequestJump();
+            var top = ground;
+            var landed = false;
+            for (var t = 0f; t < 2f && !landed; t += Time.fixedDeltaTime)
+            {
+                yield return new WaitForFixedUpdate();
+                top = Mathf.Max(top, body.position.y);
+                landed = t > 0.2f && movement.IsGrounded;
+            }
+
+            // Physics moves the body in steps (50 a second), so it stops a little short of the exact
+            // height: about half a step of the take-off speed (15 x 0.02 / 2 = 0.15 units).
+            Assert.AreEqual(movement.JumpHeight, top - ground, 0.25f, "height of the jump");
+            Assert.IsTrue(landed, "the Player should be on the ground again within 2 seconds");
+            Assert.AreEqual(ground, body.position.y, 0.05f, "the Player should land where it took off");
+        }
+
+        // The Animator's transitions are made by hand, so check the whole chain of a jump on the spot.
+        [UnityTest]
+        public IEnumerator Animator_PlaysJumpFallLand_ThenIdleAgain()
+        {
+            var movement = _player.GetComponent<PlayerMovement>();
+            var animator = _player.GetComponent<Animator>();
+            var names = new[] { "Hero_Idle", "Hero_Run", "Hero_Jump", "Hero_Fall", "Hero_Land" };
+            yield return new WaitForSeconds(0.3f);
+
+            // Every state the Animator goes through, in order.
+            var seen = new List<string>();
+            void Record()
+            {
+                var info = animator.GetCurrentAnimatorStateInfo(0);
+                var current = names.FirstOrDefault(info.IsName) ?? "?";
+                if (seen.Count == 0 || seen[seen.Count - 1] != current)
+                {
+                    seen.Add(current);
+                }
+            }
+
+            Record();
+            movement.RequestJump();
+            for (var t = 0f; t < 3f && !(seen.Count > 1 && seen[seen.Count - 1] == "Hero_Idle"); t += Time.deltaTime)
+            {
+                yield return null;
+                Record();
+            }
+
+            CollectionAssert.AreEqual(
+                new[] { "Hero_Idle", "Hero_Jump", "Hero_Fall", "Hero_Land", "Hero_Idle" }, seen,
+                "states during a jump: " + string.Join(" > ", seen));
         }
 
         [UnityTest]

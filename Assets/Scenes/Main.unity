@@ -289,6 +289,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 2.68
+  jumpHeight: 3
+  timeToApex: 0.4
 --- !u!50 &374769167
 Rigidbody2D:
   serializedVersion: 4

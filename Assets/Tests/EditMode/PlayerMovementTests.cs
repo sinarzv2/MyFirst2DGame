@@ -28,6 +28,17 @@ namespace Tests.EditMode
             Assert.AreEqual(-3f, PlayerMovement.GetVelocity(1f, 2.68f, new Vector2(0f, -3f)).y);
         }
 
+        [Test]
+        public void JumpSpeedAndGravity_ReachTheHeight_InTheTime()
+        {
+            var speed = PlayerMovement.GetJumpSpeed(3f, 0.4f);
+            var gravity = PlayerMovement.GetJumpGravity(3f, 0.4f);
+
+            // Rising with speed v against gravity g: stops after v / g seconds, at v² / 2g.
+            Assert.AreEqual(3f, speed * speed / (2f * gravity), 1e-4f, "height of the top of the jump");
+            Assert.AreEqual(0.4f, speed / gravity, 1e-5f, "time to the top of the jump");
+        }
+
         [TestCase(1f, ExpectedResult = 1f)]
         [TestCase(-1f, ExpectedResult = 1f)]
         [TestCase(0f, ExpectedResult = 0f)]
