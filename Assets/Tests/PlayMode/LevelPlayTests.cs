@@ -81,6 +81,32 @@ namespace Tests.PlayMode
             yield return null;
         }
 
+        // Paint a block 10 cells past the right end (a copy of the right end column, top tile down)
+        // and refit: the right wall, the camera bounds and the kill zone must all follow it.
+        [UnityTest]
+        public IEnumerator LevelBounds_FollowsTheTilesWhenTheLevelGrows()
+        {
+            var fitter = Object.FindObjectOfType<LevelBounds>();
+            Assert.IsNotNull(fitter, "no LevelBounds in the Main scene");
+            var cells = _tilemap.cellBounds;
+            var newColumn = cells.xMax + 9;
+            for (var y = cells.yMin; y < cells.yMax; y++)
+            {
+                _tilemap.SetTile(new Vector3Int(newColumn, y, 0), _tilemap.GetTile(new Vector3Int(cells.xMax - 1, y, 0)));
+            }
+
+            fitter.Fit();
+            yield return new WaitForFixedUpdate();
+
+            var newEnd = _tilemap.CellToWorld(new Vector3Int(newColumn + 1, 0, 0)).x;
+            var wall = GameObject.Find("WallRight").GetComponent<BoxCollider2D>().bounds;
+            var camera = GameObject.Find("CameraBounds").GetComponent<PolygonCollider2D>().bounds;
+            var zone = Object.FindObjectOfType<KillZone>().GetComponent<BoxCollider2D>().bounds;
+            Assert.AreEqual(newEnd, wall.min.x, 0.01f, "the right wall should stand at the new right end");
+            Assert.AreEqual(newEnd, camera.max.x, 0.01f, "the camera bounds should reach the new right end");
+            Assert.That(zone.max.x, Is.GreaterThanOrEqualTo(newEnd), "the kill zone should reach under the new right end");
+        }
+
         [UnityTest]
         public IEnumerator Player_CannotWalkOffTheLeftEnd()
         {
