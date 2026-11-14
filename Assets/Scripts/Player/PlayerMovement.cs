@@ -29,6 +29,17 @@ namespace Player
         [SerializeField, Min(0.1f)] private float jumpHeight = 3f;
         [SerializeField, Min(0.05f)] private float timeToApex = 0.45f;
 
+        // Forgiveness for presses a little off, as most platformers do (seconds; 0.1 = 5 physics steps).
+        // Coyote time: a jump still works this long after running off a ledge.
+        // Jump buffer: a press this long before landing jumps as soon as the hero lands.
+        [SerializeField, Range(0f, 0.3f)] private float coyoteTime = 0.1f;
+        [SerializeField, Range(0f, 0.3f)] private float jumpBuffer = 0.1f;
+
+        // Letting go of the button while rising multiplies the rising speed by this. The height left
+        // to climb goes with the speed squared, so letting go at take-off gives the shortest jump:
+        // jumpHeight * 0.5² = 0.75 units. 1 = the jump is always full height.
+        [SerializeField, Range(0f, 1f)] private float jumpCutFactor = 0.5f;
+
         // Names of the Animator parameters this script drives. Hero.controller must
         // have them, with these types (an Edit Mode test checks it).
         public const string SpeedParameter = "Speed";           // Float
@@ -51,7 +62,14 @@ namespace Player
 
         // The input read in Update, used by FixedUpdate.
         private float _horizontal;
-        private bool _jumpRequested;
+        private bool _jumpReleased;
+
+        // Clocks, in seconds, counted in FixedUpdate. Infinity = long ago, or used up.
+        private float _sinceGrounded = float.PositiveInfinity;
+        private float _sinceJumpPressed = float.PositiveInfinity;
+
+        // Rising from a jump that letting go of the button can still cut.
+        private bool _rising;
 
         private void Awake()
         {
@@ -67,26 +85,48 @@ namespace Player
 
         public bool IsGrounded => _body.IsTouching(_groundFilter);
 
+        // On the ground and not taking off from it. The physics engine finds contacts at the start of
+        // a step, before moving bodies: after the step in which a jump starts, the body is already
+        // 0.27 units up but its contact with the ground is still listed until the next step. So
+        // IsGrounded stays true for a moment while the hero rises; this doesn't.
+        public bool IsStanding => IsGrounded && _body.velocity.y <= 0.01f;
+
         // Read-only views of the settings, for tests that move the hero as the script would.
         public float JumpHeight => jumpHeight;
         public float MoveSpeed => moveSpeed;
         public float JumpSpeed => GetJumpSpeed(jumpHeight, timeToApex);
+        public float JumpCutFactor => jumpCutFactor;
+        public float CoyoteTime => coyoteTime;
+        public float JumpBuffer => jumpBuffer;
 
-        // Jump at the next physics step, if the hero is on the ground then.
-        // Public so a Play Mode test can jump without a keyboard.
+        // The jump button went down: jump as soon as the hero may (now, or on landing within the
+        // buffer). Public, like ReleaseJump, so a Play Mode test can jump without a keyboard.
         public void RequestJump()
         {
-            _jumpRequested = true;
+            _sinceJumpPressed = 0f;
+            _jumpReleased = false;
+        }
+
+        // The jump button came up: a jump still rising is cut short.
+        public void ReleaseJump()
+        {
+            _jumpReleased = true;
         }
 
         // Once per drawn frame: read the input and update what is drawn.
         // A key press lasts one frame, so it must be read here: FixedUpdate may not run in that frame.
+        // Up, not "not held": a test that calls RequestJump holds no key, and must get a full jump.
         private void Update()
         {
             _horizontal = Input.GetAxisRaw("Horizontal");
             if (Input.GetButtonDown("Jump"))
             {
                 RequestJump();
+            }
+
+            if (Input.GetButtonUp("Jump"))
+            {
+                ReleaseJump();
             }
 
             _animator.SetFloat(SpeedHash, GetAnimatorSpeed(_horizontal));
@@ -102,18 +142,38 @@ namespace Player
         private void FixedUpdate()
         {
             var velocity = GetVelocity(_horizontal, moveSpeed, _body.velocity);
-            if (_jumpRequested)
-            {
-                // A jump pressed in the air is dropped, not kept for later.
-                if (IsGrounded)
-                {
-                    velocity.y = GetJumpSpeed(jumpHeight, timeToApex);
-                }
 
-                _jumpRequested = false;
+            // Standing on the ground restarts the coyote clock. Not while taking off (see IsStanding):
+            // that must not allow a second jump.
+            if (IsStanding)
+            {
+                _sinceGrounded = 0f;
+            }
+
+            if (ShouldJump(_sinceGrounded, _sinceJumpPressed, coyoteTime, jumpBuffer))
+            {
+                velocity.y = GetJumpSpeed(jumpHeight, timeToApex);
+                // Both used up: one press, one jump; and no second jump in the coyote time.
+                _sinceGrounded = float.PositiveInfinity;
+                _sinceJumpPressed = float.PositiveInfinity;
+                _rising = true;
+            }
+
+            // Cut once, while rising. If the button was let go before a buffered jump started,
+            // that jump is cut at once: a tap gives a short jump either way.
+            if (_rising && _jumpReleased)
+            {
+                velocity.y = CutJumpSpeed(velocity.y, jumpCutFactor);
+                _rising = false;
+            }
+            else if (_rising && velocity.y <= 0f)
+            {
+                _rising = false;   // past the top: letting go now changes nothing
             }
 
             _body.velocity = velocity;
+            _sinceGrounded += Time.fixedDeltaTime;
+            _sinceJumpPressed += Time.fixedDeltaTime;
         }
 
         // The rules below don't read input or touch components,
@@ -129,6 +189,19 @@ namespace Player
         public static float GetJumpGravity(float height, float timeToApex)
         {
             return 2f * height / (timeToApex * timeToApex);
+        }
+
+        // Jump if the hero stood on the ground a moment ago (coyote time) and the button was pressed
+        // a moment ago (jump buffer). Pressing on the ground is the case where both are 0.
+        public static bool ShouldJump(float sinceGrounded, float sinceJumpPressed, float coyoteTime, float jumpBuffer)
+        {
+            return sinceGrounded <= coyoteTime && sinceJumpPressed <= jumpBuffer;
+        }
+
+        // Letting go of the button: a rise is slowed (so it ends lower), a fall is left alone.
+        public static float CutJumpSpeed(float velocityY, float cutFactor)
+        {
+            return velocityY > 0f ? velocityY * cutFactor : velocityY;
         }
 
         // The body's new velocity: the input sets the horizontal part;
