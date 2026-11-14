@@ -18,6 +18,10 @@ namespace Player
 
         public Vector3 SpawnPoint => _spawnPoint;
 
+        // Raised after every respawn, for whatever must jump back with the Player (CameraTarget).
+        // An event: PlayerRespawn doesn't need to know who listens.
+        public event System.Action Respawned;
+
         private void Awake()
         {
             _body = GetComponent<Rigidbody2D>();
@@ -38,6 +42,8 @@ namespace Player
             {
                 followCamera.PreviousStateIsValid = false;
             }
+
+            Respawned?.Invoke();   // ?. : nothing happens if no one listens
         }
     }
 }
