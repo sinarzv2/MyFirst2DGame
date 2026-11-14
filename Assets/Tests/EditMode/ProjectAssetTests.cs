@@ -31,6 +31,17 @@ namespace Tests.EditMode
         // is noticed too.
         private const float RunFootPixelsPerFrame = 7.28f;
 
+        // The ground: its sheets, and the Tile assets the Tilemap paints with. A tile is 2 units (the
+        // Grid's cell) at the hero's 46 Pixels Per Unit: 92 px.
+        private const string GroundSpritesFolder = "Assets/Sprites/Ground";
+        private const string TilesFolder = "Assets/Tiles";
+        private const float TilePixels = 92f;
+
+        // A one-cell gap is 2 units between cells, but about 2.9 between the rounded grass corners of
+        // the end tiles (measured on Ground.png). A jump must cover that with some room to spare.
+        private const float OneCellGapUnits = 2.9f;
+        private const float JumpReachMargin = 0.4f;
+
         // Built-in Unity assets (default material, default sprite...) use these GUIDs and have no file in the project.
         private static readonly string[] BuiltInGuids = { "0000000000000000e000000000000000", "0000000000000000f000000000000000" };
 
@@ -46,6 +57,79 @@ namespace Tests.EditMode
             var controller = AssetDatabase.LoadAssetAtPath<AnimatorController>(HeroControllerPath);
             Assert.IsNotNull(controller, HeroControllerPath + " not found");
             return controller;
+        }
+
+        // A PlayerMovement setting as the game will use it: the value saved in the Main scene if the
+        // scene has saved one (it wins, lesson 12-9), else the default in the code.
+        private static float PlayerSetting(string field)
+        {
+            var match = Regex.Match(File.ReadAllText(MainScenePath), $@"^\s*{field}: ([-\d.eE]+)", RegexOptions.Multiline);
+            if (match.Success)
+            {
+                return float.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture);
+            }
+
+            var gameObject = new GameObject("SettingTest");
+            try
+            {
+                return new SerializedObject(gameObject.AddComponent<PlayerMovement>()).FindProperty(field).floatValue;
+            }
+            finally
+            {
+                Object.DestroyImmediate(gameObject);
+            }
+        }
+
+        [Test]
+        public void GroundSheets_UseTheHeroDensity_AndTileSizedSprites()
+        {
+            var paths = AssetDatabase.FindAssets("t:Texture2D", new[] { GroundSpritesFolder })
+                .Select(guid => AssetDatabase.GUIDToAssetPath(guid))
+                .ToArray();
+            Assert.IsNotEmpty(paths, "no sheets in " + GroundSpritesFolder);
+            foreach (var path in paths)
+            {
+                var importer = (TextureImporter)AssetImporter.GetAtPath(path);
+                Assert.AreEqual(HeroPixelsPerUnit, importer.spritePixelsPerUnit, 0.001f, path + ": Pixels Per Unit (the hero's, or the ground's pixels look a different size)");
+                var settings = new TextureImporterSettings();
+                importer.ReadTextureSettings(settings);
+                Assert.AreEqual(SpriteMeshType.FullRect, settings.spriteMeshType, path + ": Mesh Type (Full Rect for tiles)");
+
+                var sprites = AssetDatabase.LoadAllAssetsAtPath(path).OfType<Sprite>().ToArray();
+                Assert.IsNotEmpty(sprites, path + " has no sprites. Is it sliced?");
+                foreach (var sprite in sprites)
+                {
+                    Assert.AreEqual(new Vector2(TilePixels, TilePixels), sprite.rect.size, sprite.name + ": size in pixels (one Grid cell)");
+                }
+            }
+        }
+
+        [Test]
+        public void Tiles_ShowASprite_AndCollideByItsShape()
+        {
+            var guids = AssetDatabase.FindAssets("t:Tile", new[] { TilesFolder });
+            Assert.IsNotEmpty(guids, "no Tile assets in " + TilesFolder);
+            foreach (var guid in guids)
+            {
+                var path = AssetDatabase.GUIDToAssetPath(guid);
+                var tile = AssetDatabase.LoadAssetAtPath<UnityEngine.Tilemaps.Tile>(path);
+                Assert.IsTrue(tile.sprite != null, path + " has no sprite (shown as Missing)");
+                // Sprite: the Tilemap Collider uses the sprite's shape (its rounded grass corners and
+                // all); Grid would make every tile a full square; None would let the hero fall through.
+                Assert.AreEqual(UnityEngine.Tilemaps.Tile.ColliderType.Sprite, tile.colliderType, path + ": Collider Type");
+            }
+        }
+
+        // The distance covered in a jump on flat ground: running speed * time in the air (twice the
+        // time to the top). The Play Mode test EveryGapInTheLevel_CanBeJumped tries the real gaps.
+        [Test]
+        public void Jump_ReachesAcrossAOneCellGap()
+        {
+            var moveSpeed = PlayerSetting("moveSpeed");
+            var timeToApex = PlayerSetting("timeToApex");
+            var reach = moveSpeed * 2f * timeToApex;
+            Assert.That(reach, Is.GreaterThanOrEqualTo(OneCellGapUnits + JumpReachMargin),
+                $"a jump covers {moveSpeed} x 2 x {timeToApex} = {reach:0.00} units; a one-cell gap needs {OneCellGapUnits} + {JumpReachMargin}");
         }
 
         [Test]

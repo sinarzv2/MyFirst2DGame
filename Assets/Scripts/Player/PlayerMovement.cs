@@ -67,7 +67,10 @@ namespace Player
 
         public bool IsGrounded => _body.IsTouching(_groundFilter);
 
+        // Read-only views of the settings, for tests that move the hero as the script would.
         public float JumpHeight => jumpHeight;
+        public float MoveSpeed => moveSpeed;
+        public float JumpSpeed => GetJumpSpeed(jumpHeight, timeToApex);
 
         // Jump at the next physics step, if the hero is on the ground then.
         // Public so a Play Mode test can jump without a keyboard.
