@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Level;
 using NUnit.Framework;
 using Player;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
+using UnityEngine.Tilemaps;
 
 // Play Mode tests: Unity enters Play Mode, loads the real Main scene and runs real frames.
 // A [UnityTest] is a coroutine: each "yield return null" lets Unity run one frame.
@@ -89,28 +91,66 @@ namespace Tests.PlayMode
             Assert.AreEqual(ground, body.position.y, 0.05f, "the Player should land where it took off");
         }
 
-        // The camera keeps the Player in view: centred on it horizontally at the start, and still
-        // centred after the Player has moved 8 units to the right (given time to catch up).
+        // Falling out of the level sends the Player back to where it started, standing still.
         [UnityTest]
-        public IEnumerator Camera_FollowsThePlayer()
+        public IEnumerator Player_FallingIntoTheKillZone_RespawnsAtTheStart()
         {
-            var camera = Camera.main;
-            Assert.IsNotNull(camera, "no camera tagged MainCamera in the Main scene");
-            yield return new WaitForSeconds(0.2f);
-            Assert.AreEqual(_player.transform.position.x, camera.transform.position.x, 1.5f, "camera x at the start");
-
-            // Move the Player without the keyboard: switch the script off and slide the body.
-            _player.GetComponent<PlayerMovement>().enabled = false;
+            var killZone = Object.FindObjectOfType<KillZone>();
+            Assert.IsNotNull(killZone, "no KillZone in the Main scene");
+            Assert.IsNotNull(_player.GetComponent<PlayerRespawn>(), "Player has no PlayerRespawn");
             var body = _player.GetComponent<Rigidbody2D>();
-            for (var t = 0f; t < 1f; t += Time.fixedDeltaTime)
+            var start = (Vector2)_player.transform.position;
+            yield return new WaitForFixedUpdate();
+
+            // Put the Player just above the kill zone and let it fall in: beside the level's left end,
+            // where no tile is in the way (under the level the blocks' fill may reach down that far).
+            var tilemap = Object.FindObjectOfType<Tilemap>();
+            tilemap.CompressBounds();
+            var drop = new Vector2(tilemap.localBounds.min.x - 3f, killZone.GetComponent<Collider2D>().bounds.max.y + 1f);
+            body.velocity = Vector2.zero;
+            body.position = drop;
+            _player.transform.position = drop;
+            for (var t = 0f; t < 2f && Vector2.Distance(body.position, start) > 0.1f; t += Time.fixedDeltaTime)
             {
-                body.velocity = new Vector2(8f, body.velocity.y);
                 yield return new WaitForFixedUpdate();
             }
 
+            Assert.AreEqual(start.x, body.position.x, 0.1f, "x after falling into the kill zone");
+            Assert.AreEqual(start.y, body.position.y, 0.1f, "y after falling into the kill zone");
+            Assert.AreEqual(0f, body.velocity.y, 1f, "the Player should come back standing, not still falling fast");
+        }
+
+        // The camera keeps the Player in view, at the start and at the far end of the level.
+        // Not "centred on the Player": near an end of the level the camera stops at its bounds
+        // (CinemachineConfiner2D), so the Player is off-centre there, as it should be. How far off
+        // depends on the width of the Game view, so the test asks only that the Player be on screen.
+        [UnityTest]
+        public IEnumerator Camera_KeepsThePlayerInView()
+        {
+            var camera = Camera.main;
+            Assert.IsNotNull(camera, "no camera tagged MainCamera in the Main scene");
+            yield return new WaitForSeconds(0.3f);
+            AssertOnScreen(camera, "at the start");
+
+            // Put the Player above the right end of the level (wherever that is: the Tilemap's
+            // bounds), let it land and the camera catch up. A camera that didn't follow would be
+            // left at the start, with this end off screen.
+            var level = Object.FindObjectOfType<Tilemap>().localBounds;
+            var body = _player.GetComponent<Rigidbody2D>();
+            var target = new Vector2(level.max.x - 3f, level.max.y + 1f);
             body.velocity = Vector2.zero;
-            yield return new WaitForSeconds(2f);
-            Assert.AreEqual(_player.transform.position.x, camera.transform.position.x, 1.5f, "camera x after the Player moved 8 units");
+            body.position = target;
+            _player.transform.position = target;
+            yield return new WaitForSeconds(2.5f);
+            AssertOnScreen(camera, "at the right end of the level");
+        }
+
+        // The Player's middle (1.7 units above its soles) inside the screen, away from the edges.
+        private void AssertOnScreen(Camera camera, string when)
+        {
+            var onScreen = camera.WorldToViewportPoint(_player.transform.position + Vector3.up * 1.7f);
+            Assert.That(onScreen.x, Is.InRange(0.05f, 0.95f), $"Player across the screen (0 = left, 1 = right) {when}");
+            Assert.That(onScreen.y, Is.InRange(0.05f, 0.95f), $"Player up the screen (0 = bottom, 1 = top) {when}");
         }
 
         // The Animator's transitions are made by hand, so check the whole chain of a jump on the spot.
