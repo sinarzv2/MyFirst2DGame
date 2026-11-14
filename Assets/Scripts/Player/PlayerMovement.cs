@@ -71,16 +71,49 @@ namespace Player
         // Rising from a jump that letting go of the button can still cut.
         private bool _rising;
 
+        // From the step a jump starts until the body has really left the ground (see IsStanding).
+        private bool _takingOff;
+
+        private PlayerRespawn _respawn;   // optional: on the same GameObject
+
         private void Awake()
         {
             _animator = GetComponent<Animator>();
             _spriteRenderer = GetComponent<SpriteRenderer>();
             _body = GetComponent<Rigidbody2D>();
+            _respawn = GetComponent<PlayerRespawn>();
             _groundFilter.SetNormalAngle(45f, 135f);
 
             // Gravity Scale comes from the jump's design, not from the Inspector:
             // the gravity it needs divided by the project's gravity (9.81 down).
             _body.gravityScale = GetJumpGravity(jumpHeight, timeToApex) / -Physics2D.gravity.y;
+        }
+
+        // A respawn starts afresh (Awake runs before OnEnable, so _respawn is set by then).
+        private void OnEnable()
+        {
+            if (_respawn != null)
+            {
+                _respawn.Respawned += ForgetJump;
+            }
+        }
+
+        private void OnDisable()
+        {
+            if (_respawn != null)
+            {
+                _respawn.Respawned -= ForgetJump;
+            }
+        }
+
+        // Without this, a press made just before falling into the kill zone is still in the jump
+        // buffer when the hero is put back, and it jumps at the start by itself.
+        private void ForgetJump()
+        {
+            _sinceJumpPressed = float.PositiveInfinity;
+            _jumpReleased = false;
+            _rising = false;
+            _takingOff = false;
         }
 
         public bool IsGrounded => _body.IsTouching(_groundFilter);
@@ -89,7 +122,9 @@ namespace Player
         // a step, before moving bodies: after the step in which a jump starts, the body is already
         // 0.27 units up but its contact with the ground is still listed until the next step. So
         // IsGrounded stays true for a moment while the hero rises; this doesn't.
-        public bool IsStanding => IsGrounded && _body.velocity.y <= 0.01f;
+        // (Not "on the ground and not moving up", the first version: a hero walking up a rounded
+        // grass corner, or riding a platform that moves up, moves up too and is standing all the same.)
+        public bool IsStanding => IsGrounded && !_takingOff;
 
         // Read-only views of the settings, for tests that move the hero as the script would.
         public float JumpHeight => jumpHeight;
@@ -143,6 +178,12 @@ namespace Player
         {
             var velocity = GetVelocity(_horizontal, moveSpeed, _body.velocity);
 
+            // The take-off is over once the body has left the ground, or was stopped before it could.
+            if (_takingOff && (!IsGrounded || velocity.y <= 0f))
+            {
+                _takingOff = false;
+            }
+
             // Standing on the ground restarts the coyote clock. Not while taking off (see IsStanding):
             // that must not allow a second jump.
             if (IsStanding)
@@ -157,6 +198,7 @@ namespace Player
                 _sinceGrounded = float.PositiveInfinity;
                 _sinceJumpPressed = float.PositiveInfinity;
                 _rising = true;
+                _takingOff = true;
             }
 
             // Cut once, while rising. If the button was let go before a buffered jump started,

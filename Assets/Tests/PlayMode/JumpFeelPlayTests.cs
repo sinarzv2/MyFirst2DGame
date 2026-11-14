@@ -16,6 +16,7 @@ namespace Tests.PlayMode
         private PlayerMovement _movement;
         private Rigidbody2D _body;
         private float _ground;
+        private GameObject _platform;
 
         [UnitySetUp]
         public IEnumerator LoadMainScene_AndStand()
@@ -114,10 +115,65 @@ namespace Tests.PlayMode
             Assert.IsTrue(_movement.IsGrounded, "should be standing again");
         }
 
+        // Standing is not "not moving up": on a platform that rises, the hero rises with it and must
+        // still count as standing, and be able to jump. (The first IsStanding asked for no upward
+        // speed: here the hero could never jump. The same happens walking up a rounded grass corner.)
+        [UnityTest]
+        public IEnumerator OnAPlatformMovingUp_TheHeroIsStanding_AndCanJump()
+        {
+            // Far from the level, to the left (RespawnTests builds its own objects far to the right).
+            var far = new Vector2(-1000f, 0f);
+            _platform = new GameObject("RisingPlatform");
+            _platform.transform.position = far;
+            _platform.AddComponent<BoxCollider2D>().size = new Vector2(6f, 1f);   // its top 0.5 above `far`
+            var platformBody = _platform.AddComponent<Rigidbody2D>();
+            platformBody.bodyType = RigidbodyType2D.Kinematic;                    // moved by its velocity only
+            platformBody.velocity = Vector2.up;
+
+            MoveTo(far + Vector2.up * 0.6f);
+            yield return Wait(0.5f);
+            Assert.That(_body.velocity.y, Is.GreaterThan(0.5f), "the hero should be riding the platform up");
+            Assert.IsTrue(_movement.IsStanding, "riding a rising platform is standing");
+
+            _movement.RequestJump();
+            yield return Wait(0.04f);
+            Assert.That(_body.velocity.y, Is.GreaterThan(_movement.JumpSpeed * 0.5f), "should have jumped off the platform");
+        }
+
+        // A press made just before falling into the kill zone must not jump at the start by itself.
+        [UnityTest]
+        public IEnumerator Respawn_ForgetsABufferedJump()
+        {
+            _movement.RequestJump();
+            _body.GetComponent<PlayerRespawn>().Respawn();
+            var fastestUp = 0f;
+            for (var t = 0f; t < 0.3f; t += Time.fixedDeltaTime)
+            {
+                yield return new WaitForFixedUpdate();
+                fastestUp = Mathf.Max(fastestUp, _body.velocity.y);
+            }
+
+            Assert.That(fastestUp, Is.LessThan(1f), "the press from before the respawn should be forgotten");
+        }
+
+        // The scene stays loaded after the last test: leave nothing of ours in it.
+        [TearDown]
+        public void DestroyThePlatform()
+        {
+            if (_platform != null)
+            {
+                Object.Destroy(_platform);
+            }
+        }
+
         // Straight up from where the Player stands, standing still.
         private void Lift(float height)
         {
-            var to = _body.position + Vector2.up * height;
+            MoveTo(_body.position + Vector2.up * height);
+        }
+
+        private void MoveTo(Vector2 to)
+        {
             _body.velocity = Vector2.zero;
             _body.position = to;
             _body.transform.position = to;

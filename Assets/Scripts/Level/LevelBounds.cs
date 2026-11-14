@@ -74,6 +74,12 @@ namespace Level
             var local = level.localBounds;
             var tiles = new Bounds(level.transform.TransformPoint(local.center), local.size);
             GroundRange(out var lowest, out var highest);
+            if (lowest > highest)
+            {
+                Debug.LogError("LevelBounds: the Level Tilemap has no tiles to fit to", this);
+                return;
+            }
+
             var layout = Compute(tiles, lowest, highest, wallThickness, cameraBelowGround, cameraAboveGround, killZoneBelowTiles, killZoneMargin);
 
             Place(wallLeft, layout.WallLeft);
@@ -132,6 +138,12 @@ namespace Level
         [ContextMenu("Fit To Level")]
         private void FitInEditor()
         {
+            if (level == null || wallLeft == null || wallRight == null || killZone == null || cameraBounds == null)
+            {
+                Fit();   // logs which fields to set (the list below would fail on an empty one first)
+                return;
+            }
+
             UnityEditor.Undo.RecordObjects(new Object[]
             {
                 level, wallLeft, wallLeft.transform, wallRight, wallRight.transform,
