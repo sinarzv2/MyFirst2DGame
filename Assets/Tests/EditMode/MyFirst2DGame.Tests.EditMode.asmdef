@@ -4,7 +4,8 @@
     "references": [
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
-        "MyFirst2DGame"
+        "MyFirst2DGame",
+        "MyFirst2DGame.Editor"
     ],
     "includePlatforms": [
         "Editor"

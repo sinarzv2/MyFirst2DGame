@@ -135,8 +135,9 @@ namespace Level
 
 #if UNITY_EDITOR
         // Undo.RecordObjects first: the change can be undone, and Unity knows the scene changed.
+        // Public for Tools > Level > Build From Layout, which fits the bounds after building.
         [ContextMenu("Fit To Level")]
-        private void FitInEditor()
+        public void FitInEditor()
         {
             if (level == null || wallLeft == null || wallRight == null || killZone == null || cameraBounds == null)
             {
