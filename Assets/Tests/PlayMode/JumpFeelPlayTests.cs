@@ -53,16 +53,18 @@ namespace Tests.PlayMode
             Assert.That(_body.velocity.y, Is.LessThan(0f), "should still be falling: no jump in mid-air");
         }
 
+        // The two buffer tests time the press from the Inspector's Jump Buffer and Coyote Time, not
+        // from numbers written here: with other settings they still test what their names say.
         [UnityTest]
         public IEnumerator JumpBuffer_APressJustBeforeLanding_JumpsOnLanding()
         {
-            // From 1.5 units up the Player falls at about 8.6 units/s near the end: 0.25 units above
-            // the ground is about 0.03 s before landing, well inside the buffer.
-            Lift(1.5f);
-            for (var t = 0f; t < 1f && _body.position.y - _ground > 0.25f; t += Time.fixedDeltaTime)
-            {
-                yield return new WaitForFixedUpdate();
-            }
+            // Pressed half the buffer before landing: inside the buffer, whatever its length.
+            const float height = 1.5f;
+            var pressAt = FallTime(height) - _movement.JumpBuffer / 2f;
+            Assert.That(pressAt, Is.GreaterThan(_movement.CoyoteTime + 0.04f),
+                "the press must come after the coyote time, or that (not the buffer) makes the jump: lift higher");
+            Lift(height);
+            yield return Wait(pressAt);
 
             Assert.That(_movement.IsGrounded, Is.False, "the press must come before landing");
             _movement.RequestJump();
@@ -79,11 +81,14 @@ namespace Tests.PlayMode
         [UnityTest]
         public IEnumerator JumpBuffer_APressLongBeforeLanding_IsForgotten()
         {
-            // From 3 units up the fall takes about 0.45 s. The press comes after the coyote time is
-            // over (a press right after leaving the ground is meant to jump), and still about 0.3 s
-            // before landing, far more than the buffer.
-            Lift(3f);
-            yield return Wait(_movement.CoyoteTime + 0.06f);
+            // Pressed after the coyote time is over (a press right after leaving the ground is meant
+            // to jump), and longer before landing than the buffer lasts.
+            const float height = 3f;
+            var pressAt = _movement.CoyoteTime + 0.06f;
+            Assert.That(FallTime(height) - pressAt, Is.GreaterThan(_movement.JumpBuffer + 0.06f),
+                "the press must come longer before landing than the buffer lasts: lift higher");
+            Lift(height);
+            yield return Wait(pressAt);
             _movement.RequestJump();
             var fastestUp = 0f;
             for (var t = 0f; t < 1f; t += Time.fixedDeltaTime)
@@ -164,6 +169,14 @@ namespace Tests.PlayMode
             {
                 Object.Destroy(_platform);
             }
+        }
+
+        // Seconds to fall `height` units from standing still, with the Player's own gravity:
+        // height = g t² / 2, so t = √(2 height / g).
+        private float FallTime(float height)
+        {
+            var gravity = -Physics2D.gravity.y * _body.gravityScale;
+            return Mathf.Sqrt(2f * height / gravity);
         }
 
         // Straight up from where the Player stands, standing still.
