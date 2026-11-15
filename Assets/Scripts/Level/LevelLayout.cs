@@ -46,12 +46,13 @@ namespace Level
     public class LevelLayout
     {
         public const char Empty = '.';
+        public const char Coin = '$';   // a coin in the middle of the cell; not ground
         private const string OriginWord = "origin";
 
         private static readonly string[] Header =
         {
-            "// One character per Tilemap cell (2 x 2 units), top row first. '.' is empty; any other",
-            "// character is ground. A run of the same character is one block: blocks side by side need",
+            "// One character per Tilemap cell (2 x 2 units), top row first. '.' is empty, '$' a coin; any",
+            "// other character is ground. A run of the same character is one block: blocks side by side need",
             "// different characters. Each block must be at least 2 cells wide and 2 tall.",
             "// The bottom-left character is the cell at \"origin x y\".",
             "// Tools > Level > Build From Layout paints this; Save Layout From Level writes it from the tiles.",
@@ -159,20 +160,24 @@ namespace Level
             return text.ToString();
         }
 
-        // Every ground cell's position, bottom row first.
-        private IEnumerable<Vector2Int> GroundCells()
+        // Every cell holding one of `wanted`'s kind, bottom row first.
+        private IEnumerable<Vector2Int> Cells(Func<char, bool> wanted)
         {
             for (var y = Origin.y; y < Origin.y + Height; y++)
             {
                 for (var x = Origin.x; x < Origin.x + Width; x++)
                 {
-                    if (At(x, y) != Empty)
+                    if (wanted(At(x, y)))
                     {
                         yield return new Vector2Int(x, y);
                     }
                 }
             }
         }
+
+        private IEnumerable<Vector2Int> GroundCells() => Cells(c => c != Empty && c != Coin);
+
+        public List<Vector2Int> CoinCells() => Cells(c => c == Coin).ToList();
 
         // The tile a ground cell needs, from which of its four neighbours are of the same block.
         // A block one cell tall would need grass with the outline under it, and one cell wide both side
@@ -232,14 +237,23 @@ namespace Level
             return pieces;
         }
 
-        // The other way: the layout of painted tiles. Two cells side by side are one block unless an
-        // edge lies between them (a right end, then a left end); the same up and down (a bottom row
-        // under grass). Blocks are lettered A, B, C... from the left, never the same as a neighbour.
-        public static LevelLayout FromPieces(IReadOnlyDictionary<Vector2Int, GroundPiece> pieces)
+        // The other way: the layout of painted tiles (and coins). Two cells side by side are one block
+        // unless an edge lies between them (a right end, then a left end); the same up and down (a
+        // bottom row under grass). Blocks are lettered A, B, C... from the left, never the same as a
+        // neighbour.
+        public static LevelLayout FromPieces(IReadOnlyDictionary<Vector2Int, GroundPiece> pieces,
+            IEnumerable<Vector2Int> coins = null)
         {
             if (pieces.Count == 0)
             {
                 throw new ArgumentException("no tiles");
+            }
+
+            var coinCells = (coins ?? Enumerable.Empty<Vector2Int>()).Distinct().ToList();
+            var buried = coinCells.Where(pieces.ContainsKey).ToList();
+            if (buried.Count > 0)
+            {
+                throw new ArgumentException($"a coin inside the ground, at cell ({buried[0].x}, {buried[0].y})");
             }
 
             // Union-find: every cell starts as its own block; joining two cells joins their blocks.
@@ -309,10 +323,16 @@ namespace Level
                 }
             }
 
-            var minX = pieces.Keys.Min(c => c.x);
-            var maxX = pieces.Keys.Max(c => c.x);
-            var minY = pieces.Keys.Min(c => c.y);
-            var maxY = pieces.Keys.Max(c => c.y);
+            foreach (var cell in coinCells)
+            {
+                letters[cell] = Coin;
+            }
+
+            var all = pieces.Keys.Concat(coinCells).ToList();
+            var minX = all.Min(c => c.x);
+            var maxX = all.Max(c => c.x);
+            var minY = all.Min(c => c.y);
+            var maxY = all.Max(c => c.y);
             var rows = new List<string>();
             for (var y = maxY; y >= minY; y--)
             {

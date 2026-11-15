@@ -45,6 +45,9 @@ namespace Tests.EditMode
         // Built-in Unity assets (default material, default sprite...) use these GUIDs and have no file in the project.
         private static readonly string[] BuiltInGuids = { "0000000000000000e000000000000000", "0000000000000000f000000000000000" };
 
+        // Unity's fixed fileID for a whole prefab file, as a prefab instance in a scene refers to it.
+        private const long PrefabAssetFileId = 100100000;
+
         private static string[] HeroSheetPaths()
         {
             return AssetDatabase.FindAssets("t:Texture2D", new[] { HeroSpritesFolder })
@@ -343,6 +346,14 @@ namespace Tests.EditMode
                     var path = AssetDatabase.GUIDToAssetPath(guid);
                     Assert.IsFalse(string.IsNullOrEmpty(path) || AssetDatabase.LoadMainAssetAtPath(path) == null,
                         $"{scenePath}: missing asset with guid {guid}");
+
+                    // A prefab instance points at its prefab with m_SourcePrefab: {fileID: 100100000, ...}.
+                    // That number is Unity's fixed id for "the prefab file as a whole", not an object in it.
+                    if (fileId == PrefabAssetFileId)
+                    {
+                        Assert.IsTrue(path.EndsWith(".prefab"), $"{scenePath}: {path} is used as a prefab but is not one");
+                        continue;
+                    }
 
                     // ...and so must the object inside it (for example one sprite of a sheet).
                     var found = AssetDatabase.LoadAllAssetsAtPath(path).Any(asset =>

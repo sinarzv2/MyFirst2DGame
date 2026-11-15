@@ -92,6 +92,26 @@ namespace Tests.EditMode
             Assert.AreEqual(pieces.Count, again.Count, "the same cells");
         }
 
+        // '$' is a coin: not ground, so the ground under it still gets its grass.
+        [Test]
+        public void Coins_AreReadApart_FromTheGround()
+        {
+            var layout = LevelLayout.Parse("origin 0 0\n.$.\nAAA\nAAA\n");
+            CollectionAssert.AreEqual(new[] { new Vector2Int(1, 2) }, layout.CoinCells());
+            var pieces = layout.Pieces();
+            Assert.IsFalse(pieces.ContainsKey(new Vector2Int(1, 2)), "a coin is not ground");
+            Assert.AreEqual(Piece(GroundRow.Top, GroundColumn.Middle), pieces[new Vector2Int(1, 1)], "grass under the coin");
+        }
+
+        [Test]
+        public void FromPieces_KeepsTheCoins()
+        {
+            var layout = LevelLayout.Parse("origin 0 0\n.$.\nAAA\nAAA\n");
+            var again = LevelLayout.FromPieces(layout.Pieces(), layout.CoinCells());
+            CollectionAssert.AreEqual(layout.CoinCells(), again.CoinCells());
+            StringAssert.Contains(".$.\nAAA\nAAA\n", again.ToText());
+        }
+
         [Test]
         public void MainLayout_HasNoProblems_AndSavesBackTheSame()
         {
@@ -101,6 +121,7 @@ namespace Tests.EditMode
             CollectionAssert.IsEmpty(layout.Problems(), path);
             var pieces = layout.Pieces();
             CollectionAssert.AreEquivalent(pieces, LevelLayout.FromPieces(pieces).Pieces(), "Save after Build gives the same layout");
+            Assert.That(layout.CoinCells(), Is.Not.Empty, "the level should have coins");
         }
 
         [Test]
