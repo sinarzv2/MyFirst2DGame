@@ -54,8 +54,8 @@ namespace Tests.EditMode
             Assert.AreEqual(0, wallet.Coins);
         }
 
-        [TestCase(0, ExpectedResult = "x 0", TestName = "Counter: no coins")]
-        [TestCase(12, ExpectedResult = "x 12", TestName = "Counter: twelve coins")]
+        [TestCase(0, ExpectedResult = "× 0", TestName = "Counter: no coins")]
+        [TestCase(12, ExpectedResult = "× 12", TestName = "Counter: twelve coins")]
         public string Counter_ShowsTheTotal(int coins)
         {
             return CoinCounterView.Format(coins);

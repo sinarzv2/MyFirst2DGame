@@ -40,6 +40,8 @@ namespace Hud
             label.text = Format(coins);
         }
 
-        public static string Format(int coins) => $"x {coins}";
+        // "× 12", next to the coin icon. × is the multiplication sign ×, not the letter x;
+        // written as a code so the file's encoding can't spoil it.
+        public static string Format(int coins) => $"× {coins}";
     }
 }

@@ -7,6 +7,7 @@ using Player;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
+using UnityEngine.UI;
 
 // Coins in the real Main scene: the Player takes one by touching it, once, and the counter on the
 // screen shows the new total.
@@ -48,6 +49,36 @@ namespace Tests.PlayMode
 
             yield return new WaitForSeconds(0.2f);
             Assert.AreEqual(1, wallet.Coins, "taken once only");
+        }
+
+        // A still coin (not the spin: a HUD stays calm) on the left of the counter, beside the text.
+        [UnityTest]
+        public IEnumerator CounterHasACoinIcon_OnItsLeft()
+        {
+            yield return null;   // a frame, for the Canvas to lay itself out
+            var iconObject = GameObject.Find(IconName);
+            Assert.IsNotNull(iconObject, $"no \"{IconName}\" in the Main scene");
+            var icon = iconObject.GetComponent<Image>();
+            Assert.IsTrue(icon != null, $"{IconName} has no UI Image");
+            Assert.IsTrue(icon.sprite != null && icon.sprite.texture.name == "Coin", $"{IconName} should show a frame of the coin sheet");
+            Assert.IsTrue(icon.preserveAspect, $"{IconName}: tick Preserve Aspect, or the coin is stretched to its box");
+            Assert.IsNull(iconObject.GetComponent<Animator>(), $"{IconName} should be still");
+
+            var label = Object.FindObjectOfType<CoinCounterView>().GetComponent<RectTransform>();
+            var iconBox = Corners(icon.rectTransform);
+            var labelBox = Corners(label);
+            Assert.LessOrEqual(iconBox.xMax, labelBox.xMin + 1f, "the icon should end where the text begins, not overlap it");
+            Assert.IsTrue(iconBox.center.y > labelBox.yMin && iconBox.center.y < labelBox.yMax, "the icon should be level with the text");
+        }
+
+        private const string IconName = "CoinIcon";
+
+        // A UI element's box on the screen (a Screen Space - Overlay canvas: world units are pixels).
+        private static Rect Corners(RectTransform rect)
+        {
+            var c = new Vector3[4];
+            rect.GetWorldCorners(c);   // bottom-left, top-left, top-right, bottom-right
+            return Rect.MinMaxRect(c[0].x, c[0].y, c[2].x, c[2].y);
         }
     }
 }
