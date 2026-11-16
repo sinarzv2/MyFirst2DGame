@@ -77,5 +77,32 @@ namespace Tests.EditMode
             Assert.IsNotNull(sprite, "the prefab's SpriteRenderer has no sprite");
             Assert.AreEqual(46f, sprite.pixelsPerUnit, "Pixels Per Unit, as every sprite of the game (chapter 18)");
         }
+
+        // The prefab's Animator plays one looping clip, whose every key is a frame of the coin sheet.
+        [Test]
+        public void CoinPrefab_Spins_InALoop()
+        {
+            var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(LevelLayoutMenu.CoinPrefabPath);
+            Assert.IsNotNull(prefab, $"no coin prefab at {LevelLayoutMenu.CoinPrefabPath}");
+            var animator = prefab.GetComponent<Animator>();
+            Assert.IsTrue(animator != null, "the coin prefab has no Animator");
+            var controller = animator.runtimeAnimatorController;
+            Assert.IsTrue(controller != null, "the coin's Animator has no Controller");
+            Assert.AreEqual(1, controller.animationClips.Length, "one clip: the spin");
+
+            var clip = controller.animationClips[0];
+            Assert.IsTrue(clip.isLooping, $"{clip.name} must loop (Loop Time)");
+            var bindings = AnimationUtility.GetObjectReferenceCurveBindings(clip);
+            Assert.AreEqual(1, bindings.Length, "one curve: the SpriteRenderer's sprite");
+            var keys = AnimationUtility.GetObjectReferenceCurve(clip, bindings[0]);
+            Assert.Greater(keys.Length, 1, "a spin needs more than one frame");
+            foreach (var key in keys)
+            {
+                var frame = key.value as Sprite;
+                Assert.IsTrue(frame != null, $"{clip.name}: no sprite at {key.time:0.###} s");
+                Assert.AreEqual("Coin", frame.texture.name, $"{frame.name} is not from the coin sheet");
+                Assert.AreEqual(46f, frame.pixelsPerUnit, frame.name + ": Pixels Per Unit");
+            }
+        }
     }
 }
