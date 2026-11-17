@@ -1,0 +1,916 @@
+fileFormatVersion: 2
+guid: e2d31aef72aa8c9a63dbadacaef085c4
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 12
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 7
+  spritePivot: {x: 0.5, y: 0}
+  spritePixelsToUnits: 46
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Goblin_Walk_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 535
+        width: 112
+        height: 107
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 66064e2470ae6de6a3bd5e40b1fa0798
+      internalID: -2078890327
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Goblin_Walk_1
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 535
+        width: 112
+        height: 107
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: de36b7384fb37f4a25dbedfeff95dfdc
+      internalID: -369848183
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Goblin_Walk_2
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 535
+        width: 112
+        height: 107
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3fd2fba2be1ca8446977228a6e8b73c7
+      internalID: 2109866471
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Goblin_Walk_3
+      rect:
+        serializedVersion: 2
+        x: 336
+        y: 535
+        width: 112
+        height: 107
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 97d77b6ea13c20bbe74eb7ecdbbbf9e0
+      internalID: 149473621
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Goblin_Walk_4
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 535
+        width: 112
+        height: 107
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c918b75b68131147f95f27ea0e026671
+      internalID: 28242181
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Goblin_Walk_5
+      rect:
+        serializedVersion: 2
+        x: 560
+        y: 535
+        width: 112
+        height: 107
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 355391dc824ebd317171db198d6b6e5a
+      internalID: -1262117618
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Goblin_Walk_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 428
+        width: 112
+        height: 107
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8cf1b47bc3a648cf804d48f86a53805d
+      internalID: -895045971
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Goblin_Walk_7
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 428
+        width: 112
+        height: 107
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8a52efc0a7e30e2ef7a0c754340d71b9
+      internalID: -1363554923
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Goblin_Walk_8
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 428
+        width: 112
+        height: 107
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7cc3ffb4a4d549d40e73d2897d1408a1
+      internalID: -639743598
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Goblin_Walk_9
+      rect:
+        serializedVersion: 2
+        x: 336
+        y: 428
+        width: 112
+        height: 107
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5ac39bbed130fc4c49d2f2c2f3107c4a
+      internalID: 187977064
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Goblin_Walk_10
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 428
+        width: 112
+        height: 107
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 37a2b293c838781d9758a4bb7f56a760
+      internalID: -665099664
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Goblin_Walk_11
+      rect:
+        serializedVersion: 2
+        x: 560
+        y: 428
+        width: 112
+        height: 107
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 87b2a9f2dca0a80f0514a96c53b2d86d
+      internalID: 855021527
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Goblin_Walk_12
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 321
+        width: 112
+        height: 107
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 066332a9d106a3d6e89be714c47f5e84
+      internalID: -521919020
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Goblin_Walk_13
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 321
+        width: 112
+        height: 107
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 77f81c14137329ef42538d706d882dae
+      internalID: 1156922047
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Goblin_Walk_14
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 321
+        width: 112
+        height: 107
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e097cdbb0163e52c08ed27508c8405a3
+      internalID: 915037606
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Goblin_Walk_15
+      rect:
+        serializedVersion: 2
+        x: 336
+        y: 321
+        width: 112
+        height: 107
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d6cf6f76354b1b706bb71b83ed7e74c1
+      internalID: 792122838
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Goblin_Walk_16
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 321
+        width: 112
+        height: 107
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 61b818423a7398ed719416fecab04b76
+      internalID: 1051364890
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Goblin_Walk_17
+      rect:
+        serializedVersion: 2
+        x: 560
+        y: 321
+        width: 112
+        height: 107
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6bc3aeeb8011a584bdedc72b46589c46
+      internalID: 201727501
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Goblin_Walk_18
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 214
+        width: 112
+        height: 107
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bbdcf98e6aa6c2ca0a62053552a0a778
+      internalID: -652223839
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Goblin_Walk_19
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 214
+        width: 112
+        height: 107
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ba2adc4a665ce8c5674c4a42dc5786ad
+      internalID: -1056790224
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Goblin_Walk_20
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 214
+        width: 112
+        height: 107
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 248cd030e42bb6756172158faadd0894
+      internalID: 24579692
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Goblin_Walk_21
+      rect:
+        serializedVersion: 2
+        x: 336
+        y: 214
+        width: 112
+        height: 107
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c20fc20898c0f2d4d65c22337f4765e1
+      internalID: -976901212
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Goblin_Walk_22
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 214
+        width: 112
+        height: 107
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a609dde1cba26b1144f4bbec90e4398e
+      internalID: 594045030
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Goblin_Walk_23
+      rect:
+        serializedVersion: 2
+        x: 560
+        y: 214
+        width: 112
+        height: 107
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 46b86a57621a096a0b4430b312b5fb1b
+      internalID: -546559722
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Goblin_Walk_24
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 107
+        width: 112
+        height: 107
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e5b02f7af200060b5b676a437cba48d0
+      internalID: -2100274102
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Goblin_Walk_25
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 107
+        width: 112
+        height: 107
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c980f17606c60e094aa20ed09ae9f6f7
+      internalID: 628694504
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Goblin_Walk_26
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 107
+        width: 112
+        height: 107
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d17abcb125fcdc6fa7c2ce81c8814f2e
+      internalID: -1957738520
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Goblin_Walk_27
+      rect:
+        serializedVersion: 2
+        x: 336
+        y: 107
+        width: 112
+        height: 107
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2283ceee72c92d3410b3c4f89d4a8237
+      internalID: 58473911
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Goblin_Walk_28
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 107
+        width: 112
+        height: 107
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 490b6004e4e5379acfb2e6557a6de186
+      internalID: -1723414461
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Goblin_Walk_29
+      rect:
+        serializedVersion: 2
+        x: 560
+        y: 107
+        width: 112
+        height: 107
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 547328a4e429f4914e21bdb637973c71
+      internalID: 830929287
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Goblin_Walk_30
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 112
+        height: 107
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d551d72ae84d623fbdf1f7eb1657f8b4
+      internalID: -1667833897
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Goblin_Walk_31
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 0
+        width: 112
+        height: 107
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: def1e87ad8c0037ab7440b6cc873a808
+      internalID: -404589936
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Goblin_Walk_32
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 0
+        width: 112
+        height: 107
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c94c2427992b6ce832c276b46a33add8
+      internalID: -570084552
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Goblin_Walk_33
+      rect:
+        serializedVersion: 2
+        x: 336
+        y: 0
+        width: 112
+        height: 107
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 95893073160367ba5c36dfb085b22888
+      internalID: -1408341540
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Goblin_Walk_34
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 0
+        width: 112
+        height: 107
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f7033af2b4436b63ec116e8c81cc2705
+      internalID: 1769079574
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Goblin_Walk_35
+      rect:
+        serializedVersion: 2
+        x: 560
+        y: 0
+        width: 112
+        height: 107
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aba0677ae5ed11a672e33c93545b5027
+      internalID: 835803779
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 2e3824a7450b4c5c1b33a95fd468e57b
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      Goblin_Walk_0: -2078890327
+      Goblin_Walk_1: -369848183
+      Goblin_Walk_2: 2109866471
+      Goblin_Walk_3: 149473621
+      Goblin_Walk_4: 28242181
+      Goblin_Walk_5: -1262117618
+      Goblin_Walk_6: -895045971
+      Goblin_Walk_7: -1363554923
+      Goblin_Walk_8: -639743598
+      Goblin_Walk_9: 187977064
+      Goblin_Walk_10: -665099664
+      Goblin_Walk_11: 855021527
+      Goblin_Walk_12: -521919020
+      Goblin_Walk_13: 1156922047
+      Goblin_Walk_14: 915037606
+      Goblin_Walk_15: 792122838
+      Goblin_Walk_16: 1051364890
+      Goblin_Walk_17: 201727501
+      Goblin_Walk_18: -652223839
+      Goblin_Walk_19: -1056790224
+      Goblin_Walk_20: 24579692
+      Goblin_Walk_21: -976901212
+      Goblin_Walk_22: 594045030
+      Goblin_Walk_23: -546559722
+      Goblin_Walk_24: -2100274102
+      Goblin_Walk_25: 628694504
+      Goblin_Walk_26: -1957738520
+      Goblin_Walk_27: 58473911
+      Goblin_Walk_28: -1723414461
+      Goblin_Walk_29: 830929287
+      Goblin_Walk_30: -1667833897
+      Goblin_Walk_31: -404589936
+      Goblin_Walk_32: -570084552
+      Goblin_Walk_33: -1408341540
+      Goblin_Walk_34: 1769079574
+      Goblin_Walk_35: 835803779
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

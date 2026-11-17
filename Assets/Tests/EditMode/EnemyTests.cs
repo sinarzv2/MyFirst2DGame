@@ -1,3 +1,4 @@
+using System.Linq;
 using Enemies;
 using LevelTools;
 using NUnit.Framework;
@@ -56,6 +57,25 @@ namespace Tests.EditMode
             var gravity = PlayerMovement.GetJumpGravity(height, time);
             Assert.AreEqual(PlayerMovement.GetJumpSpeed(height, time), PlayerMovement.GetLaunchSpeed(height, gravity), 1e-4f);
             Assert.AreEqual(0f, PlayerMovement.GetLaunchSpeed(0f, gravity));
+        }
+
+        // The goblin's walk: its planted foot slides back this many sprite pixels a frame (measured on
+        // the Ludo frames). The patrol speed must match it, or the feet skate on the ground.
+        private const float WalkFootPixelsPerFrame = 2.03f;
+
+        [Test]
+        public void EnemyPrefab_WalksAtTheSpeedOfItsFeet()
+        {
+            var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(LevelLayoutMenu.EnemyPrefabPath);
+            var animator = prefab.GetComponent<Animator>();
+            Assert.IsTrue(animator != null && animator.runtimeAnimatorController != null,
+                "the prefab needs an Animator with the Goblin controller");
+            var clip = animator.runtimeAnimatorController.animationClips.FirstOrDefault(c => c.name == "Goblin_Walk");
+            Assert.IsTrue(clip != null, "the controller should play Goblin_Walk");
+            Assert.IsTrue(clip.isLooping, "the walk loops");
+            var feetSpeed = WalkFootPixelsPerFrame * clip.frameRate / 46f;
+            Assert.AreEqual(feetSpeed, prefab.GetComponent<EnemyPatrol>().Speed, 0.05f,
+                "the patrol speed should be the feet's speed (pixels per frame * frames per second / PPU)");
         }
 
         // Build From Layout puts this prefab wherever the layout has a '@'.

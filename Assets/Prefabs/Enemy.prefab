@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3968959563855566260}
   - component: {fileID: 2161341273592517708}
   - component: {fileID: 8162170405273689236}
+  - component: {fileID: -1268968795172093955}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -34,7 +35,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1204877223547758775
 SpriteRenderer:
@@ -77,7 +78,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 54e8d2b340efb41fde923b35c28bb499, type: 3}
+  m_Sprite: {fileID: -2078890327, guid: e2d31aef72aa8c9a63dbadacaef085c4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -137,7 +138,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 139f291f63c6cb04aa638a0a7e57f1a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1.5
+  speed: 1.1
   groundLayers:
     serializedVersion: 2
     m_Bits: 8
@@ -156,3 +157,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stompBounceHeight: 1.5
+--- !u!95 &-1268968795172093955
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8358818951410088442}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d31dc654a7fb5b60a56123e6ea16d3c0, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0

@@ -10,8 +10,10 @@ namespace Enemies
     [RequireComponent(typeof(SpriteRenderer))]
     public class EnemyPatrol : MonoBehaviour
     {
-        // Units per second: well under the hero's 4, so it can be outrun and jumped.
-        [SerializeField, Min(0f)] private float speed = 1.5f;
+        // Units per second: well under the hero's 4, so it can be outrun and jumped. The goblin's walk
+        // clip moves its planted foot back 2.03 px a frame at 25 frames a second (2.03 * 25 / 46 PPU
+        // = 1.1): at this speed its feet don't skate on the ground. Change both together.
+        [SerializeField, Min(0f)] private float speed = 1.1f;
         [SerializeField] private LayerMask groundLayers;
         [SerializeField] private bool startFacingLeft = true;
         // Which way the art is drawn. Each enemy's image may face either way; flipX turns it to
