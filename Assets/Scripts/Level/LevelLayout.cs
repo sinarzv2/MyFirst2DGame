@@ -47,13 +47,15 @@ namespace Level
     {
         public const char Empty = '.';
         public const char Coin = '$';   // a coin in the middle of the cell; not ground
+        public const char Enemy = '@';  // an enemy standing on the bottom of the cell; ground must be under it
         private const string OriginWord = "origin";
 
         private static readonly string[] Header =
         {
-            "// One character per Tilemap cell (2 x 2 units), top row first. '.' is empty, '$' a coin; any",
-            "// other character is ground. A run of the same character is one block: blocks side by side need",
-            "// different characters. Each block must be at least 2 cells wide and 2 tall.",
+            "// One character per Tilemap cell (2 x 2 units), top row first. '.' is empty, '$' a coin, '@' an",
+            "// enemy (ground must be under it); any other character is ground. A run of the same character is",
+            "// one block: blocks side by side need different characters. Each block must be at least 2 cells",
+            "// wide and 2 tall.",
             "// The bottom-left character is the cell at \"origin x y\".",
             "// Tools > Level > Build From Layout paints this; Save Layout From Level writes it from the tiles.",
         };
@@ -175,9 +177,13 @@ namespace Level
             }
         }
 
-        private IEnumerable<Vector2Int> GroundCells() => Cells(c => c != Empty && c != Coin);
+        private static bool IsGround(char c) => c != Empty && c != Coin && c != Enemy;
+
+        private IEnumerable<Vector2Int> GroundCells() => Cells(IsGround);
 
         public List<Vector2Int> CoinCells() => Cells(c => c == Coin).ToList();
+
+        public List<Vector2Int> EnemyCells() => Cells(c => c == Enemy).ToList();
 
         // The tile a ground cell needs, from which of its four neighbours are of the same block.
         // A block one cell tall would need grass with the outline under it, and one cell wide both side
@@ -218,6 +224,15 @@ namespace Level
                 }
             }
 
+            // An enemy walks on ground: placed in the air it would fall, maybe into a pit.
+            foreach (var cell in EnemyCells())
+            {
+                if (!IsGround(At(cell.x, cell.y - 1)))
+                {
+                    problems.Add($"cell ({cell.x}, {cell.y}): enemy '{Enemy}' with no ground under it");
+                }
+            }
+
             return problems;
         }
 
@@ -237,12 +252,12 @@ namespace Level
             return pieces;
         }
 
-        // The other way: the layout of painted tiles (and coins). Two cells side by side are one block
-        // unless an edge lies between them (a right end, then a left end); the same up and down (a
-        // bottom row under grass). Blocks are lettered A, B, C... from the left, never the same as a
-        // neighbour.
+        // The other way: the layout of painted tiles (and coins and enemies). Two cells side by side are
+        // one block unless an edge lies between them (a right end, then a left end); the same up and
+        // down (a bottom row under grass). Blocks are lettered A, B, C... from the left, never the same
+        // as a neighbour.
         public static LevelLayout FromPieces(IReadOnlyDictionary<Vector2Int, GroundPiece> pieces,
-            IEnumerable<Vector2Int> coins = null)
+            IEnumerable<Vector2Int> coins = null, IEnumerable<Vector2Int> enemies = null)
         {
             if (pieces.Count == 0)
             {
@@ -250,10 +265,17 @@ namespace Level
             }
 
             var coinCells = (coins ?? Enumerable.Empty<Vector2Int>()).Distinct().ToList();
-            var buried = coinCells.Where(pieces.ContainsKey).ToList();
+            var enemyCells = (enemies ?? Enumerable.Empty<Vector2Int>()).Distinct().ToList();
+            var buried = coinCells.Concat(enemyCells).Where(pieces.ContainsKey).ToList();
             if (buried.Count > 0)
             {
-                throw new ArgumentException($"a coin inside the ground, at cell ({buried[0].x}, {buried[0].y})");
+                throw new ArgumentException($"a coin or enemy inside the ground, at cell ({buried[0].x}, {buried[0].y})");
+            }
+
+            var shared = coinCells.Intersect(enemyCells).ToList();
+            if (shared.Count > 0)
+            {
+                throw new ArgumentException($"a coin and an enemy in the same cell ({shared[0].x}, {shared[0].y})");
             }
 
             // Union-find: every cell starts as its own block; joining two cells joins their blocks.
@@ -328,7 +350,12 @@ namespace Level
                 letters[cell] = Coin;
             }
 
-            var all = pieces.Keys.Concat(coinCells).ToList();
+            foreach (var cell in enemyCells)
+            {
+                letters[cell] = Enemy;
+            }
+
+            var all = pieces.Keys.Concat(coinCells).Concat(enemyCells).ToList();
             var minX = all.Min(c => c.x);
             var maxX = all.Max(c => c.x);
             var minY = all.Min(c => c.y);

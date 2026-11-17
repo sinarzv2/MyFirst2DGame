@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Enemies;
 using Level;
 using NUnit.Framework;
 using Player;
@@ -36,6 +37,13 @@ namespace Tests.PlayMode
             Assert.IsNotNull(_tilemap, "no Tilemap in the Main scene");
             _tilemap.CompressBounds();   // the bounds of the tiles there are (erased cells left out)
             _level = _tilemap.localBounds;
+
+            // The level's shape alone: an enemy walking by would send the Player back to the start in
+            // the middle of a jump. Enemies have tests of their own (EnemyPlayTests).
+            foreach (var enemy in Object.FindObjectsOfType<Enemy>())
+            {
+                enemy.gameObject.SetActive(false);
+            }
         }
 
         // Puts the Player at `position` at once (the physics body and the drawn transform).

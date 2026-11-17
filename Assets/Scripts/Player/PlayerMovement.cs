@@ -148,6 +148,19 @@ namespace Player
             _jumpReleased = true;
         }
 
+        // Thrown up to `height` units, as off an enemy it landed on. Like a jump, it uses up the
+        // coyote time and the buffer, and starts a take-off (the contact with the enemy is still
+        // listed for a step). Letting go of the button doesn't cut it: the height is the enemy's.
+        public void Bounce(float height)
+        {
+            var gravity = GetJumpGravity(jumpHeight, timeToApex);
+            _body.velocity = new Vector2(_body.velocity.x, GetLaunchSpeed(height, gravity));
+            _sinceGrounded = float.PositiveInfinity;
+            _sinceJumpPressed = float.PositiveInfinity;
+            _rising = false;
+            _takingOff = true;
+        }
+
         // Once per drawn frame: read the input and update what is drawn.
         // A key press lasts one frame, so it must be read here: FixedUpdate may not run in that frame.
         // Up, not "not held": a test that calls RequestJump holds no key, and must get a full jump.
@@ -231,6 +244,13 @@ namespace Player
         public static float GetJumpGravity(float height, float timeToApex)
         {
             return 2f * height / (timeToApex * timeToApex);
+        }
+
+        // The upward speed that reaches `height` under `gravity` (the same rule as above, solved for v:
+        // h = v² / 2g, so v = √(2gh)). For the jump's own height it gives GetJumpSpeed.
+        public static float GetLaunchSpeed(float height, float gravity)
+        {
+            return Mathf.Sqrt(2f * gravity * height);
         }
 
         // Jump if the hero stood on the ground a moment ago (coyote time) and the button was pressed

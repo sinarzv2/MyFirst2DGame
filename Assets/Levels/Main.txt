@@ -1,13 +1,14 @@
-// One character per Tilemap cell (2 x 2 units), top row first. '.' is empty, '$' a coin; any
-// other character is ground. A run of the same character is one block: blocks side by side need
-// different characters. Each block must be at least 2 cells wide and 2 tall.
+// One character per Tilemap cell (2 x 2 units), top row first. '.' is empty, '$' a coin, '@' an
+// enemy (ground must be under it); any other character is ground. A run of the same character is
+// one block: blocks side by side need different characters. Each block must be at least 2 cells
+// wide and 2 tall.
 // The bottom-left character is the cell at "origin x y".
 // Tools > Level > Build From Layout paints this; Save Layout From Level writes it from the tiles.
 origin -4 -8
 .............................$...$.............................
 .....................$$.......GGG.HHHH.........................
 .........$.......$........FFF.GGG.HHHH................$....$$$.
-..$$$BBBB.....$...EEEEEEEEFFF.GGG.HHHH..$$$...$...$....LLLLLLLL
+..$$$BBBB.....$...EEEEEEEEFFF.GGG.HHHH..$$$.@.$...$....LLLLLLLL
 AAAAABBBB.CCCC.DD.EEEEEEEEFFF.GGG.HHHHIIIIIIII.JJJ.KKK.LLLLLLLL
 AAAAABBBB.CCCC.DD.EEEEEEEEFFF.GGG.HHHHIIIIIIII.JJJ.KKK.LLLLLLLL
 AAAAABBBB.CCCC.DD.EEEEEEEEFFF.GGG.HHHHIIIIIIII.JJJ.KKK.LLLLLLLL

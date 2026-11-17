@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Enemies;
 using Level;
 using UnityEditor;
 using UnityEditor.SceneManagement;
@@ -33,9 +34,11 @@ namespace LevelTools
 
         public static string LayoutPath(string sceneName) => $"Assets/Levels/{sceneName}.txt";
 
-        // Put wherever the layout has a '$', under a GameObject of this name.
+        // Put wherever the layout has a '$' (a coin) or a '@' (an enemy), under a GameObject of this name.
         public const string CoinPrefabPath = "Assets/Prefabs/Coin.prefab";
         private const string CoinsParentName = "Coins";
+        public const string EnemyPrefabPath = "Assets/Prefabs/Enemy.prefab";
+        private const string EnemiesParentName = "Enemies";
 
         private const string Title = "Level Layout";
 
@@ -57,6 +60,7 @@ namespace LevelTools
 
             Dictionary<Vector2Int, GroundPiece> wanted;
             List<Vector2Int> wantedCoins;
+            List<Vector2Int> wantedEnemies;
             try
             {
                 var layout = LevelLayout.Parse(File.ReadAllText(path));
@@ -69,6 +73,7 @@ namespace LevelTools
 
                 wanted = layout.Pieces();
                 wantedCoins = layout.CoinCells();
+                wantedEnemies = layout.EnemyCells();
             }
             catch (FormatException e)
             {
@@ -76,22 +81,22 @@ namespace LevelTools
                 return;
             }
 
-            var coinPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(CoinPrefabPath);
-            if (wantedCoins.Count > 0 && coinPrefab == null)
+            if (!TryLoadPrefab(CoinPrefabPath, wantedCoins, path, out var coinPrefab) ||
+                !TryLoadPrefab(EnemyPrefabPath, wantedEnemies, path, out var enemyPrefab))
             {
-                Fail($"{path} has coins, but there is no coin prefab at {CoinPrefabPath} to place.");
                 return;
             }
 
-            // Painting where there is nothing loses nothing; changing or removing a tile or a coin
-            // does. Ask first, in case those were placed by hand and never saved to the text.
+            // Painting where there is nothing loses nothing; changing or removing a tile, a coin or an
+            // enemy does. Ask first, in case those were placed by hand and never saved to the text.
             ReadPieces(tilemap, tiles, out var current, out var unknown);
             var lost = current.Where(pair => !wanted.TryGetValue(pair.Key, out var piece) || !piece.Equals(pair.Value))
                 .Select(pair => pair.Key).Concat(unknown)
                 .Concat(CoinCellsInScene(tilemap).Where(cell => !wantedCoins.Contains(cell)))
+                .Concat(EnemyCellsInScene(tilemap).Where(cell => !wantedEnemies.Contains(cell)))
                 .ToList();
             if (lost.Count > 0 && !EditorUtility.DisplayDialog(Title,
-                    $"{lost.Count} tile(s) or coin(s) now in the scene are not in {path} and will be changed or removed, " +
+                    $"{lost.Count} tile(s), coin(s) or enemies now in the scene are not in {path} and will be changed or removed, " +
                     $"for example at {Cells(lost)}.\n\nIf you placed them by hand, Cancel, then use Save Layout From Level first. " +
                     "(Edit > Undo can bring them back either way.)",
                     "Build anyway", "Cancel"))
@@ -106,7 +111,8 @@ namespace LevelTools
                 wanted.Keys.Select(cell => new Vector3Int(cell.x, cell.y, 0)).ToArray(),
                 wanted.Values.Select(piece => tiles[piece]).ToArray());   // a Dictionary lists Keys and Values in the same order
             tilemap.CompressBounds();
-            PlaceCoins(tilemap, coinPrefab, wantedCoins);
+            Place<Coin>(coinPrefab, CoinsParentName, wantedCoins, cell => CoinPosition(tilemap, cell));
+            Place<Enemy>(enemyPrefab, EnemiesParentName, wantedEnemies, cell => EnemyPosition(tilemap, cell));
 
             var bounds = Object.FindObjectOfType<LevelBounds>();
             if (bounds != null)
@@ -116,7 +122,7 @@ namespace LevelTools
 
             Undo.CollapseUndoOperations(group);   // one Ctrl+Z undoes the tiles and the bounds together
             EditorSceneManager.MarkSceneDirty(tilemap.gameObject.scene);
-            Debug.Log($"Level: built {wanted.Count} tiles and {wantedCoins.Count} coins from {path}" +
+            Debug.Log($"Level: built {wanted.Count} tiles, {wantedCoins.Count} coins and {wantedEnemies.Count} enemies from {path}" +
                       (bounds != null ? " and fitted LevelBounds. Save the scene to keep them." : ". No LevelBounds in the scene to fit."));
         }
 
@@ -147,7 +153,7 @@ namespace LevelTools
             LevelLayout layout;
             try
             {
-                layout = LevelLayout.FromPieces(pieces, CoinCellsInScene(tilemap));
+                layout = LevelLayout.FromPieces(pieces, CoinCellsInScene(tilemap), EnemyCellsInScene(tilemap));
             }
             catch (ArgumentException e)
             {
@@ -177,22 +183,50 @@ namespace LevelTools
             Directory.CreateDirectory(Path.GetDirectoryName(path));
             File.WriteAllText(path, layout.ToText());
             AssetDatabase.ImportAsset(path);
-            Debug.Log($"Level: saved {pieces.Count} tiles and {layout.CoinCells().Count} coins to {path}");
+            Debug.Log($"Level: saved {pieces.Count} tiles, {layout.CoinCells().Count} coins and {layout.EnemyCells().Count} enemies to {path}");
         }
 
-        // The cell of every coin in the open scene, hidden ones too (a coin taken in Play Mode is
-        // hidden, but Play Mode changes are undone when it ends).
+        // A coin sits in the middle of its cell; an enemy stands on the cell's bottom edge, the top of
+        // the ground under it (its pivot is at its feet).
+        private static Vector3 CoinPosition(Tilemap tilemap, Vector2Int cell) =>
+            tilemap.GetCellCenterWorld(new Vector3Int(cell.x, cell.y, 0));
+
+        private static Vector3 EnemyPosition(Tilemap tilemap, Vector2Int cell) =>
+            CoinPosition(tilemap, cell) + Vector3.down * (tilemap.layoutGrid.cellSize.y / 2f);
+
+        // The cell of every coin or enemy in the open scene, hidden ones too (one taken or defeated in
+        // Play Mode is hidden, but Play Mode changes are undone when it ends). An enemy's feet are on
+        // its cell's bottom edge: half a unit up is safely inside the cell.
         private static List<Vector2Int> CoinCellsInScene(Tilemap tilemap) =>
             Object.FindObjectsOfType<Coin>(true)
                 .Select(coin => (Vector2Int)tilemap.WorldToCell(coin.transform.position))
                 .ToList();
 
-        // Replaces every coin in the scene with one prefab instance per cell, under "Coins".
-        private static void PlaceCoins(Tilemap tilemap, GameObject prefab, List<Vector2Int> cells)
+        private static List<Vector2Int> EnemyCellsInScene(Tilemap tilemap) =>
+            Object.FindObjectsOfType<Enemy>(true)
+                .Select(enemy => (Vector2Int)tilemap.WorldToCell(enemy.transform.position + Vector3.up * 0.5f))
+                .ToList();
+
+        // The prefab to place, if the layout needs it.
+        private static bool TryLoadPrefab(string prefabPath, List<Vector2Int> cells, string layoutPath, out GameObject prefab)
         {
-            foreach (var coin in Object.FindObjectsOfType<Coin>(true))
+            prefab = AssetDatabase.LoadAssetAtPath<GameObject>(prefabPath);
+            if (cells.Count > 0 && prefab == null)
             {
-                Undo.DestroyObjectImmediate(coin.gameObject);
+                Fail($"{layoutPath} places {cells.Count} of {Path.GetFileNameWithoutExtension(prefabPath)}, but there is no prefab at {prefabPath}.");
+                return false;
+            }
+
+            return true;
+        }
+
+        // Replaces every T in the scene (Coin, Enemy) with one prefab instance per cell, under a parent.
+        private static void Place<T>(GameObject prefab, string parentName, List<Vector2Int> cells,
+            Func<Vector2Int, Vector3> positionOf) where T : Component
+        {
+            foreach (var old in Object.FindObjectsOfType<T>(true))
+            {
+                Undo.DestroyObjectImmediate(old.gameObject);
             }
 
             if (cells.Count == 0)
@@ -200,21 +234,21 @@ namespace LevelTools
                 return;
             }
 
-            var parent = GameObject.Find(CoinsParentName);
+            var parent = GameObject.Find(parentName);
             if (parent == null)
             {
-                parent = new GameObject(CoinsParentName);
+                parent = new GameObject(parentName);
                 Undo.RegisterCreatedObjectUndo(parent, "Build Level From Layout");
             }
 
             foreach (var cell in cells)
             {
                 // InstantiatePrefab, not Instantiate: the copy stays linked to the prefab, so a change
-                // to the prefab (its sprite, say) reaches every coin.
-                var coin = (GameObject)PrefabUtility.InstantiatePrefab(prefab, parent.transform);
-                coin.transform.position = tilemap.GetCellCenterWorld(new Vector3Int(cell.x, cell.y, 0));
-                coin.name = $"Coin ({cell.x}, {cell.y})";
-                Undo.RegisterCreatedObjectUndo(coin, "Build Level From Layout");
+                // to the prefab (its sprite, say) reaches every copy.
+                var made = (GameObject)PrefabUtility.InstantiatePrefab(prefab, parent.transform);
+                made.transform.position = positionOf(cell);
+                made.name = $"{prefab.name} ({cell.x}, {cell.y})";
+                Undo.RegisterCreatedObjectUndo(made, "Build Level From Layout");
             }
         }
 

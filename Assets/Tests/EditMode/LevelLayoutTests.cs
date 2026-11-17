@@ -112,6 +112,27 @@ namespace Tests.EditMode
             StringAssert.Contains(".$.\nAAA\nAAA\n", again.ToText());
         }
 
+        // '@' is an enemy: not ground either, and kept by the way back, with the coins.
+        [Test]
+        public void Enemies_AreReadApart_AndKeptByFromPieces()
+        {
+            var layout = LevelLayout.Parse("origin 0 0\n$.@\nAAA\nAAA\n");
+            CollectionAssert.AreEqual(new[] { new Vector2Int(2, 2) }, layout.EnemyCells());
+            CollectionAssert.IsEmpty(layout.Problems(), "ground under the enemy");
+            Assert.IsFalse(layout.Pieces().ContainsKey(new Vector2Int(2, 2)), "an enemy is not ground");
+
+            var again = LevelLayout.FromPieces(layout.Pieces(), layout.CoinCells(), layout.EnemyCells());
+            StringAssert.Contains("$.@\nAAA\nAAA\n", again.ToText());
+        }
+
+        [Test]
+        public void Problems_NameAnEnemyInTheAir()
+        {
+            var problems = LevelLayout.Parse("origin 0 0\n..@\n...\nAAA\nAAA\n").Problems();
+            Assert.AreEqual(1, problems.Count);
+            StringAssert.Contains("no ground under it", problems[0]);
+        }
+
         [Test]
         public void MainLayout_HasNoProblems_AndSavesBackTheSame()
         {
@@ -122,6 +143,7 @@ namespace Tests.EditMode
             var pieces = layout.Pieces();
             CollectionAssert.AreEquivalent(pieces, LevelLayout.FromPieces(pieces).Pieces(), "Save after Build gives the same layout");
             Assert.That(layout.CoinCells(), Is.Not.Empty, "the level should have coins");
+            Assert.That(layout.EnemyCells(), Is.Not.Empty, "the level should have an enemy");
         }
 
         [Test]
