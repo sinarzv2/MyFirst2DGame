@@ -10,8 +10,8 @@ using UnityEngine.TestTools;
 using UnityEngine.Tilemaps;
 
 // The enemy in the real Main scene, with real physics: it walks its ground and turns at the wall and
-// at the drop, landing on it defeats it and bounces the Player, walking into it sends the Player back
-// to the start, and it doesn't take coins.
+// at the drop, landing on it defeats it and bounces the Player, walking into it knocks the Player out
+// and then sends it back to the start, and it doesn't take coins.
 namespace Tests.PlayMode
 {
     public class EnemyPlayTests
@@ -169,10 +169,14 @@ namespace Tests.PlayMode
             Assert.IsFalse(_enemy.gameObject.activeSelf, "after its defeat the enemy should be gone");
         }
 
+        // Knocked out where it was hit (it stays there, out of the game, playing its knock-out), then
+        // sent back to the start.
         [UnityTest]
-        public IEnumerator WalkingIntoTheEnemy_SendsThePlayerBack_AndTheEnemyStays()
+        public IEnumerator WalkingIntoTheEnemy_KnocksThePlayerOut_ThenSendsItBack_AndTheEnemyStays()
         {
             var (surface, _, _) = EnemyGround();
+            var death = _player.GetComponent<PlayerDeath>();
+            Assert.IsNotNull(death, "the Player has no PlayerDeath");
             _patrol.enabled = false;
             _enemyBody.velocity = Vector2.zero;
             var movement = _player.GetComponent<PlayerMovement>();
@@ -181,15 +185,40 @@ namespace Tests.PlayMode
             Teleport(_playerBody, new Vector2(enemyX - 3f, surface + 0.1f));
             yield return new WaitForSeconds(0.4f);
 
-            var sentBack = false;
-            for (var t = 0f; t < 2f && !sentBack; t += Time.fixedDeltaTime)
+            for (var t = 0f; t < 2f && !death.IsDying; t += Time.fixedDeltaTime)
             {
                 _playerBody.velocity = new Vector2(movement.MoveSpeed, _playerBody.velocity.y);
                 yield return new WaitForFixedUpdate();
+            }
+
+            Assert.IsTrue(death.IsDying, "walking into the enemy should knock the Player out");
+            var at = _playerBody.position;
+            yield return null;   // two frames: the Animator has surely entered the new state
+            yield return null;
+            Assert.IsFalse(_playerBody.simulated, "a knocked-out Player is out of the physics");
+            Assert.IsFalse(movement.enabled, "a knocked-out Player takes no input");
+            Assert.IsTrue(_player.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName(death.DeathState),
+                $"the Player should play its {death.DeathState} animation");
+
+            // The knock-out lasts 2.1 s: sent back within 3 s, from where it was hit. It may only come
+            // down onto the ground (it was walking: a little at most).
+            var sentBack = false;
+            for (var t = 0f; t < 3f && !sentBack; t += Time.deltaTime)
+            {
                 sentBack = _playerBody.position.x < enemyX - 10f;
+                if (!sentBack)
+                {
+                    Assert.AreEqual(at.x, _playerBody.position.x, 0.0001f, "a knocked-out Player stays where it was hit");
+                    Assert.That(_playerBody.position.y, Is.InRange(surface - 0.05f, at.y + 0.0001f),
+                        "a knocked-out Player only comes down onto the ground");
+                }
+
+                yield return null;
             }
 
             Assert.IsTrue(sentBack, $"the Player should be sent back to the start (it ended at {_playerBody.position})");
+            Assert.IsFalse(death.IsDying, "back at the start, the knock-out is over");
+            Assert.IsTrue(_playerBody.simulated && movement.enabled, "back at the start, the Player plays again");
             Assert.IsTrue(_enemy.gameObject.activeSelf && !_enemy.IsDefeated, "walking into it must not defeat it");
         }
 

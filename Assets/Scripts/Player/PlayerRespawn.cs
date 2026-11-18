@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Player
 {
     // Puts the Player back where it started (its position when the scene loaded), standing still.
-    // Called by a KillZone when the Player falls out of the level.
+    // Called by a KillZone when the Player falls out of the level, and by PlayerDeath after a knock-out.
     [RequireComponent(typeof(Rigidbody2D))]
     public class PlayerRespawn : MonoBehaviour
     {

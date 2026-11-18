@@ -25,6 +25,12 @@ namespace Tests.EditMode
         // In every Hero sheet the soles are 4 px above the bottom of the cell; that point is the pivot.
         private const float SolesAbovePixels = 4f;
 
+        // Except the knock-out's: sitting, the seat rests on the green under the ground's 4 px outline
+        // and the near heel (nearer the camera in the 3/4 view) reaches 16 px below the ground, into
+        // the grass. Its cell ends lower, so the pivot, still on the ground, is 20 px above the bottom.
+        private const string HeroDeathSheetPath = "Assets/Sprites/Hero/Hero_Death.png";
+        private const float DeathGroundAbovePixels = 20f;
+
         // The Run animation's planted shoe moves back 7.28 px for every frame of the sheet, on average
         // over a step (Ludo's run: 22.56 px a frame in the video, x 171/530 on the sheet; the speed
         // varies from frame to frame). Per frame, not per second, so a change to the clip's Samples
@@ -154,10 +160,11 @@ namespace Tests.EditMode
             {
                 var sprites = AssetDatabase.LoadAllAssetsAtPath(path).OfType<Sprite>().ToArray();
                 Assert.IsNotEmpty(sprites, path + " has no sprites. Is it sliced?");
+                var solesAbove = path == HeroDeathSheetPath ? DeathGroundAbovePixels : SolesAbovePixels;
                 foreach (var sprite in sprites)
                 {
                     Assert.AreEqual(sprite.rect.width / 2f, sprite.pivot.x, 0.01f, sprite.name + ": pivot x");
-                    Assert.AreEqual(SolesAbovePixels, sprite.pivot.y, 0.01f, sprite.name + ": pivot y");
+                    Assert.AreEqual(solesAbove, sprite.pivot.y, 0.01f, sprite.name + ": pivot y");
                 }
             }
         }
@@ -209,13 +216,14 @@ namespace Tests.EditMode
             }
         }
 
-        // Idle and Run repeat; the jump's clips play once and hold their last frame (a long fall
-        // stays in the falling pose, a landing doesn't start again).
+        // Idle and Run repeat; the jump's clips and the knock-out play once and hold their last frame
+        // (a long fall stays in the falling pose, a landing doesn't start again).
         [TestCase("Hero_Idle", true)]
         [TestCase("Hero_Run", true)]
         [TestCase("Hero_Jump", false)]
         [TestCase("Hero_Fall", false)]
         [TestCase("Hero_Land", false)]
+        [TestCase("Hero_Death", false)]
         public void HeroClips_LoopOnlyWhereTheyShould(string stateName, bool loops)
         {
             var state = LoadHeroController().layers[0].stateMachine.states

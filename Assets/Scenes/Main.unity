@@ -250,6 +250,7 @@ GameObject:
   - component: {fileID: 374769170}
   - component: {fileID: 374769172}
   - component: {fileID: 374769171}
+  - component: {fileID: 374769173}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -442,6 +443,7 @@ MonoBehaviour:
   jump: {fileID: 8300000, guid: a58a4aece7faf3b46a0555107dd8c6d0, type: 3}
   land: {fileID: 8300000, guid: 3db43040b36f6884bbc3441affddaa2a, type: 3}
   respawn: {fileID: 8300000, guid: 447a2a39cf5496648a74f9507db4338a, type: 3}
+  death: {fileID: 8300000, guid: 395c3890928504203cce2da868fab4d6, type: 3}
   coin: {fileID: 8300000, guid: d3896eb5b4cd96647bbb09f6452896da, type: 3}
   coinChainWindow: 0.8
   pitchVariation: 0.05
@@ -541,6 +543,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &374769173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 374769162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2aa030cdcef1cb44691a80a1849ea637, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deathState: Hero_Death
 --- !u!1001 &430956168
 PrefabInstance:
   m_ObjectHideFlags: 0

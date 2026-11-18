@@ -1,0 +1,916 @@
+fileFormatVersion: 2
+guid: 85138b2c1375520ebc7ad75cad0e94ee
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 12
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 9
+  spritePivot: {x: 0.5, y: 0.02173913}
+  spritePixelsToUnits: 46
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Hero_Death_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1010
+        width: 144
+        height: 202
+      alignment: 9
+      pivot: {x: 0.5, y: 0.099009901}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 372019ba605d987d1d1d5427c5d162bf
+      internalID: -54578436
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hero_Death_1
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 1010
+        width: 144
+        height: 202
+      alignment: 9
+      pivot: {x: 0.5, y: 0.099009901}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dab55f726a1dbc767f15e99b2096ed01
+      internalID: 90260141
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hero_Death_2
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 1010
+        width: 144
+        height: 202
+      alignment: 9
+      pivot: {x: 0.5, y: 0.099009901}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7ecc103bed2b58e25bf631fcc947cd37
+      internalID: 1680429505
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hero_Death_3
+      rect:
+        serializedVersion: 2
+        x: 432
+        y: 1010
+        width: 144
+        height: 202
+      alignment: 9
+      pivot: {x: 0.5, y: 0.099009901}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 39905e2d39a93be9f56fafa73e3a423c
+      internalID: -1705220133
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hero_Death_4
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 1010
+        width: 144
+        height: 202
+      alignment: 9
+      pivot: {x: 0.5, y: 0.099009901}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 83a66c674f663a53b11de5a813965234
+      internalID: 958862162
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hero_Death_5
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 1010
+        width: 144
+        height: 202
+      alignment: 9
+      pivot: {x: 0.5, y: 0.099009901}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8a4c234d116ea73210680cd5645fcf22
+      internalID: 1562779015
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hero_Death_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 808
+        width: 144
+        height: 202
+      alignment: 9
+      pivot: {x: 0.5, y: 0.099009901}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1b6a65c7417d8821f8c095b1eb06412a
+      internalID: -88646356
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hero_Death_7
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 808
+        width: 144
+        height: 202
+      alignment: 9
+      pivot: {x: 0.5, y: 0.099009901}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0f7ebfe574a15551af77db30448262b4
+      internalID: 802152694
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hero_Death_8
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 808
+        width: 144
+        height: 202
+      alignment: 9
+      pivot: {x: 0.5, y: 0.099009901}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 021e3c1e2a18c3532dba541b57d435e3
+      internalID: -696052112
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hero_Death_9
+      rect:
+        serializedVersion: 2
+        x: 432
+        y: 808
+        width: 144
+        height: 202
+      alignment: 9
+      pivot: {x: 0.5, y: 0.099009901}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 374121b377e80315adf56090abe70bc5
+      internalID: 1657733130
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hero_Death_10
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 808
+        width: 144
+        height: 202
+      alignment: 9
+      pivot: {x: 0.5, y: 0.099009901}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f3a42bafc362498a2f8385aaf77932c9
+      internalID: 334708906
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hero_Death_11
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 808
+        width: 144
+        height: 202
+      alignment: 9
+      pivot: {x: 0.5, y: 0.099009901}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ba90ad3d0a92dff15d931deadb3bed64
+      internalID: 1581551539
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hero_Death_12
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 606
+        width: 144
+        height: 202
+      alignment: 9
+      pivot: {x: 0.5, y: 0.099009901}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7708b5d9598a0c8f077ea9ba652f760d
+      internalID: 777466852
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hero_Death_13
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 606
+        width: 144
+        height: 202
+      alignment: 9
+      pivot: {x: 0.5, y: 0.099009901}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 616e4447e29c37abe552da9cb025a32a
+      internalID: -1610761404
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hero_Death_14
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 606
+        width: 144
+        height: 202
+      alignment: 9
+      pivot: {x: 0.5, y: 0.099009901}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6fe3e20dcc722e4fe02c034f0b21d40f
+      internalID: 375456610
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hero_Death_15
+      rect:
+        serializedVersion: 2
+        x: 432
+        y: 606
+        width: 144
+        height: 202
+      alignment: 9
+      pivot: {x: 0.5, y: 0.099009901}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 740f3830ddf65b7a5cda73340e4bf963
+      internalID: -162998558
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hero_Death_16
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 606
+        width: 144
+        height: 202
+      alignment: 9
+      pivot: {x: 0.5, y: 0.099009901}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f01e2c9168c2b3615f3d01bf64276c13
+      internalID: 1274319216
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hero_Death_17
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 606
+        width: 144
+        height: 202
+      alignment: 9
+      pivot: {x: 0.5, y: 0.099009901}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2d49ce2ba53c8d21cf92926985acbb78
+      internalID: 750305348
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hero_Death_18
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 404
+        width: 144
+        height: 202
+      alignment: 9
+      pivot: {x: 0.5, y: 0.099009901}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 26f04e9c2a51f4d981470e3497d67f88
+      internalID: 411065350
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hero_Death_19
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 404
+        width: 144
+        height: 202
+      alignment: 9
+      pivot: {x: 0.5, y: 0.099009901}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1bea4269331d247f33df8038a55018e7
+      internalID: -928541881
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hero_Death_20
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 404
+        width: 144
+        height: 202
+      alignment: 9
+      pivot: {x: 0.5, y: 0.099009901}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cdb309bc7fa7cd1ea83aa9d62483e4ae
+      internalID: -1757805262
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hero_Death_21
+      rect:
+        serializedVersion: 2
+        x: 432
+        y: 404
+        width: 144
+        height: 202
+      alignment: 9
+      pivot: {x: 0.5, y: 0.099009901}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8f7ce57da89607a04dc7c1d7d613dc97
+      internalID: 1803280544
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hero_Death_22
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 404
+        width: 144
+        height: 202
+      alignment: 9
+      pivot: {x: 0.5, y: 0.099009901}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: afaef7e033e8f338bc2ba1129737074a
+      internalID: -1868212284
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hero_Death_23
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 404
+        width: 144
+        height: 202
+      alignment: 9
+      pivot: {x: 0.5, y: 0.099009901}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b17c36e4cb5a361e400d47ade80bb9a6
+      internalID: 934103817
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hero_Death_24
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 202
+        width: 144
+        height: 202
+      alignment: 9
+      pivot: {x: 0.5, y: 0.099009901}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 639a51625db3cce5d14365cb6ec729b3
+      internalID: 1502132684
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hero_Death_25
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 202
+        width: 144
+        height: 202
+      alignment: 9
+      pivot: {x: 0.5, y: 0.099009901}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 815e0b0e8428af7c96f6508e2ae2834a
+      internalID: -17548714
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hero_Death_26
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 202
+        width: 144
+        height: 202
+      alignment: 9
+      pivot: {x: 0.5, y: 0.099009901}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0216d93f65491f489e81b79dbc8e92c7
+      internalID: -427926201
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hero_Death_27
+      rect:
+        serializedVersion: 2
+        x: 432
+        y: 202
+        width: 144
+        height: 202
+      alignment: 9
+      pivot: {x: 0.5, y: 0.099009901}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f9986b26e7242a0227769f5743dd0d48
+      internalID: 257427947
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hero_Death_28
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 202
+        width: 144
+        height: 202
+      alignment: 9
+      pivot: {x: 0.5, y: 0.099009901}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b61ea8cce73870f936377e914ad00f7a
+      internalID: 1289357774
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hero_Death_29
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 202
+        width: 144
+        height: 202
+      alignment: 9
+      pivot: {x: 0.5, y: 0.099009901}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: caca95e421581450fd0be3c68d4eeea6
+      internalID: -145014674
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hero_Death_30
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 144
+        height: 202
+      alignment: 9
+      pivot: {x: 0.5, y: 0.099009901}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e6bea84a7fd20e798aeb96bce6ef0e64
+      internalID: 1137591273
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hero_Death_31
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 0
+        width: 144
+        height: 202
+      alignment: 9
+      pivot: {x: 0.5, y: 0.099009901}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c85aebbd52e7e55614f466a841697020
+      internalID: 399132412
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hero_Death_32
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 0
+        width: 144
+        height: 202
+      alignment: 9
+      pivot: {x: 0.5, y: 0.099009901}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c03ef7a127f92641be39e7e74b67f76b
+      internalID: -1714187062
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hero_Death_33
+      rect:
+        serializedVersion: 2
+        x: 432
+        y: 0
+        width: 144
+        height: 202
+      alignment: 9
+      pivot: {x: 0.5, y: 0.099009901}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 189f0bcec4a9f1e899075eec3293cb9b
+      internalID: 1695128775
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hero_Death_34
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 0
+        width: 144
+        height: 202
+      alignment: 9
+      pivot: {x: 0.5, y: 0.099009901}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c31a5582287c051ea7be76b3d00b637f
+      internalID: -1553199024
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hero_Death_35
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 0
+        width: 144
+        height: 202
+      alignment: 9
+      pivot: {x: 0.5, y: 0.099009901}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 41c08ddb053aac356970397132b60884
+      internalID: 1275040609
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 2e3824a7450b4c5c1b33a95fd468e57b
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      Hero_Death_0: -54578436
+      Hero_Death_1: 90260141
+      Hero_Death_2: 1680429505
+      Hero_Death_3: -1705220133
+      Hero_Death_4: 958862162
+      Hero_Death_5: 1562779015
+      Hero_Death_6: -88646356
+      Hero_Death_7: 802152694
+      Hero_Death_8: -696052112
+      Hero_Death_9: 1657733130
+      Hero_Death_10: 334708906
+      Hero_Death_11: 1581551539
+      Hero_Death_12: 777466852
+      Hero_Death_13: -1610761404
+      Hero_Death_14: 375456610
+      Hero_Death_15: -162998558
+      Hero_Death_16: 1274319216
+      Hero_Death_17: 750305348
+      Hero_Death_18: 411065350
+      Hero_Death_19: -928541881
+      Hero_Death_20: -1757805262
+      Hero_Death_21: 1803280544
+      Hero_Death_22: -1868212284
+      Hero_Death_23: 934103817
+      Hero_Death_24: 1502132684
+      Hero_Death_25: -17548714
+      Hero_Death_26: -427926201
+      Hero_Death_27: 257427947
+      Hero_Death_28: 1289357774
+      Hero_Death_29: -145014674
+      Hero_Death_30: 1137591273
+      Hero_Death_31: 399132412
+      Hero_Death_32: -1714187062
+      Hero_Death_33: 1695128775
+      Hero_Death_34: -1553199024
+      Hero_Death_35: 1275040609
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

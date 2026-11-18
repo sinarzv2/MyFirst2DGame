@@ -5,8 +5,9 @@ using UnityEngine;
 namespace Enemies
 {
     // What happens when the Player touches an enemy: landing on top of it defeats it and bounces the
-    // Player up; any other touch sends the Player back to the start. Defeat is public: weapons made
-    // later (a sword, arrows) call it too, so stomping stays just one way of defeating an enemy.
+    // Player up; any other touch knocks the Player out (PlayerDeath), which then sends it back to the
+    // start. Defeat is public: weapons made later (a sword, arrows) call it too, so stomping stays
+    // just one way of defeating an enemy.
     [RequireComponent(typeof(Collider2D))]
     public class Enemy : MonoBehaviour
     {
@@ -65,8 +66,14 @@ namespace Enemies
             }
             else
             {
+                // Knocked out, then sent back; a Player without PlayerDeath is sent back at once.
+                var death = body.GetComponent<PlayerDeath>();
                 var respawn = body.GetComponent<PlayerRespawn>();
-                if (respawn != null)
+                if (death != null)
+                {
+                    death.Die();
+                }
+                else if (respawn != null)
                 {
                     respawn.Respawn();
                 }

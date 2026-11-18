@@ -50,6 +50,7 @@ namespace Tests.PlayMode
             Assert.IsNotNull(_sounds.Jump, "no jump sound");
             Assert.IsNotNull(_sounds.Land, "no landing sound");
             Assert.IsNotNull(_sounds.Respawn, "no respawn sound");
+            Assert.IsNotNull(_sounds.Death, "no death sound");
             Assert.IsNotNull(_sounds.Coin, "no coin sound");
             var source = _player.GetComponent<AudioSource>();
             Assert.IsFalse(source.playOnAwake, "the AudioSource must not play anything by itself at the start");
@@ -108,6 +109,27 @@ namespace Tests.PlayMode
             _player.GetComponent<PlayerRespawn>().Respawn();
             yield return new WaitForSeconds(0.5f);
             Assert.AreEqual(new[] { _sounds.Respawn }, _played.ToArray(), "the poof only");
+        }
+
+        // Knocked out: its sound at once, the poof when it is sent back (2.1 s later), nothing else.
+        [UnityTest]
+        public IEnumerator KnockedOut_PlaysTheDeathSound_ThenThePoof()
+        {
+            var death = _player.GetComponent<PlayerDeath>();
+            Assert.IsNotNull(death, "the Player has no PlayerDeath");
+            yield return new WaitForSeconds(0.2f);   // standing at the start
+            _played.Clear();
+
+            death.Die();
+            Assert.AreEqual(new[] { _sounds.Death }, _played.ToArray(), "the knock-out's sound, at once");
+            for (var t = 0f; t < 3f && death.IsDying; t += Time.deltaTime)
+            {
+                yield return null;
+            }
+
+            Assert.IsFalse(death.IsDying, "the knock-out should be over within 3 s");
+            yield return new WaitForSeconds(0.2f);
+            Assert.AreEqual(new[] { _sounds.Death, _sounds.Respawn }, _played.ToArray(), "then the poof only");
         }
 
         [UnityTest]

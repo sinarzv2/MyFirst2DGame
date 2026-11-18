@@ -20,6 +20,10 @@ namespace Player
         // vanishes and comes back.
         [SerializeField] private AudioClip respawn;
 
+        // Knocked out by an enemy: Ludo's sound for the knock-out clip, timed to its frames (the thud
+        // as the hero lands, then the stars). The poof follows at the respawn.
+        [SerializeField] private AudioClip death;
+
         // A coin picked up. Coins taken one within coinChainWindow seconds of the last (a row of
         // them, 0.5 s apart at running speed) climb a semitone each (SoundRules.GetChainPitch).
         [SerializeField] private AudioClip coin;
@@ -32,6 +36,7 @@ namespace Player
         private AudioSource _source;
         private PlayerMovement _movement;
         private PlayerRespawn _respawn;   // optional, as in PlayerMovement
+        private PlayerDeath _death;       // optional
         private CoinWallet _wallet;       // optional
         private int _nextFootstep;
         private int _coinsHeard;
@@ -45,6 +50,7 @@ namespace Player
         public AudioClip Jump => jump;
         public AudioClip Land => land;
         public AudioClip Respawn => respawn;
+        public AudioClip Death => death;
         public AudioClip Coin => coin;
 
         // Unity calls Reset when the component is added in the Editor: a sound effect, heard the same
@@ -64,6 +70,7 @@ namespace Player
             _source = GetComponent<AudioSource>();
             _movement = GetComponent<PlayerMovement>();
             _respawn = GetComponent<PlayerRespawn>();
+            _death = GetComponent<PlayerDeath>();
             _wallet = GetComponent<CoinWallet>();
             if (_wallet != null)
             {
@@ -84,6 +91,11 @@ namespace Player
                 _respawn.Respawned += PlayRespawn;
             }
 
+            if (_death != null)
+            {
+                _death.Died += PlayDeath;
+            }
+
             if (_wallet != null)
             {
                 _wallet.CoinsChanged += OnCoinsChanged;
@@ -101,6 +113,11 @@ namespace Player
             if (_respawn != null)
             {
                 _respawn.Respawned -= PlayRespawn;
+            }
+
+            if (_death != null)
+            {
+                _death.Died -= PlayDeath;
             }
 
             if (_wallet != null)
@@ -136,6 +153,11 @@ namespace Player
         private void PlayRespawn()
         {
             Play(respawn, 1f);
+        }
+
+        private void PlayDeath()
+        {
+            Play(death, 1f);
         }
 
         // Only when the count goes up: spending coins (a shop, later) is not picking one up.
