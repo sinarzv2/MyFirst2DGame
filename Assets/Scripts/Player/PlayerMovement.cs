@@ -74,6 +74,20 @@ namespace Player
         // From the step a jump starts until the body has really left the ground (see IsStanding).
         private bool _takingOff;
 
+        // Seconds since the hero last stood on the ground (0 while standing). It starts at 0, so
+        // standing at the start is not a landing.
+        private float _airTime;
+
+        // Less time in the air than this is not a landing: running over a bump can lose the contact
+        // with the ground for a physics step or two (0.1 s = 5 steps).
+        public const float MinAirTimeForLanding = 0.1f;
+
+        // Raised in the physics step a jump starts, and in the step the hero stands again after being
+        // in the air (a jump, a fall, a bounce off an enemy). Sounds and effects listen to them;
+        // PlayerMovement doesn't need to know who does.
+        public event System.Action Jumped;
+        public event System.Action Landed;
+
         private PlayerRespawn _respawn;   // optional: on the same GameObject
 
         private void Awake()
@@ -114,6 +128,7 @@ namespace Player
             _jumpReleased = false;
             _rising = false;
             _takingOff = false;
+            _airTime = 0f;   // and being put back on the ground is not a landing
         }
 
         public bool IsGrounded => _body.IsTouching(_groundFilter);
@@ -197,9 +212,17 @@ namespace Player
                 _takingOff = false;
             }
 
+            var standing = IsStanding;
+            if (HasLanded(standing, _airTime, MinAirTimeForLanding))
+            {
+                Landed?.Invoke();
+            }
+
+            _airTime = standing ? 0f : _airTime + Time.fixedDeltaTime;
+
             // Standing on the ground restarts the coyote clock. Not while taking off (see IsStanding):
             // that must not allow a second jump.
-            if (IsStanding)
+            if (standing)
             {
                 _sinceGrounded = 0f;
             }
@@ -212,6 +235,7 @@ namespace Player
                 _sinceJumpPressed = float.PositiveInfinity;
                 _rising = true;
                 _takingOff = true;
+                Jumped?.Invoke();
             }
 
             // Cut once, while rising. If the button was let go before a buffered jump started,
@@ -258,6 +282,12 @@ namespace Player
         public static bool ShouldJump(float sinceGrounded, float sinceJumpPressed, float coyoteTime, float jumpBuffer)
         {
             return sinceGrounded <= coyoteTime && sinceJumpPressed <= jumpBuffer;
+        }
+
+        // A landing: standing again after at least minAirTime in the air.
+        public static bool HasLanded(bool standing, float airTime, float minAirTime)
+        {
+            return standing && airTime >= minAirTime;
         }
 
         // Letting go of the button: a rise is slowed (so it ends lower), a fall is left alone.
