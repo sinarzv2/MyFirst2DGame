@@ -16,25 +16,34 @@ namespace Tests.EditMode
         private static readonly string[] SoundPaths =
         {
             "Assets/Audio/Enemy/stomp.wav",
-            "Assets/Audio/Enemy/Goblin/goblin_defeat.wav",
+            // goblin_defeat.wav goes with the defeat animation: EnemyDefeatTests checks it
             "Assets/Audio/Enemy/Goblin/goblin_step_1.wav",
             "Assets/Audio/Enemy/Goblin/goblin_step_2.wav",
             "Assets/Audio/Enemy/Goblin/goblin_step_3.wav",
             "Assets/Audio/Enemy/Goblin/goblin_step_4.wav",
         };
 
-        // Two steps in the walk's 36 frames, on the frames a foot lands (16 and 33): half a cycle apart.
+        // Four steps in the walk's 36 frames (two strides: each foot lands twice), at frames 6, 16, 25
+        // and 33, about a frame before a foot lands (the back foot at 7 and 26, the front one at 17 and
+        // 34). The back foot hardly lifts in the 3/4 view, easy to miss: counting the steps catches it.
         [Test]
         public void GoblinWalkClip_CallsFootstep_OncePerStep()
         {
             var clip = AssetDatabase.LoadAssetAtPath<AnimationClip>(WalkClipPath);
             Assert.IsNotNull(clip, $"no clip at {WalkClipPath}");
             var events = AnimationUtility.GetAnimationEvents(clip);
-            Assert.AreEqual(2, events.Length, "one footstep event per step: the walk has two");
+            Assert.AreEqual(4, events.Length, "one footstep event per step: the walk has four");
             Assert.That(events.Select(e => e.functionName), Is.All.EqualTo(nameof(EnemySounds.Footstep)),
                 "an Animation Event calls a method by its name: the name must be EnemySounds.Footstep's");
+
+            // Spread over the cycle like the steps: each 7 to 11 frames after the one before.
+            var total = Mathf.RoundToInt(clip.length * clip.frameRate);
             var frames = events.Select(e => Mathf.RoundToInt(e.time * clip.frameRate)).OrderBy(f => f).ToArray();
-            Assert.That(frames[1] - frames[0], Is.InRange(15, 21), $"steps at frames {string.Join(", ", frames)}");
+            for (var i = 0; i < frames.Length; i++)
+            {
+                var gap = (frames[(i + 1) % frames.Length] - frames[i] + total) % total;
+                Assert.That(gap, Is.InRange(7, 11), $"steps at frames {string.Join(", ", frames)}");
+            }
         }
 
         [Test]

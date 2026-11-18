@@ -26,6 +26,7 @@ namespace Enemies
         private Rigidbody2D _body;
         private Collider2D _collider;
         private SpriteRenderer _spriteRenderer;
+        private Enemy _enemy;   // optional: something that patrols but cannot be defeated has none
         private bool _facingLeft;
 
         public bool FacingLeft => _facingLeft;
@@ -43,7 +44,31 @@ namespace Enemies
             _body = GetComponent<Rigidbody2D>();
             _collider = GetComponent<Collider2D>();
             _spriteRenderer = GetComponent<SpriteRenderer>();
+            _enemy = GetComponent<Enemy>();
             _facingLeft = startFacingLeft;
+        }
+
+        // Defeated: no more walking or turning (with its collider off, the rays would see no ground
+        // and it would turn back and forth while it falls over).
+        private void OnEnable()
+        {
+            if (_enemy != null)
+            {
+                _enemy.Defeated += Stop;
+            }
+        }
+
+        private void OnDisable()
+        {
+            if (_enemy != null)
+            {
+                _enemy.Defeated -= Stop;
+            }
+        }
+
+        private void Stop()
+        {
+            enabled = false;
         }
 
         private void FixedUpdate()

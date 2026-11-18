@@ -131,13 +131,21 @@ namespace Tests.PlayMode
             var solesBelowPivot = _playerBody.position.y - _player.GetComponent<Collider2D>().bounds.min.y;
             Teleport(_playerBody, new Vector2(_enemyBody.position.x + offsetX, enemyTop + 1f + solesBelowPivot));
 
-            for (var t = 0f; t < 1.5f && _enemy.gameObject.activeSelf; t += Time.fixedDeltaTime)
+            for (var t = 0f; t < 1.5f && !_enemy.IsDefeated; t += Time.fixedDeltaTime)
             {
                 yield return new WaitForFixedUpdate();
             }
 
-            Assert.IsFalse(_enemy.gameObject.activeSelf, "the enemy should be gone");
-            Assert.IsTrue(_enemy.IsDefeated);
+            // Defeated: out of the game at once (nothing touches it, it does not move), but still on
+            // screen, playing its defeat.
+            Assert.IsTrue(_enemy.IsDefeated, "landing on it should defeat it");
+            var at = _enemy.transform.position;
+            yield return null;   // two frames: the Animator has surely entered the new state
+            yield return null;
+            Assert.IsTrue(_enemy.gameObject.activeSelf, "the enemy should stay to play its defeat");
+            Assert.IsFalse(_enemy.GetComponent<Collider2D>().enabled, "a defeated enemy should touch nothing");
+            Assert.IsTrue(_enemy.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName(_enemy.DefeatState),
+                $"the enemy should play its {_enemy.DefeatState} animation");
 
             var from = _playerBody.position.y;
             var top = from;
@@ -150,6 +158,15 @@ namespace Tests.PlayMode
             Assert.AreEqual(_enemy.StompBounceHeight, top - from, 0.25f, "the Player should bounce up by the enemy's bounce height");
             Assert.That(Vector2.Distance(_playerBody.position, _player.GetComponent<PlayerRespawn>().SpawnPoint), Is.GreaterThan(5f),
                 "the Player should not have been sent back to the start");
+
+            // The animation (1.1 s), lying still and the fade (0.4 s each): gone within 3 s, where it fell.
+            for (var t = 0f; t < 3f && _enemy.gameObject.activeSelf; t += Time.deltaTime)
+            {
+                Assert.AreEqual(at, _enemy.transform.position, "a defeated enemy should stay where it was");
+                yield return null;
+            }
+
+            Assert.IsFalse(_enemy.gameObject.activeSelf, "after its defeat the enemy should be gone");
         }
 
         [UnityTest]
