@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Level;
 using NUnit.Framework;
 using Player;
 using UnityEngine;
@@ -49,6 +50,7 @@ namespace Tests.PlayMode
             Assert.IsNotNull(_sounds.Jump, "no jump sound");
             Assert.IsNotNull(_sounds.Land, "no landing sound");
             Assert.IsNotNull(_sounds.Respawn, "no respawn sound");
+            Assert.IsNotNull(_sounds.Coin, "no coin sound");
             var source = _player.GetComponent<AudioSource>();
             Assert.IsFalse(source.playOnAwake, "the AudioSource must not play anything by itself at the start");
             Assert.AreEqual(0f, source.spatialBlend, "2D: the hero sounds the same wherever it is on screen");
@@ -78,6 +80,17 @@ namespace Tests.PlayMode
 
             Assert.IsTrue(_played.Contains(_sounds.Land), "landing should play its sound");
             Assert.AreEqual(new[] { _sounds.Jump, _sounds.Land }, _played.ToArray(), "one jump, one landing, nothing else");
+        }
+
+        [UnityTest]
+        public IEnumerator PickingUpACoin_PlaysTheCoinSound()
+        {
+            var coin = Object.FindObjectsOfType<Coin>().FirstOrDefault();
+            Assert.IsNotNull(coin, "no coins in the Main scene");
+            _played.Clear();
+            coin.transform.position = _player.GetComponent<Collider2D>().bounds.center;
+            yield return new WaitForSeconds(0.2f);
+            Assert.AreEqual(new[] { _sounds.Coin }, _played.ToArray(), "one coin, one coin sound");
         }
 
         // Sent back while in the air (as after falling into a pit): the poof, and no landing sound when

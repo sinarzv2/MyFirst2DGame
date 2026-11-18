@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using Sounds;
+using UnityEngine;
 
 // The rules every sound component uses: whose turn, how much the pitch varies, how loud and how far
 // to the side a sound is heard.
@@ -23,6 +24,23 @@ namespace Tests.EditMode
             Assert.AreEqual(1.05f, SoundRules.GetPitch(0.05f, 1f), 1e-5f);
             Assert.AreEqual(1f, SoundRules.GetPitch(0.05f, 0.5f), 1e-5f);
             Assert.AreEqual(1f, SoundRules.GetPitch(0f, 0.9f), 1e-5f, "no variation: always the normal pitch");
+        }
+
+        [TestCase(0, 0.5f, ExpectedResult = 1, TestName = "Chain: soon after the last, one longer")]
+        [TestCase(3, 0.8f, ExpectedResult = 4, TestName = "Chain: just in time, one longer")]
+        [TestCase(3, 2f, ExpectedResult = 0, TestName = "Chain: too long after, a new chain")]
+        public int Chain_GrowsOnlyWhilePickupsComeQuickly(int chain, float sinceLast)
+        {
+            return SoundRules.NextChain(chain, sinceLast, 0.8f);
+        }
+
+        [Test]
+        public void ChainPitch_ClimbsASemitoneAStep_UpToAFifth()
+        {
+            Assert.AreEqual(1f, SoundRules.GetChainPitch(0), 1e-5f, "the first pickup: the normal pitch");
+            Assert.AreEqual(1.059463f, SoundRules.GetChainPitch(1), 1e-5f, "a semitone: 2 to the power 1/12");
+            Assert.AreEqual(Mathf.Pow(2f, 7f / 12f), SoundRules.GetChainPitch(7), 1e-5f, "a fifth");
+            Assert.AreEqual(SoundRules.GetChainPitch(SoundRules.MaxChainSteps), SoundRules.GetChainPitch(30), 1e-5f, "no higher after that");
         }
 
         [TestCase(0f, ExpectedResult = 1f, TestName = "Volume: at the listener, full")]

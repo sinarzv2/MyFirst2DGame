@@ -20,6 +20,11 @@ namespace Player
         // vanishes and comes back.
         [SerializeField] private AudioClip respawn;
 
+        // A coin picked up. Coins taken one within coinChainWindow seconds of the last (a row of
+        // them, 0.5 s apart at running speed) climb a semitone each (SoundRules.GetChainPitch).
+        [SerializeField] private AudioClip coin;
+        [SerializeField, Min(0f)] private float coinChainWindow = 0.8f;
+
         // Each footstep plays a little higher or lower, at random (plus or minus this share of the
         // normal pitch): two recordings then sound like many different steps.
         [SerializeField, Range(0f, 0.2f)] private float pitchVariation = 0.05f;
@@ -27,7 +32,11 @@ namespace Player
         private AudioSource _source;
         private PlayerMovement _movement;
         private PlayerRespawn _respawn;   // optional, as in PlayerMovement
+        private CoinWallet _wallet;       // optional
         private int _nextFootstep;
+        private int _coinsHeard;
+        private int _coinChain;
+        private float _lastCoinTime = float.NegativeInfinity;
 
         // Raised with every sound played: tests listen to it (and a debug overlay could).
         public event System.Action<AudioClip> Played;
@@ -36,6 +45,7 @@ namespace Player
         public AudioClip Jump => jump;
         public AudioClip Land => land;
         public AudioClip Respawn => respawn;
+        public AudioClip Coin => coin;
 
         // Unity calls Reset when the component is added in the Editor: a sound effect, heard the same
         // wherever the hero is on screen (2D), and nothing played on its own at the start.
@@ -54,6 +64,11 @@ namespace Player
             _source = GetComponent<AudioSource>();
             _movement = GetComponent<PlayerMovement>();
             _respawn = GetComponent<PlayerRespawn>();
+            _wallet = GetComponent<CoinWallet>();
+            if (_wallet != null)
+            {
+                _coinsHeard = _wallet.Coins;
+            }
         }
 
         private void OnEnable()
@@ -68,6 +83,11 @@ namespace Player
             {
                 _respawn.Respawned += PlayRespawn;
             }
+
+            if (_wallet != null)
+            {
+                _wallet.CoinsChanged += OnCoinsChanged;
+            }
         }
 
         private void OnDisable()
@@ -81,6 +101,11 @@ namespace Player
             if (_respawn != null)
             {
                 _respawn.Respawned -= PlayRespawn;
+            }
+
+            if (_wallet != null)
+            {
+                _wallet.CoinsChanged -= OnCoinsChanged;
             }
         }
 
@@ -111,6 +136,21 @@ namespace Player
         private void PlayRespawn()
         {
             Play(respawn, 1f);
+        }
+
+        // Only when the count goes up: spending coins (a shop, later) is not picking one up.
+        private void OnCoinsChanged(int total)
+        {
+            var gained = total > _coinsHeard;
+            _coinsHeard = total;
+            if (!gained)
+            {
+                return;
+            }
+
+            _coinChain = SoundRules.NextChain(_coinChain, Time.time - _lastCoinTime, coinChainWindow);
+            _lastCoinTime = Time.time;
+            Play(coin, SoundRules.GetChainPitch(_coinChain));
         }
 
         // One AudioSource plays every sound (PlayOneShot lets them overlap). Its pitch is shared by

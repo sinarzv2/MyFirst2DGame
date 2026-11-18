@@ -442,6 +442,8 @@ MonoBehaviour:
   jump: {fileID: 8300000, guid: a58a4aece7faf3b46a0555107dd8c6d0, type: 3}
   land: {fileID: 8300000, guid: 3db43040b36f6884bbc3441affddaa2a, type: 3}
   respawn: {fileID: 8300000, guid: 447a2a39cf5496648a74f9507db4338a, type: 3}
+  coin: {fileID: 8300000, guid: d3896eb5b4cd96647bbb09f6452896da, type: 3}
+  coinChainWindow: 0.8
   pitchVariation: 0.05
 --- !u!82 &374769172
 AudioSource:

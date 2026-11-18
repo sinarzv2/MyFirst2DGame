@@ -18,6 +18,7 @@ namespace Tests.EditMode
             "Assets/Audio/Hero/hero_step_2.wav",
             "Assets/Audio/Hero/hero_jump.wav",
             "Assets/Audio/Hero/hero_land.wav",
+            "Assets/Audio/Coin/coin.wav",
         };
 
         [TestCase(true, 0.5f, ExpectedResult = true, TestName = "Landing: standing after a jump")]
