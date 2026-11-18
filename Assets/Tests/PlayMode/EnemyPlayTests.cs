@@ -137,7 +137,7 @@ namespace Tests.PlayMode
             }
 
             Assert.IsFalse(_enemy.gameObject.activeSelf, "the enemy should be gone");
-            Assert.IsTrue(_enemy.Defeated);
+            Assert.IsTrue(_enemy.IsDefeated);
 
             var from = _playerBody.position.y;
             var top = from;
@@ -173,7 +173,7 @@ namespace Tests.PlayMode
             }
 
             Assert.IsTrue(sentBack, $"the Player should be sent back to the start (it ended at {_playerBody.position})");
-            Assert.IsTrue(_enemy.gameObject.activeSelf && !_enemy.Defeated, "walking into it must not defeat it");
+            Assert.IsTrue(_enemy.gameObject.activeSelf && !_enemy.IsDefeated, "walking into it must not defeat it");
         }
 
         [UnityTest]

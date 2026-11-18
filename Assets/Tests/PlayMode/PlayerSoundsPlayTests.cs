@@ -48,6 +48,7 @@ namespace Tests.PlayMode
             Assert.That(_sounds.Footsteps, Has.None.Null, "an empty footstep slot");
             Assert.IsNotNull(_sounds.Jump, "no jump sound");
             Assert.IsNotNull(_sounds.Land, "no landing sound");
+            Assert.IsNotNull(_sounds.Respawn, "no respawn sound");
             var source = _player.GetComponent<AudioSource>();
             Assert.IsFalse(source.playOnAwake, "the AudioSource must not play anything by itself at the start");
             Assert.AreEqual(0f, source.spatialBlend, "2D: the hero sounds the same wherever it is on screen");
@@ -77,6 +78,23 @@ namespace Tests.PlayMode
 
             Assert.IsTrue(_played.Contains(_sounds.Land), "landing should play its sound");
             Assert.AreEqual(new[] { _sounds.Jump, _sounds.Land }, _played.ToArray(), "one jump, one landing, nothing else");
+        }
+
+        // Sent back while in the air (as after falling into a pit): the poof, and no landing sound when
+        // it is put down at the start.
+        [UnityTest]
+        public IEnumerator Respawning_PlaysThePoof_ButNoLanding()
+        {
+            var body = _player.GetComponent<Rigidbody2D>();
+            var up = body.position + Vector2.up * 3f;
+            body.position = up;
+            _player.transform.position = up;
+            yield return new WaitForSeconds(0.2f);   // falling: longer in the air than a landing needs
+            _played.Clear();
+
+            _player.GetComponent<PlayerRespawn>().Respawn();
+            yield return new WaitForSeconds(0.5f);
+            Assert.AreEqual(new[] { _sounds.Respawn }, _played.ToArray(), "the poof only");
         }
 
         [UnityTest]

@@ -1,3 +1,4 @@
+using Sounds;
 using UnityEngine;
 
 namespace Player
@@ -15,12 +16,17 @@ namespace Player
         [SerializeField] private AudioClip jump;
         [SerializeField] private AudioClip land;
 
+        // Sent back to the start (hit by an enemy, or fallen into a pit): a puff of smoke, as the hero
+        // vanishes and comes back.
+        [SerializeField] private AudioClip respawn;
+
         // Each footstep plays a little higher or lower, at random (plus or minus this share of the
         // normal pitch): two recordings then sound like many different steps.
         [SerializeField, Range(0f, 0.2f)] private float pitchVariation = 0.05f;
 
         private AudioSource _source;
         private PlayerMovement _movement;
+        private PlayerRespawn _respawn;   // optional, as in PlayerMovement
         private int _nextFootstep;
 
         // Raised with every sound played: tests listen to it (and a debug overlay could).
@@ -29,6 +35,7 @@ namespace Player
         public AudioClip[] Footsteps => footsteps;
         public AudioClip Jump => jump;
         public AudioClip Land => land;
+        public AudioClip Respawn => respawn;
 
         // Unity calls Reset when the component is added in the Editor: a sound effect, heard the same
         // wherever the hero is on screen (2D), and nothing played on its own at the start.
@@ -46,6 +53,7 @@ namespace Player
         {
             _source = GetComponent<AudioSource>();
             _movement = GetComponent<PlayerMovement>();
+            _respawn = GetComponent<PlayerRespawn>();
         }
 
         private void OnEnable()
@@ -55,6 +63,11 @@ namespace Player
                 _movement.Jumped += PlayJump;
                 _movement.Landed += PlayLand;
             }
+
+            if (_respawn != null)
+            {
+                _respawn.Respawned += PlayRespawn;
+            }
         }
 
         private void OnDisable()
@@ -63,6 +76,11 @@ namespace Player
             {
                 _movement.Jumped -= PlayJump;
                 _movement.Landed -= PlayLand;
+            }
+
+            if (_respawn != null)
+            {
+                _respawn.Respawned -= PlayRespawn;
             }
         }
 
@@ -76,8 +94,8 @@ namespace Player
             }
 
             var clip = footsteps[_nextFootstep];
-            _nextFootstep = NextIndex(_nextFootstep, footsteps.Length);
-            Play(clip, GetPitch(pitchVariation, Random.value));
+            _nextFootstep = SoundRules.NextIndex(_nextFootstep, footsteps.Length);
+            Play(clip, SoundRules.GetPitch(pitchVariation, Random.value));
         }
 
         private void PlayJump()
@@ -88,6 +106,11 @@ namespace Player
         private void PlayLand()
         {
             Play(land, 1f);
+        }
+
+        private void PlayRespawn()
+        {
+            Play(respawn, 1f);
         }
 
         // One AudioSource plays every sound (PlayOneShot lets them overlap). Its pitch is shared by
@@ -103,20 +126,6 @@ namespace Player
             _source.pitch = pitch;
             _source.PlayOneShot(clip);
             Played?.Invoke(clip);
-        }
-
-        // Rules, without components: Edit Mode tests call them directly.
-
-        // The footstep after this one, back to the first after the last.
-        public static int NextIndex(int index, int count)
-        {
-            return (index + 1) % count;
-        }
-
-        // t is a random number from 0 to 1: the pitch goes from 1 - variation to 1 + variation.
-        public static float GetPitch(float variation, float t)
-        {
-            return 1f + variation * (2f * t - 1f);
         }
     }
 }

@@ -14,8 +14,12 @@ namespace Enemies
 
         private Collider2D _collider;
 
-        public bool Defeated { get; private set; }
+        public bool IsDefeated { get; private set; }
         public float StompBounceHeight => stompBounceHeight;
+
+        // Raised by Defeat, however the enemy was defeated (a stomp now, a sword or an arrow later),
+        // just before it is hidden: sounds and effects listen to it.
+        public event System.Action Defeated;
 
         private void Awake()
         {
@@ -24,7 +28,7 @@ namespace Enemies
 
         private void OnCollisionEnter2D(Collision2D collision)
         {
-            if (Defeated)
+            if (IsDefeated)
             {
                 return;
             }
@@ -56,7 +60,8 @@ namespace Enemies
         // Hidden, not destroyed (as a coin): a level restart could bring it back.
         public void Defeat()
         {
-            Defeated = true;
+            IsDefeated = true;
+            Defeated?.Invoke();
             gameObject.SetActive(false);
         }
 

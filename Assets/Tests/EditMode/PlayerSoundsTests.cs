@@ -4,8 +4,8 @@ using Player;
 using UnityEditor;
 using UnityEngine;
 
-// The hero's sounds: the rules (whose turn, how much the pitch varies, what is a landing), the Run
-// clip's footstep events and the sound files.
+// The hero's sounds: what is a landing, the Run clip's footstep events and the sound files (the
+// rules shared with the enemies' sounds are in SoundRulesTests).
 namespace Tests.EditMode
 {
     public class PlayerSoundsTests
@@ -19,23 +19,6 @@ namespace Tests.EditMode
             "Assets/Audio/Hero/hero_jump.wav",
             "Assets/Audio/Hero/hero_land.wav",
         };
-
-        [TestCase(0, 2, ExpectedResult = 1)]
-        [TestCase(1, 2, ExpectedResult = 0)]
-        [TestCase(0, 1, ExpectedResult = 0)]
-        public int Footsteps_TakeTurns(int index, int count)
-        {
-            return PlayerSounds.NextIndex(index, count);
-        }
-
-        [Test]
-        public void FootstepPitch_StaysWithinTheVariation()
-        {
-            Assert.AreEqual(0.95f, PlayerSounds.GetPitch(0.05f, 0f), 1e-5f);
-            Assert.AreEqual(1.05f, PlayerSounds.GetPitch(0.05f, 1f), 1e-5f);
-            Assert.AreEqual(1f, PlayerSounds.GetPitch(0.05f, 0.5f), 1e-5f);
-            Assert.AreEqual(1f, PlayerSounds.GetPitch(0f, 0.9f), 1e-5f, "no variation: always the normal pitch");
-        }
 
         [TestCase(true, 0.5f, ExpectedResult = true, TestName = "Landing: standing after a jump")]
         [TestCase(true, 0.04f, ExpectedResult = false, TestName = "Landing: a bump is not a landing")]
@@ -83,6 +66,12 @@ namespace Tests.EditMode
                 Assert.That(clip.length, Is.LessThan(0.35f),
                     $"{path}: shorter than the time between two running steps (0.357 s)");
             }
+
+            const string respawnPath = "Assets/Audio/Hero/hero_respawn.wav";
+            var respawn = AssetDatabase.LoadAssetAtPath<AudioClip>(respawnPath);
+            Assert.IsNotNull(respawn, $"no sound at {respawnPath}");
+            Assert.AreEqual(1, respawn.channels, $"{respawnPath}: a sound effect is mono");
+            Assert.That(respawn.length, Is.LessThan(0.5f), $"{respawnPath}: short");
         }
     }
 }

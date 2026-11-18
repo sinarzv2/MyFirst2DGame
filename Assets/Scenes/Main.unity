@@ -441,6 +441,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: bba949345bd6b6c4b9c3af81902f7465, type: 3}
   jump: {fileID: 8300000, guid: a58a4aece7faf3b46a0555107dd8c6d0, type: 3}
   land: {fileID: 8300000, guid: 3db43040b36f6884bbc3441affddaa2a, type: 3}
+  respawn: {fileID: 8300000, guid: 447a2a39cf5496648a74f9507db4338a, type: 3}
   pitchVariation: 0.05
 --- !u!82 &374769172
 AudioSource:
@@ -870,7 +871,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.769712, y: 2, z: -10}
+  m_LocalPosition: {x: 3.7446654, y: 2, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
