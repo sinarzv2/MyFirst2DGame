@@ -16,8 +16,8 @@ namespace Player
         [SerializeField] private AudioClip jump;
         [SerializeField] private AudioClip land;
 
-        // Sent back to the start (hit by an enemy, or fallen into a pit): a puff of smoke, as the hero
-        // vanishes and comes back.
+        // Sent back to the start (after a knock-out, or after the pause in a pit): a puff of smoke, as
+        // the hero comes back.
         [SerializeField] private AudioClip respawn;
 
         // Knocked out by an enemy: Ludo's sound for the knock-out clip, timed to its frames (the thud
@@ -26,6 +26,10 @@ namespace Player
 
         // Hurt by an enemy, a heart less but still standing (thrown back, blinking).
         [SerializeField] private AudioClip hurt;
+
+        // Fallen into a pit: a scream falling away, as long as PlayerHealth's pause before the
+        // respawn (1 s); the poof follows it.
+        [SerializeField] private AudioClip fall;
 
         // A coin picked up. Coins taken one within coinChainWindow seconds of the last (a row of
         // them, 0.5 s apart at running speed) climb a semitone each (SoundRules.GetChainPitch).
@@ -56,6 +60,7 @@ namespace Player
         public AudioClip Respawn => respawn;
         public AudioClip Death => death;
         public AudioClip Hurt => hurt;
+        public AudioClip Fall => fall;
         public AudioClip Coin => coin;
 
         // Unity calls Reset when the component is added in the Editor: a sound effect, heard the same
@@ -105,6 +110,7 @@ namespace Player
             if (_health != null)
             {
                 _health.Hurt += PlayHurt;
+                _health.FellIn += PlayFall;
             }
 
             if (_wallet != null)
@@ -134,6 +140,7 @@ namespace Player
             if (_health != null)
             {
                 _health.Hurt -= PlayHurt;
+                _health.FellIn -= PlayFall;
             }
 
             if (_wallet != null)
@@ -179,6 +186,11 @@ namespace Player
         private void PlayHurt()
         {
             Play(hurt, 1f);
+        }
+
+        private void PlayFall()
+        {
+            Play(fall, 1f);
         }
 
         // Only when the count goes up: spending coins (a shop, later) is not picking one up.

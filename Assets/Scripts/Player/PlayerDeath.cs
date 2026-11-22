@@ -9,7 +9,7 @@ namespace Player
     // walking on can neither push it nor knock it out again. Without physics nothing holds it to the
     // ground either: hit in the air (a jump into the enemy's side), or lifted a little as the two round
     // colliders met, it would sit in the air. So it falls to the ground below it by itself (Settle).
-    // Falling into a pit doesn't come here: the hero is already off screen, KillZone respawns it at once.
+    // Falling into a pit doesn't come here: the hero is already off screen (PlayerHealth.FellInPit).
     [RequireComponent(typeof(PlayerRespawn))]
     [RequireComponent(typeof(Rigidbody2D))]
     public class PlayerDeath : MonoBehaviour

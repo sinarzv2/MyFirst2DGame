@@ -70,15 +70,21 @@ namespace Tests.PlayMode
         private IEnumerator FallIntoThePit()
         {
             var start = (Vector2)_player.GetComponent<PlayerRespawn>().SpawnPoint;
-            var tilemap = Object.FindObjectOfType<Tilemap>();
-            tilemap.CompressBounds();
-            var zone = Object.FindObjectOfType<KillZone>().GetComponent<Collider2D>().bounds;
-            Teleport(new Vector2(tilemap.localBounds.min.x - 3f, zone.max.y + 1f));
+            DropAboveThePit();
             yield return new WaitForFixedUpdate();
             for (var t = 0f; t < 2f && !_health.IsGameOver && Vector2.Distance(_body.position, start) > 0.1f; t += Time.fixedDeltaTime)
             {
                 yield return new WaitForFixedUpdate();
             }
+        }
+
+        // Just above the kill zone, beside the level's left end (no tile in the way).
+        private void DropAboveThePit()
+        {
+            var tilemap = Object.FindObjectOfType<Tilemap>();
+            tilemap.CompressBounds();
+            var zone = Object.FindObjectOfType<KillZone>().GetComponent<Collider2D>().bounds;
+            Teleport(new Vector2(tilemap.localBounds.min.x - 3f, zone.max.y + 1f));
         }
 
         [UnityTest]
@@ -190,6 +196,39 @@ namespace Tests.PlayMode
             Assert.AreEqual(3, _health.Hearts, "back at the start with all the hearts");
             Assert.AreEqual(3, Find<HeartsView>().ShownFull);
             Assert.AreEqual(CoinCounterView.Format(2), Find<LivesView>().Shown);
+        }
+
+        // In the pit: held where it fell in, below what the camera can show, for the pause (its scream
+        // plays meanwhile: PlayerSoundsPlayTests), then back at the start, playing again.
+        [UnityTest]
+        public IEnumerator APit_HoldsTheHeroOutOfView_ForThePause_ThenSendsItBack()
+        {
+            yield return null;
+            var start = (Vector2)_player.GetComponent<PlayerRespawn>().SpawnPoint;
+            DropAboveThePit();
+            for (var t = 0f; t < 2f && !_health.IsInPit; t += Time.fixedDeltaTime)
+            {
+                yield return new WaitForFixedUpdate();
+            }
+
+            Assert.IsTrue(_health.IsInPit, "falling into the kill zone should hold the hero in the pit");
+            var fellAt = Time.time;
+            var heldAt = _body.position;
+            var view = GameObject.Find("CameraBounds").GetComponent<Collider2D>().bounds;
+            Assert.That(_sprite.bounds.max.y, Is.LessThan(view.min.y), "held out of view: below all the camera can show");
+
+            var movement = _player.GetComponent<PlayerMovement>();
+            while (_health.IsInPit && Time.time - fellAt < 3f)
+            {
+                Assert.IsFalse(_body.simulated || movement.enabled, "held: out of the physics, no input");
+                Assert.AreEqual(heldAt, _body.position, "held where it fell in");
+                yield return null;
+            }
+
+            Assert.AreEqual(_health.PitPause, Time.time - fellAt, 0.15f, "held for the pause");
+            Assert.AreEqual(start.x, _body.position.x, 0.1f, "then back at the start");
+            Assert.AreEqual(start.y, _body.position.y, 0.1f, "then back at the start");
+            Assert.IsTrue(_body.simulated && movement.enabled, "back at the start, the hero plays again");
         }
 
         [UnityTest]

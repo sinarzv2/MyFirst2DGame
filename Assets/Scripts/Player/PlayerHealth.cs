@@ -8,7 +8,8 @@ namespace Player
     //   an enemy     a heart less: thrown back, then blinking for a moment, when no enemy can hurt it
     //                (it passes through them, as in most platformers, so it isn't hit again at once)
     //   last heart   a life less: knocked out (PlayerDeath), then back at the start with full hearts
-    //   a pit        a whole life at once: back at the start (the fall itself is the show)
+    //   a pit        a whole life at once: a scream as it falls away out of view, a short pause
+    //                (the scream is heard out), then back at the start
     //   last life    game over: knocked out for good (or lost in the pit), then LevelRestart starts
     //                the level again
     // Hearts and lives change here only; the HUD and the sounds listen to the events.
@@ -25,6 +26,10 @@ namespace Player
         [SerializeField, Min(0f)] private float knockbackTime = 0.3f;
         [SerializeField, Min(0f)] private float invulnerableTime = 1.5f;
         [SerializeField, Min(0.02f)] private float blinkInterval = 0.1f;
+
+        // Fallen into a pit: held out of view this long (s) before the respawn, as long as the scream
+        // (PlayerSounds), so the poof comes after it instead of on top of it.
+        [SerializeField, Min(0f)] private float pitPause = 1f;
 
         private Health _health;
         private PlayerRespawn _respawn;
@@ -44,10 +49,13 @@ namespace Player
         public int HeartsPerLife => Model.HeartsPerLife;
         public bool IsGameOver { get; private set; }
         public bool IsInvulnerable => _invulnerable != null;
+        public bool IsInPit { get; private set; }   // fallen in, waiting out the pause
+        public float PitPause => pitPause;
 
         public event System.Action<int> HeartsChanged;
         public event System.Action<int> LivesChanged;
         public event System.Action Hurt;       // a heart lost, still standing (its sound)
+        public event System.Action FellIn;     // fallen into a pit (its sound)
         public event System.Action GameOver;
 
         private void Awake()
@@ -81,7 +89,7 @@ namespace Player
         // Hit by an enemy at `from` (its position: the hero is thrown away from it).
         public void Hit(Vector2 from)
         {
-            if (IsGameOver || IsInvulnerable || (_death != null && _death.IsDying) || Hearts == 0)
+            if (IsGameOver || IsInvulnerable || IsInPit || (_death != null && _death.IsDying) || Hearts == 0)
             {
                 return;
             }
@@ -100,10 +108,12 @@ namespace Player
             KnockOut(getUp: result == HealthResult.LifeLost);
         }
 
-        // Fallen into a pit (KillZone).
+        // Fallen into a pit (KillZone). The kill zone lies below what the camera can show, so the hero
+        // is already out of view: it is held there (no input, out of the physics, or it would fall
+        // forever) while the scream plays, then sent back to the start, or left there if the game is over.
         public void FellInPit()
         {
-            if (IsGameOver)
+            if (IsGameOver || IsInPit)
             {
                 return;
             }
@@ -111,25 +121,48 @@ namespace Player
             var result = Model.LoseLife();
             HeartsChanged?.Invoke(Hearts);
             LivesChanged?.Invoke(Lives);
+            StopInvulnerable();
+            Hold();
+            FellIn?.Invoke();
             if (result == HealthResult.GameOver)
             {
-                // Off screen in the pit: nothing to show but the end. Physics lets go of it, or it
-                // would fall forever.
-                if (_movement != null)
-                {
-                    _movement.enabled = false;
-                }
-
-                if (_body != null)
-                {
-                    _body.simulated = false;
-                }
-
                 EndGame();
                 return;
             }
 
+            StartCoroutine(BackFromThePit());
+        }
+
+        private IEnumerator BackFromThePit()
+        {
+            IsInPit = true;
+            yield return new WaitForSeconds(pitPause);
+            IsInPit = false;
+            if (_movement != null)
+            {
+                _movement.enabled = true;   // before the respawn: it listens to Respawned
+            }
+
             _respawn.Respawn();
+            if (_body != null)
+            {
+                _body.simulated = true;     // after it: back in the physics at the start, not in the kill zone
+            }
+        }
+
+        // Held where it is: no input, and physics lets go of it.
+        private void Hold()
+        {
+            if (_movement != null)
+            {
+                _movement.enabled = false;
+            }
+
+            if (_body != null)
+            {
+                _body.velocity = Vector2.zero;
+                _body.simulated = false;
+            }
         }
 
         private void KnockOut(bool getUp)

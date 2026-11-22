@@ -7,6 +7,7 @@ using Player;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
+using UnityEngine.Tilemaps;
 
 // The hero's sounds in the real Main scene: a jump and its landing play their sounds, running plays
 // a footstep at each step (from the Run clip's Animation Events), the two footsteps take turns.
@@ -52,6 +53,7 @@ namespace Tests.PlayMode
             Assert.IsNotNull(_sounds.Respawn, "no respawn sound");
             Assert.IsNotNull(_sounds.Death, "no death sound");
             Assert.IsNotNull(_sounds.Hurt, "no hurt sound");
+            Assert.IsNotNull(_sounds.Fall, "no pit sound");
             Assert.IsNotNull(_sounds.Coin, "no coin sound");
             var source = _player.GetComponent<AudioSource>();
             Assert.IsFalse(source.playOnAwake, "the AudioSource must not play anything by itself at the start");
@@ -144,6 +146,38 @@ namespace Tests.PlayMode
 
             health.Hit(_player.transform.position + Vector3.right);
             Assert.AreEqual(new[] { _sounds.Hurt }, _played.ToArray(), "the hurt sound, at once");
+        }
+
+        // Into a pit: the scream at once, the poof once it is over (not on top of it), nothing else.
+        [UnityTest]
+        public IEnumerator FallingIntoAPit_PlaysTheScream_ThenThePoof()
+        {
+            yield return new WaitForSeconds(0.2f);   // standing at the start
+            var tilemap = Object.FindObjectOfType<Tilemap>();
+            tilemap.CompressBounds();
+            var zone = Object.FindObjectOfType<KillZone>().GetComponent<Collider2D>().bounds;
+            var body = _player.GetComponent<Rigidbody2D>();
+            var drop = new Vector2(tilemap.localBounds.min.x - 3f, zone.max.y + 1f);
+            body.velocity = Vector2.zero;
+            body.position = drop;
+            _player.transform.position = drop;
+            _played.Clear();
+
+            for (var t = 0f; t < 2f && !_played.Contains(_sounds.Fall); t += Time.fixedDeltaTime)
+            {
+                yield return new WaitForFixedUpdate();
+            }
+
+            Assert.AreEqual(new[] { _sounds.Fall }, _played.ToArray(), "the scream as it falls in");
+            var fellAt = Time.time;
+            for (var t = 0f; t < 3f && !_played.Contains(_sounds.Respawn); t += Time.deltaTime)
+            {
+                yield return null;
+            }
+
+            Assert.AreEqual(new[] { _sounds.Fall, _sounds.Respawn }, _played.ToArray(), "then the poof only");
+            Assert.That(Time.time - fellAt, Is.GreaterThanOrEqualTo(_sounds.Fall.length - 0.05f),
+                "the poof after the scream, not on top of it");
         }
 
         [UnityTest]

@@ -596,6 +596,7 @@ MonoBehaviour:
   respawn: {fileID: 8300000, guid: 447a2a39cf5496648a74f9507db4338a, type: 3}
   death: {fileID: 8300000, guid: 395c3890928504203cce2da868fab4d6, type: 3}
   hurt: {fileID: 8300000, guid: 2101ad24105d60d750e98a452cec0ae3, type: 3}
+  fall: {fileID: 8300000, guid: de8f003fd3f2421094056b9208028fd7, type: 3}
   coin: {fileID: 8300000, guid: d3896eb5b4cd96647bbb09f6452896da, type: 3}
   coinChainWindow: 0.8
   pitchVariation: 0.05
@@ -727,6 +728,7 @@ MonoBehaviour:
   knockbackTime: 0.3
   invulnerableTime: 1.5
   blinkInterval: 0.1
+  pitPause: 1
 --- !u!1001 &430956168
 PrefabInstance:
   m_ObjectHideFlags: 0
