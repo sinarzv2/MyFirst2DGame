@@ -10,8 +10,8 @@ using UnityEngine.TestTools;
 using UnityEngine.Tilemaps;
 
 // The enemy in the real Main scene, with real physics: it walks its ground and turns at the wall and
-// at the drop, landing on it defeats it and bounces the Player, walking into it knocks the Player out
-// and then sends it back to the start, and it doesn't take coins.
+// at the drop, landing on it defeats it and bounces the Player, walking into it on the last heart
+// knocks the Player out and then sends it back to the start, and it doesn't take coins.
 namespace Tests.PlayMode
 {
     public class EnemyPlayTests
@@ -169,14 +169,31 @@ namespace Tests.PlayMode
             Assert.IsFalse(_enemy.gameObject.activeSelf, "after its defeat the enemy should be gone");
         }
 
-        // Knocked out where it was hit (it stays there, out of the game, playing its knock-out), then
-        // sent back to the start.
+        // On its last heart (each hit before costs one: PlayerHealthPlayTests): knocked out where it
+        // was hit (it stays there, out of the game, playing its knock-out), then sent back to the start.
         [UnityTest]
-        public IEnumerator WalkingIntoTheEnemy_KnocksThePlayerOut_ThenSendsItBack_AndTheEnemyStays()
+        public IEnumerator WalkingIntoTheEnemy_OnTheLastHeart_KnocksThePlayerOut_ThenSendsItBack_AndTheEnemyStays()
         {
             var (surface, _, _) = EnemyGround();
             var death = _player.GetComponent<PlayerDeath>();
+            var health = _player.GetComponent<PlayerHealth>();
             Assert.IsNotNull(death, "the Player has no PlayerDeath");
+            Assert.IsNotNull(health, "the Player has no PlayerHealth");
+            while (health.Hearts > 1)
+            {
+                for (var t = 0f; t < 3f && health.IsInvulnerable; t += Time.deltaTime)
+                {
+                    yield return null;
+                }
+
+                health.Hit(_playerBody.position + Vector2.right);
+            }
+
+            for (var t = 0f; t < 3f && health.IsInvulnerable; t += Time.deltaTime)
+            {
+                yield return null;   // the blinking over: the enemy can hurt again
+            }
+
             _patrol.enabled = false;
             _enemyBody.velocity = Vector2.zero;
             var movement = _player.GetComponent<PlayerMovement>();
@@ -191,7 +208,7 @@ namespace Tests.PlayMode
                 yield return new WaitForFixedUpdate();
             }
 
-            Assert.IsTrue(death.IsDying, "walking into the enemy should knock the Player out");
+            Assert.IsTrue(death.IsDying, "walking into the enemy on the last heart should knock the Player out");
             var at = _playerBody.position;
             yield return null;   // two frames: the Animator has surely entered the new state
             yield return null;

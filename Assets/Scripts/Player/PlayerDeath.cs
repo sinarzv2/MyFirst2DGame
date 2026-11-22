@@ -37,6 +37,9 @@ namespace Player
         // raises PlayerRespawn.Respawned as always.
         public event System.Action Died;
 
+        // Raised when a knock-out that doesn't get up (the last life) has played: the game is over.
+        public event System.Action StayedDown;
+
         private void Awake()
         {
             _respawn = GetComponent<PlayerRespawn>();
@@ -46,7 +49,8 @@ namespace Player
             _movement = GetComponent<PlayerMovement>();
         }
 
-        public void Die()
+        // getUp false: the last life. It stays sitting, out of the game, and raises StayedDown.
+        public void Die(bool getUp = true)
         {
             if (IsDying)
             {
@@ -64,7 +68,7 @@ namespace Player
             _body.simulated = false;
             Died?.Invoke();
             StartCoroutine(Settle(drop));
-            StartCoroutine(PlayDeath());
+            StartCoroutine(PlayDeath(getUp));
         }
 
         // How far its feet (the collider's bottom) are above the ground right below them; 0 when there
@@ -100,7 +104,7 @@ namespace Player
             }
         }
 
-        private IEnumerator PlayDeath()
+        private IEnumerator PlayDeath(bool getUp)
         {
             var state = Animator.StringToHash(deathState);
             if (_animator != null && _animator.HasState(0, state))
@@ -113,7 +117,16 @@ namespace Player
                 _animator.Play(state);
                 yield return null;   // the Animator enters the state at its next update
                 yield return new WaitForSeconds(_animator.GetCurrentAnimatorStateInfo(0).length);
-                _animator.Rebind();   // back to the controller's first state (standing), as at the start
+                if (getUp)
+                {
+                    _animator.Rebind();   // back to the controller's first state (standing), as at the start
+                }
+            }
+
+            if (!getUp)
+            {
+                StayedDown?.Invoke();   // still knocked out (IsDying), sitting where it fell
+                yield break;
             }
 
             _body.simulated = true;

@@ -24,6 +24,9 @@ namespace Player
         // as the hero lands, then the stars). The poof follows at the respawn.
         [SerializeField] private AudioClip death;
 
+        // Hurt by an enemy, a heart less but still standing (thrown back, blinking).
+        [SerializeField] private AudioClip hurt;
+
         // A coin picked up. Coins taken one within coinChainWindow seconds of the last (a row of
         // them, 0.5 s apart at running speed) climb a semitone each (SoundRules.GetChainPitch).
         [SerializeField] private AudioClip coin;
@@ -37,6 +40,7 @@ namespace Player
         private PlayerMovement _movement;
         private PlayerRespawn _respawn;   // optional, as in PlayerMovement
         private PlayerDeath _death;       // optional
+        private PlayerHealth _health;     // optional
         private CoinWallet _wallet;       // optional
         private int _nextFootstep;
         private int _coinsHeard;
@@ -51,6 +55,7 @@ namespace Player
         public AudioClip Land => land;
         public AudioClip Respawn => respawn;
         public AudioClip Death => death;
+        public AudioClip Hurt => hurt;
         public AudioClip Coin => coin;
 
         // Unity calls Reset when the component is added in the Editor: a sound effect, heard the same
@@ -71,6 +76,7 @@ namespace Player
             _movement = GetComponent<PlayerMovement>();
             _respawn = GetComponent<PlayerRespawn>();
             _death = GetComponent<PlayerDeath>();
+            _health = GetComponent<PlayerHealth>();
             _wallet = GetComponent<CoinWallet>();
             if (_wallet != null)
             {
@@ -96,6 +102,11 @@ namespace Player
                 _death.Died += PlayDeath;
             }
 
+            if (_health != null)
+            {
+                _health.Hurt += PlayHurt;
+            }
+
             if (_wallet != null)
             {
                 _wallet.CoinsChanged += OnCoinsChanged;
@@ -118,6 +129,11 @@ namespace Player
             if (_death != null)
             {
                 _death.Died -= PlayDeath;
+            }
+
+            if (_health != null)
+            {
+                _health.Hurt -= PlayHurt;
             }
 
             if (_wallet != null)
@@ -158,6 +174,11 @@ namespace Player
         private void PlayDeath()
         {
             Play(death, 1f);
+        }
+
+        private void PlayHurt()
+        {
+            Play(hurt, 1f);
         }
 
         // Only when the count goes up: spending coins (a shop, later) is not picking one up.

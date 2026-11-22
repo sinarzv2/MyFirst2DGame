@@ -2,7 +2,9 @@
     "name": "MyFirst2DGame.Editor",
     "rootNamespace": "",
     "references": [
-        "MyFirst2DGame"
+        "MyFirst2DGame",
+        "Unity.TextMeshPro",
+        "UnityEngine.UI"
     ],
     "includePlatforms": [
         "Editor"

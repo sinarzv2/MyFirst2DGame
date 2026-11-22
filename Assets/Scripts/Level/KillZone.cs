@@ -3,7 +3,8 @@ using UnityEngine;
 
 namespace Level
 {
-    // An invisible area under the level: whatever falls into it and can respawn, respawns.
+    // An invisible area under the level: whatever falls into it and can respawn, respawns. The hero
+    // loses a life doing so (PlayerHealth), which may end the game.
     // Its collider is a trigger (it reports what enters it but stops nothing). Make it wide
     // enough to lie under every gap and both ends of the level.
     [RequireComponent(typeof(BoxCollider2D))]
@@ -20,8 +21,18 @@ namespace Level
         {
             // The collider that entered may sit on a child; the Rigidbody's object is the Player.
             var body = other.attachedRigidbody;
-            var respawn = body != null ? body.GetComponent<PlayerRespawn>() : null;
-            if (respawn != null)
+            if (body == null)
+            {
+                return;
+            }
+
+            var health = body.GetComponent<PlayerHealth>();
+            var respawn = body.GetComponent<PlayerRespawn>();
+            if (health != null)
+            {
+                health.FellInPit();
+            }
+            else if (respawn != null)
             {
                 respawn.Respawn();
             }

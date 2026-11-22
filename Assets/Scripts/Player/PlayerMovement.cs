@@ -62,6 +62,9 @@ namespace Player
 
         // The input read in Update, used by FixedUpdate.
         private float _horizontal;
+
+        // Seconds left in which the input is ignored (a knockback carries the hero); 0 = in control.
+        private float _noControl;
         private bool _jumpReleased;
 
         // Clocks, in seconds, counted in FixedUpdate. Infinity = long ago, or used up.
@@ -129,6 +132,7 @@ namespace Player
             _rising = false;
             _takingOff = false;
             _airTime = 0f;   // and being put back on the ground is not a landing
+            _noControl = 0f;
         }
 
         public bool IsGrounded => _body.IsTouching(_groundFilter);
@@ -176,6 +180,22 @@ namespace Player
             _takingOff = true;
         }
 
+        // Thrown back (hurt by an enemy): `speed` units/s sideways (negative = left) and up to `height`
+        // units, with no control for `time` seconds, so the input can't cancel the throw at once.
+        // Like Bounce, it uses up the coyote time and the buffer and starts a take-off.
+        public void Knockback(float speed, float height, float time)
+        {
+            var gravity = GetJumpGravity(jumpHeight, timeToApex);
+            _body.velocity = new Vector2(speed, GetLaunchSpeed(height, gravity));
+            _noControl = time;
+            _sinceGrounded = float.PositiveInfinity;
+            _sinceJumpPressed = float.PositiveInfinity;
+            _rising = false;
+            _takingOff = true;
+        }
+
+        public bool InControl => _noControl <= 0f;
+
         // Once per drawn frame: read the input and update what is drawn.
         // A key press lasts one frame, so it must be read here: FixedUpdate may not run in that frame.
         // Up, not "not held": a test that calls RequestJump holds no key, and must get a full jump.
@@ -196,7 +216,11 @@ namespace Player
             _animator.SetBool(GroundedHash, IsGrounded);
             _animator.SetFloat(VelocityYHash, _body.velocity.y);
 
-            _spriteRenderer.flipX = FacesLeft(_horizontal, _spriteRenderer.flipX);
+            // Thrown back, it keeps facing the enemy that hit it (it flies backwards).
+            if (InControl)
+            {
+                _spriteRenderer.flipX = FacesLeft(_horizontal, _spriteRenderer.flipX);
+            }
         }
 
         // Once per physics step (50 a second by default): move the body.
@@ -204,7 +228,10 @@ namespace Player
         // changing transform.position directly would teleport it past them.
         private void FixedUpdate()
         {
-            var velocity = GetVelocity(_horizontal, moveSpeed, _body.velocity);
+            // While thrown back the body keeps its own velocity (gravity still pulls it down).
+            var inControl = InControl;
+            var velocity = inControl ? GetVelocity(_horizontal, moveSpeed, _body.velocity) : _body.velocity;
+            _noControl = Mathf.Max(0f, _noControl - Time.fixedDeltaTime);
 
             // The take-off is over once the body has left the ground, or was stopped before it could.
             if (_takingOff && (!IsGrounded || velocity.y <= 0f))
@@ -227,7 +254,7 @@ namespace Player
                 _sinceGrounded = 0f;
             }
 
-            if (ShouldJump(_sinceGrounded, _sinceJumpPressed, coyoteTime, jumpBuffer))
+            if (inControl && ShouldJump(_sinceGrounded, _sinceJumpPressed, coyoteTime, jumpBuffer))
             {
                 velocity.y = GetJumpSpeed(jumpHeight, timeToApex);
                 // Both used up: one press, one jump; and no second jump in the coyote time.
