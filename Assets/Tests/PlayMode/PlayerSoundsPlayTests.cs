@@ -51,6 +51,7 @@ namespace Tests.PlayMode
             Assert.IsNotNull(_sounds.Land, "no landing sound");
             Assert.IsNotNull(_sounds.Respawn, "no respawn sound");
             Assert.IsNotNull(_sounds.Death, "no death sound");
+            Assert.IsNotNull(_sounds.Hurt, "no hurt sound");
             Assert.IsNotNull(_sounds.Coin, "no coin sound");
             var source = _player.GetComponent<AudioSource>();
             Assert.IsFalse(source.playOnAwake, "the AudioSource must not play anything by itself at the start");
@@ -130,6 +131,19 @@ namespace Tests.PlayMode
             Assert.IsFalse(death.IsDying, "the knock-out should be over within 3 s");
             yield return new WaitForSeconds(0.2f);
             Assert.AreEqual(new[] { _sounds.Death, _sounds.Respawn }, _played.ToArray(), "then the poof only");
+        }
+
+        // A heart lost: the "ow" at once, and nothing else (the throw back lands later, out of this window).
+        [UnityTest]
+        public IEnumerator Hurt_PlaysTheHurtSound()
+        {
+            var health = _player.GetComponent<PlayerHealth>();
+            Assert.IsNotNull(health, "the Player has no PlayerHealth");
+            yield return new WaitForSeconds(0.2f);   // standing at the start
+            _played.Clear();
+
+            health.Hit(_player.transform.position + Vector3.right);
+            Assert.AreEqual(new[] { _sounds.Hurt }, _played.ToArray(), "the hurt sound, at once");
         }
 
         [UnityTest]

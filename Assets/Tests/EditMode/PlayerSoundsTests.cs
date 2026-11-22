@@ -73,6 +73,13 @@ namespace Tests.EditMode
             Assert.IsNotNull(respawn, $"no sound at {respawnPath}");
             Assert.AreEqual(1, respawn.channels, $"{respawnPath}: a sound effect is mono");
             Assert.That(respawn.length, Is.LessThan(0.5f), $"{respawnPath}: short");
+
+            // Played as the hero is thrown back (0.3 s without control): over by about the time it lands.
+            const string hurtPath = "Assets/Audio/Hero/hero_hurt.wav";
+            var hurt = AssetDatabase.LoadAssetAtPath<AudioClip>(hurtPath);
+            Assert.IsNotNull(hurt, $"no sound at {hurtPath}");
+            Assert.AreEqual(1, hurt.channels, $"{hurtPath}: a sound effect is mono");
+            Assert.That(hurt.length, Is.LessThan(0.5f), $"{hurtPath}: short");
         }
     }
 }
